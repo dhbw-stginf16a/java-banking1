@@ -5,7 +5,6 @@ import banking.backend.accounts.Account;
 import banking.backend.accounts.AccountId;
 import banking.backend.persons.Customer;
 import banking.backend.persons.CustomerId;
-import banking.backend.persons.Employee;
 import banking.backend.transactions.Transaction;
 
 import java.util.List;
@@ -20,36 +19,30 @@ import java.util.Map;
  */
 public class Bank {
     private static Bank instance = null;
-
+    /**
+     * The map of all customers indexed by their {@link CustomerId}
+     */
+    protected Map<CustomerId, Customer> customers;
+    /**
+     * The map of all accounts index by their {@link AccountId}
+     */
+    protected Map<AccountId, Account> accounts;
     /**
      * The list of all past transactions. Failed and successful.
      */
     private List<Transaction> transactions;
 
     /**
-     * The map of all customers indexed by their {@link CustomerId}
-     */
-    private Map<CustomerId, Customer> customers;
-
-    /**
-     * The map of all accounts index by their {@link AccountId}
-     */
-    private Map<AccountId, Account> accounts;
-
-    /**
-     * The list of all employees of this bank.
-     */
-    private List<Employee> employees;
-
-    /**
      * Not visible to avoid unwanted instantiation.
      * Use {@link #getInstance()}
+     * Throws {@link UnsupportedOperationException} if instance is already set.
      */
     private Bank() {
+        throw new NotYetImplementedException();
     }
 
     /**
-     * Get the singleton instance of bank
+     * Get the singleton instance of bank.
      */
     public static Bank getInstance() {
         throw new NotYetImplementedException();
@@ -65,6 +58,16 @@ public class Bank {
     }
 
     /**
+     * Get the customer with the requested id.
+     *
+     * @param customerId the customerId to look up the customer
+     * @return the customer if found or null if not
+     */
+    public Customer getCustomer(CustomerId customerId) {
+        throw new NotYetImplementedException();
+    }
+
+    /**
      * Get all accounts belonging to a specific user.
      *
      * @param customer the customer whose accounts are to be returned
@@ -72,6 +75,33 @@ public class Bank {
      */
     public List<Account> getAccounts(Customer customer) {
         throw new NotYetImplementedException();
+    }
+
+    /**
+     * Get all accounts belonging to a specific user.
+     *
+     * @return all accounts
+     */
+    public List<Account> getAccounts() {
+        return null;
+    }
+
+    /**
+     * Get all customers.
+     *
+     * @return all customer
+     */
+    public List<Customer> getCustomers() {
+        return null;
+    }
+
+    /**
+     * Get all customers.
+     *
+     * @return all customer
+     */
+    public List<Transaction> getTransactions() {
+        return null;
     }
 
     /**
@@ -85,11 +115,20 @@ public class Bank {
     }
 
     /**
-     * Generate a new {@link AccountId} not currently in use for a new user.
+     * Generate a new {@link AccountId} not currently in use for a new account.
      *
      * @return unused account id
      */
-    public AccountId generateAvailableAccountId() {
+    private AccountId generateAvailableAccountId() {
+        throw new NotYetImplementedException();
+    }
+
+    /**
+     * Generate a new {@link CustomerId} not currently in use for a new customer.
+     *
+     * @return unused customer id
+     */
+    private CustomerId generateAvailableCustomerId() {
         throw new NotYetImplementedException();
     }
 
@@ -99,6 +138,16 @@ public class Bank {
      * @param account the new account
      */
     public void addAccount(Account account) {
+        throw new NotYetImplementedException();
+    }
+
+    /**
+     * Deposit money into an account.
+     *
+     * @param accountId the id of the account
+     * @param amount    the amount to be deposited
+     */
+    public void deposit(AccountId accountId, Money amount) {
         throw new NotYetImplementedException();
     }
 

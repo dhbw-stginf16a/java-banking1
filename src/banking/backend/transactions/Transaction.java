@@ -1,5 +1,6 @@
 package banking.backend.transactions;
 
+import banking.NotYetImplementedException;
 import banking.backend.DateTime;
 import banking.backend.Money;
 
@@ -8,25 +9,29 @@ import banking.backend.Money;
  * or increments/decrements the balance in a single account.
  */
 public abstract class Transaction {
-    enum Status {PENDING, FAILED, SUCCESS}
-
-    ;
     /**
      * The monetary value of the transaction.
      */
     private Money amount;
-
     /**
      * The point in time when the transaction was issued.
      * Should be applied shortly after, therefore another `applied` attribute is not needed.
      */
     private DateTime issued;
-
     /**
      * The status of applying the transaction.
      * Has to be set by {@link #apply()} before throwing an exception to indicate success.
      */
     private Status status = Status.PENDING;
+
+    /**
+     * Constructs a transaction issued now with specified amount.
+     *
+     * @param amount the positive monetary amount
+     */
+    public Transaction(Money amount) {
+        throw new NotYetImplementedException();
+    }
 
     /**
      * Apply changes to all affected accounts in the transaction.
@@ -36,4 +41,9 @@ public abstract class Transaction {
      *                                    one of the accounts
      */
     abstract void apply() throws TransactionFailedException;
+
+    @Override
+    public abstract String toString();
+
+    enum Status {PENDING, FAILED, SUCCESS}
 }

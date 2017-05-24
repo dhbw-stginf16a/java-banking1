@@ -2,8 +2,6 @@ package banking.backend.persons;
 
 import banking.NotYetImplementedException;
 import banking.backend.DateTime;
-import banking.backend.Money;
-import banking.backend.accounts.AccountId;
 
 /**
  * A person affiliated with the bank.
@@ -36,10 +34,12 @@ public class Person {
     /**
      * Constructs a basic person
      *
-     * @param name      the name of the person
-     * @param birthdate the date of birth of the person
+     * @param name            the name of the person
+     * @param address         the address of birth of the person
+     * @param birthdate       the date of birth of the person
+     * @param telephoneNumber the telephoneNumber of birth of the person
      */
-    public Person(String name, DateTime birthdate) {
+    public Person(String name, String address, DateTime birthdate, String telephoneNumber) {
         throw new NotYetImplementedException();
     }
 
@@ -49,16 +49,6 @@ public class Person {
      * @return the age of the person
      */
     public int getAge() {
-        throw new NotYetImplementedException();
-    }
-
-    /**
-     * Have this person deposit some money on an account.
-     *
-     * @param accountId the id of the account
-     * @param amount    the amount to be deposited
-     */
-    public void deposit(AccountId accountId, Money amount) {
         throw new NotYetImplementedException();
     }
 

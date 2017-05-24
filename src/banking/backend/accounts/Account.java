@@ -20,37 +20,62 @@ abstract public class Account {
     /**
      * A unique identifier for this account.
      */
-    protected AccountId accountId;
+    protected AccountId accountId = null;
 
     /**
      * The holder/owner of this account.
+     * They are currently the only one who can send invoices from this account and withdraw money.
      */
     private Customer holder;
 
     /**
-     * Overdraft limit of the account.
+     * Constructs an account and initializes the holder.
+     * If the customer is null throws {@link IllegalArgumentException}
+     *
+     * Subclasses should override this and check if the holder is eligible for an account of this type.
+     *
+     * @param holder the holder of this account
      */
-    public static Money getOverdraft() {
+    public Account(Customer holder) {
         throw new NotYetImplementedException();
     }
+
+    /**
+     * Get the unique account id.
+     * If it has not been set a {@link IllegalStateException} is thrown.
+     */
+    public AccountId getAccountId() {
+        throw new NotYetImplementedException();
+    }
+
+    /**
+     * Set the unique account id for the first and only time.
+     * Any attempt to overwrite the id throws a {@link IllegalStateException}.
+     *
+     * @param accountId the id of the account
+     */
+    public void setAccountId(AccountId accountId) {
+        throw new NotYetImplementedException();
+    }
+
+    /**
+     * Overdraft limit of the account.
+     */
+    abstract protected Money getOverdraft();
 
     /**
      * Get the interest applied to a negative balance.
      *
      * @return the borrowing interest
      */
-    protected Percentage getBorrowingInterest() {
-        throw new NotYetImplementedException();
-    }
+    abstract protected Percentage getBorrowingInterest();
 
     /**
      * Get the interest applied to a positive balance.
      *
      * @return the saving interest
      */
-    protected Percentage getSavingInterest() {
-        throw new NotYetImplementedException();
-    }
+    abstract protected Percentage getSavingInterest();
 
     /**
      * Apply the borrowing interest and therefore decrease the balance even further.
