@@ -1,5 +1,7 @@
 package banking.backend;
 
+import banking.NotYetImplementedException;
+
 /**
  * Represents a point in time classified by date and time.
  */
@@ -13,7 +15,7 @@ public class DateTime implements Comparable<DateTime> {
      */
     @Override
     public int compareTo(DateTime dt) {
-        return 0;
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -22,7 +24,7 @@ public class DateTime implements Comparable<DateTime> {
      * @return the age of this
      */
     int getAge() {
-       return -1;
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -31,6 +33,6 @@ public class DateTime implements Comparable<DateTime> {
      */
     @Override
     public String toString() {
-        return null;
+        throw new NotYetImplementedException();
     }
 }

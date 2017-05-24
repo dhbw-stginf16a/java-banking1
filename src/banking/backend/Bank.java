@@ -1,5 +1,6 @@
 package banking.backend;
 
+import banking.NotYetImplementedException;
 import banking.backend.accounts.Account;
 import banking.backend.accounts.AccountId;
 import banking.backend.persons.Customer;
@@ -50,7 +51,7 @@ public class Bank {
      * Get the singleton instance of bank
      */
     public static Bank getInstance() {
-        return null;
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -59,7 +60,7 @@ public class Bank {
      * @param customer the new customer
      */
     public void addCustomer(Customer customer) {
-
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -69,7 +70,7 @@ public class Bank {
      * @return all accounts of the customer
      */
     public List<Account> getAccounts(Customer customer) {
-        return null;
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -79,7 +80,7 @@ public class Bank {
      * @see #transactions
      */
     public void applyTransaction(Transaction transaction) {
-
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -88,7 +89,7 @@ public class Bank {
      * @return unused account id
      */
     public AccountId generateAvailableAccountId() {
-        return null;
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -97,7 +98,7 @@ public class Bank {
      * @param account the new account
      */
     public void addAccount(Account account) {
-
+        throw new NotYetImplementedException();
     }
 
 }

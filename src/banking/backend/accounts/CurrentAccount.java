@@ -1,5 +1,6 @@
 package banking.backend.accounts;
 
+import banking.NotYetImplementedException;
 import banking.backend.Money;
 import banking.backend.Percentage;
 
@@ -15,22 +16,26 @@ public class CurrentAccount extends Account {
 	private static final Percentage BORROWING_INTEREST = null;
 
 	public CurrentAccount() {
-
-	}
+        throw new NotYetImplementedException();
+    }
 
 	@Override
 	protected void receiveInvoice(Money amount) {
-	}
+        throw new NotYetImplementedException();
+    }
 
 	@Override
 	protected void sendInvoice(Money amount) throws InsufficientFundsException {
-	}
+        throw new NotYetImplementedException();
+    }
 
 	@Override
 	protected void withdraw(Money amount) throws InsufficientFundsException {
-	}
+        throw new NotYetImplementedException();
+    }
 
 	@Override
 	protected void deposit(Money amount) {
-	}
+        throw new NotYetImplementedException();
+    }
 }

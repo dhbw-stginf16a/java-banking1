@@ -1,5 +1,7 @@
 package banking.backend;
 
+import banking.NotYetImplementedException;
+
 /**
  * A class for handling amounts of currency.
  * TODO: Add support for different currencies.
@@ -10,6 +12,7 @@ public class Money {
      * @param money the summand
      */
     void add(Money money) {
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -17,12 +20,14 @@ public class Money {
      * @param money the subtrahend
      */
     void subtract(Money money) {
+        throw new NotYetImplementedException();
     }
 
     /**
      * Turn the value negative.
      */
     void negate() {
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -30,5 +35,6 @@ public class Money {
      * @param percentage the percentage to be calculated
      */
     void applyPercentage(Percentage percentage) {
+        throw new NotYetImplementedException();
     }
 }

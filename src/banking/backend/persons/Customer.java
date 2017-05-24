@@ -1,5 +1,6 @@
 package banking.backend.persons;
 
+import banking.NotYetImplementedException;
 import banking.backend.DateTime;
 import banking.backend.Money;
 import banking.backend.accounts.Account;
@@ -18,19 +19,19 @@ public class Customer extends Person {
 	}
 
 	public Account setupAccount (Class<? extends Account> accountType) {
-		return null;
-	}
+        throw new NotYetImplementedException();
+    }
 
 	public Account setupAccount (Class<? extends JuniorAccount> accountType, Person guardian) {
-	    return null;
-	}
+        throw new NotYetImplementedException();
+    }
 
 	public void invoice (Account origin, AccountId destination, Money amount) {
-
-	}
+        throw new NotYetImplementedException();
+    }
 
 	public void withdraw (Account account, Money amount) {
-
-	}
+        throw new NotYetImplementedException();
+    }
 
 }

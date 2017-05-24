@@ -1,5 +1,6 @@
 package banking.backend.accounts;
 
+import banking.NotYetImplementedException;
 import banking.backend.Money;
 import banking.backend.Percentage;
 import banking.backend.persons.Customer;
@@ -30,24 +31,24 @@ abstract public class Account {
      * Overdraft limit of the account.
      */
 	public static Money getOverdraft () {
-	    return null;
-	}
+        throw new NotYetImplementedException();
+    }
 
     /**
      * Get the interest applied to a negative balance.
      * @return the borrowing interest
      */
 	protected Percentage getBorrowingInterest () {
-		return null;
-	}
+        throw new NotYetImplementedException();
+    }
 
     /**
      * Get the interest applied to a positive balance.
      * @return the saving interest
      */
 	protected Percentage getSavingInterest () {
-		return null;
-	}
+        throw new NotYetImplementedException();
+    }
 
     /**
      * Apply the borrowing interest and therefore decrease the balance even further.

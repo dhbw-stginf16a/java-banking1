@@ -1,5 +1,6 @@
 package banking.backend.persons;
 
+import banking.NotYetImplementedException;
 import banking.backend.DateTime;
 import banking.backend.Money;
 import banking.backend.accounts.AccountId;
@@ -39,7 +40,7 @@ public class Person {
 	 * @param birthdate the date of birth of the person
 	 */
 	public Person(String name, DateTime birthdate) {
-
+		throw new NotYetImplementedException();
 	}
 
 	/**
@@ -48,7 +49,7 @@ public class Person {
 	 * @return the age of the person
 	 */
 	public int getAge () {
-	    return -1;
+		throw new NotYetImplementedException();
 	}
 
 	/**
@@ -58,7 +59,7 @@ public class Person {
 	 * @param amount the amount to be deposited
 	 */
 	public void deposit (AccountId accountId, Money amount) {
-
+		throw new NotYetImplementedException();
 	}
 
 }
