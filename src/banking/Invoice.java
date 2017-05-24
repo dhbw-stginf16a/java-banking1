@@ -8,4 +8,8 @@ class Invoice extends Transaction {
 
 	}
 
+	@Override
+	void apply() throws TransactionFailedException {
+
+	}
 }

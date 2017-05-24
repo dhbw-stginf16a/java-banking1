@@ -11,7 +11,7 @@ class Customer extends Person {
 
 	}
 
-	public void Customer (String name, String address, DateTime birthdate, String telephoneNumber, boolean business) {
+	public Customer(String name, String address, DateTime birthdate, String telephoneNumber, boolean business) {
 
 	}
 

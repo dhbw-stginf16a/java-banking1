@@ -7,4 +7,8 @@ class Deposit extends Transaction {
 
 	}
 
+	@Override
+	void apply() {
+
+	}
 }

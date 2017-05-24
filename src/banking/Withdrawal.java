@@ -7,4 +7,8 @@ class Withdrawal extends Transaction {
 
 	}
 
+	@Override
+	void apply() throws TransactionFailedException {
+
+	}
 }
