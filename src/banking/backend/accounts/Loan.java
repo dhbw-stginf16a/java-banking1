@@ -4,7 +4,7 @@ import banking.NotYetImplementedException;
 
 class Loan extends Account {
 
-	public Loan() {
+    public Loan() {
         throw new NotYetImplementedException();
     }
 

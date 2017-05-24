@@ -3,15 +3,15 @@ package banking.backend.transactions;
 import banking.backend.accounts.Account;
 
 class Invoice extends Transaction {
-	private Account creditor;
-	private Account debitor;
+    private Account creditor;
+    private Account debitor;
 
-	public Invoice() {
+    public Invoice() {
 
-	}
+    }
 
-	@Override
-	void apply() throws TransactionFailedException {
+    @Override
+    void apply() throws TransactionFailedException {
 
-	}
+    }
 }

@@ -4,7 +4,7 @@ import banking.NotYetImplementedException;
 
 class GeneralFundInvestment extends Investments {
 
-	public GeneralFundInvestment() {
+    public GeneralFundInvestment() {
         throw new NotYetImplementedException();
     }
 

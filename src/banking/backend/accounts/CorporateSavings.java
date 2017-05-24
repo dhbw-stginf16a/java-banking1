@@ -4,7 +4,7 @@ import banking.NotYetImplementedException;
 
 class CorporateSavings extends Savings {
 
-	public CorporateSavings() {
+    public CorporateSavings() {
         throw new NotYetImplementedException();
     }
 

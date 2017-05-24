@@ -9,6 +9,7 @@ import banking.NotYetImplementedException;
 public class Money {
     /**
      * Add the value of another money object to this.
+     *
      * @param money the summand
      */
     void add(Money money) {
@@ -17,6 +18,7 @@ public class Money {
 
     /**
      * Subtract the value of another money object from this.
+     *
      * @param money the subtrahend
      */
     void subtract(Money money) {
@@ -32,6 +34,7 @@ public class Money {
 
     /**
      * Set the value to some percentage of the current value.
+     *
      * @param percentage the percentage to be calculated
      */
     void applyPercentage(Percentage percentage) {

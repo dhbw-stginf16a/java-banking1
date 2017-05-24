@@ -8,6 +8,7 @@ import banking.NotYetImplementedException;
 public class Percentage {
     /**
      * Construct a percentage by a given integer
+     *
      * @param percentage the percentage to be stored
      */
     public Percentage(int percentage) {
@@ -16,6 +17,7 @@ public class Percentage {
 
     /**
      * Construct a percentage by a given double
+     *
      * @param percentage the percentage to be stored
      */
     public Percentage(double percentage) {

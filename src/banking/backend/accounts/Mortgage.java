@@ -4,7 +4,7 @@ import banking.NotYetImplementedException;
 
 class Mortgage extends Loan {
 
-	public Mortgage() {
+    public Mortgage() {
         throw new NotYetImplementedException();
     }
 

@@ -11,7 +11,7 @@ public class DateTime implements Comparable<DateTime> {
      *
      * @param dt the other datetime to compare this to
      * @return a negative integer, zero, or a positive integer as this event is older than,
-     *         equal to, or newer than the specified datetime.
+     * equal to, or newer than the specified datetime.
      */
     @Override
     public int compareTo(DateTime dt) {
@@ -29,6 +29,7 @@ public class DateTime implements Comparable<DateTime> {
 
     /**
      * Format the datetime as a nice String for printing.
+     *
      * @return nice format of the datetime
      */
     @Override

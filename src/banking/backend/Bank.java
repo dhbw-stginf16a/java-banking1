@@ -15,7 +15,7 @@ import java.util.Map;
  * The bank class holds general information about what the bank knows.
  * It stores all the customers, their accounts, all employees and the transactions between accounts.
  * It is the main class with which the GUI handles the business logic.
- *
+ * <p>
  * Bank is not instantiable, an instance can instead be obtained through the static {@link #getInstance} method.
  */
 public class Bank {
@@ -45,7 +45,8 @@ public class Bank {
      * Not visible to avoid unwanted instantiation.
      * Use {@link #getInstance()}
      */
-    private Bank() {}
+    private Bank() {
+    }
 
     /**
      * Get the singleton instance of bank

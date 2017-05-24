@@ -4,11 +4,11 @@ import banking.NotYetImplementedException;
 
 public class AccountId {
 
-	public AccountId() {
+    public AccountId() {
         throw new NotYetImplementedException();
     }
 
-	public void hash () {
+    public void hash() {
         throw new NotYetImplementedException();
     }
 

@@ -3,14 +3,14 @@ package banking.backend.transactions;
 import banking.backend.accounts.Account;
 
 class Deposit extends Transaction {
-	public Account creditor;
+    public Account creditor;
 
-	public Deposit() {
+    public Deposit() {
 
-	}
+    }
 
-	@Override
-	void apply() {
+    @Override
+    void apply() {
 
-	}
+    }
 }

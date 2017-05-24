@@ -4,9 +4,9 @@ import banking.NotYetImplementedException;
 import banking.backend.persons.Customer;
 
 public class JuniorAccount extends CurrentAccount {
-	private Customer legalGuardian;
+    private Customer legalGuardian;
 
-	public JuniorAccount() {
+    public JuniorAccount() {
         throw new NotYetImplementedException();
     }
 
