@@ -1,7 +1,7 @@
 package banking;
 
 class Withdrawal extends Transaction {
-	public Account debitor;
+	private Account debitor;
 
 	public Withdrawal() {
 

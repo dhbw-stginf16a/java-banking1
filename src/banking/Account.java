@@ -20,7 +20,7 @@ abstract class Account {
     /**
      * The holder/owner of this account.
      */
-	public Customer holder;
+	private Customer holder;
 
 	/**
      * Overdraft limit of the account.

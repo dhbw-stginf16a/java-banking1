@@ -7,9 +7,9 @@ class CurrentAccount extends Account {
 	/**
 	 * The interest applied
 	 */
-	public static final Percentage SAVING_INTEREST = null;
-	public static final Money OVERDRAFT = null;
-	public static final Percentage BORROWING_INTEREST = null;
+	private static final Percentage SAVING_INTEREST = null;
+	private static final Money OVERDRAFT = null;
+	private static final Percentage BORROWING_INTEREST = null;
 
 	public CurrentAccount() {
 

@@ -9,24 +9,24 @@ class Person {
 	 * The format 'Lastname, Firstname' is recommended.
 	 * Does not have to be unique.
 	 */
-	public String name;
+	private String name;
 
 	/**
 	 * The address of the person.
 	 * For sending newsletters ;)
 	 */
-	public String address;
+	private String address;
 
 	/**
 	 * The date of birth.
 	 * Is used to check age
 	 */
-	public DateTime birthdate;
+	private DateTime birthdate;
 
 	/**
 	 * The telephone number of the person.
 	 */
-	public String telephoneNumber;
+	private String telephoneNumber;
 
 	/**
 	 * Constructs a basic person

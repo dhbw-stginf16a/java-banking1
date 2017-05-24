@@ -1,8 +1,8 @@
 package banking;
 
 class Invoice extends Transaction {
-	public Account creditor;
-	public Account debitor;
+	private Account creditor;
+	private Account debitor;
 
 	public Invoice() {
 

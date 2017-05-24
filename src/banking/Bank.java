@@ -16,29 +16,28 @@ public class Bank {
     /**
      * The list of all past transactions. Failed and successful.
      */
-    protected List<Transaction> transactions;
+    private List<Transaction> transactions;
 
     /**
      * The map of all customers indexed by their {@link CustomerId}
      */
-    protected Map<CustomerId, Customer> customers;
+    private Map<CustomerId, Customer> customers;
 
     /**
      * The map of all accounts index by their {@link AccountId}
      */
-    protected Map<AccountId, Account> accounts;
+    private Map<AccountId, Account> accounts;
 
     /**
      * The list of all employees of this bank.
      */
-    protected List<Employee> employees;
+    private List<Employee> employees;
 
     /**
      * Not visible to avoid unwanted instantiation.
      * Use {@link #getInstance()}
      */
-    private Bank() {
-    }
+    private Bank() {}
 
     /**
      * Get the singleton instance of bank

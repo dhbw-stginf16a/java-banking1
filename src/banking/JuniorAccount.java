@@ -1,7 +1,7 @@
 package banking;
 
 class JuniorAccount extends CurrentAccount {
-	public Customer legalGuardian;
+	private Customer legalGuardian;
 
 	public JuniorAccount() {
 

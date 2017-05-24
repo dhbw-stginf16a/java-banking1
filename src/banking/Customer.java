@@ -3,16 +3,12 @@ package banking;
 import java.util.List;
 
 class Customer extends Person {
-	protected long customerNumber;
-	protected List<Account> accounts;
-	protected boolean business;
-
-	public Customer() {
-
-	}
+	private long customerNumber;
+	private List<Account> accounts;
+	private boolean business;
 
 	public Customer(String name, String address, DateTime birthdate, String telephoneNumber, boolean business) {
-
+		super(name, birthdate);
 	}
 
 	public Account setupAccount (Class<? extends Account> accountType) {
