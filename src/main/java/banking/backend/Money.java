@@ -40,7 +40,7 @@ public class Money implements Comparable<Money> {
 
     /**
      * Converts the String if possible to a money amount. The String needs to pass the following regex:
-     * ^\d{1,3}?(,\d{3})*((\.\d\d)|(\.\d))?€$
+     * ^-?\d{1,3}?(,\d{3})*((\.\d\d)|(\.\d))?€$
      * The regex is for the format XXX,XXX.XX€ or XX€ (english format)
      *
      * @param amount The String to parse
@@ -51,27 +51,28 @@ public class Money implements Comparable<Money> {
     }
 
     /**
-     * Add the value of another money object to this.
+     * Returns a new instance of Money with the added value of this and amount.
      *
      * @param amount the summand
+     * @return a new instance after calculation
      */
-    public void add(Money amount) {
+    public Money add(Money amount) {
         throw new NotYetImplementedException();
     }
 
     /**
-     * Subtract the value of another money object from this.
+     * Returns a new instance of Money with the value of this minus amount.
      *
      * @param amount the subtrahend
-     * @return this after calculation
+     * @return a new instance after calculation
      */
     public Money subtract(Money amount) {
         throw new NotYetImplementedException();
     }
 
     /**
-     * Turn the value negative.
-     * @return this after calculation
+     * Returns a new instance with the negative value of this.
+     * @return a new instance after calculation
      */
     public Money negate() {
         throw new NotYetImplementedException();
@@ -89,11 +90,12 @@ public class Money implements Comparable<Money> {
     }
 
     /**
-     * Set the value to some percentage of the current value.
+     * Adds the needed percentage to the value and generates a new instance containing the result
      *
      * @param percentage the percentage to be calculated
+     * @return a new instance after calculation
      */
-    void applyPercentage(Percentage percentage) {
+    Money applyPercentage(Percentage percentage) {
         throw new NotYetImplementedException();
     }
 
