@@ -6,7 +6,7 @@ import banking.backend.accounts.Account;
 
 class Invoice extends Transaction {
     private Account creditor;
-    private Account debitor;
+    private Account debtor;
 
     /**
      * Constructs a deposit transaction issued now with specified amount deposited to an account.
