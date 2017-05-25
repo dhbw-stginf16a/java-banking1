@@ -6,6 +6,50 @@ import banking.NotYetImplementedException;
  * A class for handling amounts of currency.
  */
 public class Money implements Comparable<Money> {
+
+    /**
+     * This constructs a money object holding the given amount.
+     * <p>
+     * To add cents please use {@link Money}(int, int)
+     *
+     * @param amount the integer representation of the amount
+     */
+    public Money(int amount) {
+        throw new NotYetImplementedException();
+    }
+
+    /**
+     * This constructs a money object holding the given amount.
+     *
+     * @param amount The int value of the non-decimal places
+     * @param cents  The int value of the decimal places
+     * @throws IllegalArgumentException if cents ist not in the interval [0,99]
+     */
+    public Money(int amount, int cents) {
+        throw new NotYetImplementedException();
+    }
+
+    /**
+     * This constructs a money object from the given double value an cuts off after the the second decimal place
+     *
+     * @param amount the double value to store
+     */
+    public Money(double amount) {
+        throw new NotYetImplementedException();
+    }
+
+    /**
+     * Converts the String if possible to a money amount. The String needs to pass the following regex:
+     * ^\d{1,3}?(,\d{3})*((\.\d\d)|(\.\d))?€$
+     * The regex is for the format XXX,XXX.XX€ or XX€ (english format)
+     *
+     * @param amount The String to parse
+     * @throws NumberFormatException if the String isn't of the format specified above
+     */
+    public Money(String amount) {
+        throw new NotYetImplementedException();
+    }
+
     /**
      * Add the value of another money object to this.
      *
@@ -93,6 +137,8 @@ public class Money implements Comparable<Money> {
      * <i>signum</i> function, which is defined to return one of <tt>-1</tt>,
      * <tt>0</tt>, or <tt>1</tt> according to whether the value of
      * <i>expression</i> is negative, zero or positive.
+     *
+     * This returns -1 if this object is less than money
      *
      * @param money the money object to be compared.
      * @return a negative integer, zero, or a positive integer as this object
