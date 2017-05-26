@@ -18,15 +18,23 @@ import java.util.Map;
  * Bank is not instantiable, an instance can instead be obtained through the static {@link #getInstance} method.
  */
 public class Bank {
+    /**
+     * This is where the one and only instance of Bank is stored.
+     * When requesting an instance of Bank via {@link #getInstance()}
+     * this value should be returned or created if null.
+     */
     private static Bank instance = null;
+
     /**
      * The map of all customers indexed by their {@link CustomerId}
      */
     protected Map<CustomerId, Customer> customers;
+
     /**
      * The map of all accounts index by their {@link AccountId}
      */
     protected Map<AccountId, Account> accounts;
+
     /**
      * The list of all past transactions. Failed and successful.
      */
@@ -68,12 +76,12 @@ public class Bank {
     }
 
     /**
-     * Get all accounts belonging to a specific user.
+     * Get all accounts belonging to a specific customer.
      *
      * @param customer the customer whose accounts are to be returned
      * @return all accounts of the customer
      */
-    public List<Account> getAccounts(Customer customer) {
+    public List<Account> getCustomerAccounts(Customer customer) {
         throw new NotYetImplementedException();
     }
 
@@ -83,7 +91,17 @@ public class Bank {
      * @return all accounts
      */
     public List<Account> getAccounts() {
-        return null;
+        throw new NotYetImplementedException();
+    }
+
+    /**
+     * Get the account with the requested id.
+     *
+     * @param accountId the account id to look up the account
+     * @return the account if found or null if not
+     */
+    public Account getAccount(AccountId accountId) {
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -92,7 +110,7 @@ public class Bank {
      * @return all customer
      */
     public List<Customer> getCustomers() {
-        return null;
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -101,7 +119,7 @@ public class Bank {
      * @return all customer
      */
     public List<Transaction> getTransactions() {
-        return null;
+        throw new NotYetImplementedException();
     }
 
     /**
