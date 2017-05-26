@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MoneyTest {
 
     /**
-     * This test {@link Money#add(Money)} by testing several additions.
+     * Tests {@link Money#add(Money)} by testing several additions.
      */
     @Test
     void add() {
@@ -43,7 +43,7 @@ class MoneyTest {
     }
 
     /**
-     * This test {@link Money#subtract(Money)} by testing several subtractions.
+     * Tests {@link Money#subtract(Money)} by testing several subtractions.
      */
     @Test
     void subtract() {
@@ -68,7 +68,7 @@ class MoneyTest {
     }
 
     /**
-     * This test {@link Money#negate()} by testing several negations.
+     * Tests {@link Money#negate()} by testing several negations.
      */
     @Test
     void negate() {
@@ -99,7 +99,7 @@ class MoneyTest {
     }
 
     /**
-     * This test all Constructors and the equals method.
+     * Tests all Constructors and the equals method.
      */
     @Test
     void equalsAndConstructor() {
@@ -139,7 +139,7 @@ class MoneyTest {
     }
 
     /**
-     * This test several adds of Percentages.
+     * Tests several adds of Percentages.
      */
     @Test
     void applyPercentage() {
@@ -147,7 +147,7 @@ class MoneyTest {
     }
 
     /**
-     * This test several to String Conversions
+     * Tests several to String Conversions
      *
      * @return A List of DynamicTest
      */

@@ -8,7 +8,7 @@ import banking.NotYetImplementedException;
 public class Money implements Comparable<Money> {
 
     /**
-     * This constructs a money object holding the given amount.
+     * Constructs a money object holding the given amount.
      *
      * To add cents please use {@link Money#Money(int, int)}
      *
@@ -19,7 +19,7 @@ public class Money implements Comparable<Money> {
     }
 
     /**
-     * This constructs a money object holding the given amount.
+     * Constructs a money object holding the given amount.
      *
      * @param amount The int value of the non-decimal places
      * @param cents  The int value of the decimal places
@@ -30,7 +30,7 @@ public class Money implements Comparable<Money> {
     }
 
     /**
-     * This constructs a money object from the given double value and cuts off after the the second decimal place
+     * Constructs a money object from the given double value and cuts off after the the second decimal place
      *
      * @param amount the double value to store
      */
