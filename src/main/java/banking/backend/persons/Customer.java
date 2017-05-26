@@ -39,9 +39,12 @@ public class Customer extends Person {
 	/**
 	 * Get the unique customer id.
 	 * If it has not been set a {@link IllegalStateException} is thrown.
-	 */
-	public CustomerId getCustomerId() {
-		throw new NotYetImplementedException();
+     *
+     * @return The unique CustomerId
+     * @throws IllegalStateException if the CustomerId wasn't set already.
+     */
+    public CustomerId getCustomerId() {
+        throw new NotYetImplementedException();
 	}
 
 	/**
@@ -49,9 +52,10 @@ public class Customer extends Person {
 	 * Any attempt to overwrite the id throws a {@link IllegalStateException}.
 	 *
 	 * @param customerId the id of the customer
-	 */
-	public void setCustomerId(CustomerId customerId) {
-		throw new NotYetImplementedException();
+     * @throws IllegalStateException if the CustomerId was already set.
+     */
+    public void setCustomerId(CustomerId customerId) {
+        throw new NotYetImplementedException();
 	}
 
 	/**
@@ -60,20 +64,21 @@ public class Customer extends Person {
 	 * @param accountType class of the account to be created
 	 * @return the newly created account
 	 */
-	public Account setupAccount(Class<? extends Account> accountType) {
-		throw new NotYetImplementedException();
-	}
+    public <T extends Account> T setupAccount(Class<T> accountType) {
+        throw new NotYetImplementedException();
+    }
 
 	/**
 	 * Creates a new {@link JuniorAccount} after a check if the guardian is a valid guardian
 	 * and add it to this as well as the bank.
 	 *
 	 * @param accountType should be {@code JuniorAccount.class}
-	 * @return the newly created account
-	 */
-	public Account setupAccount(Class<? extends JuniorAccount> accountType, Person guardian) {
-		throw new NotYetImplementedException();
-	}
+     * @param guardian The guardian for the Junior account
+     * @return the newly created account
+     */
+    public <T extends JuniorAccount> T setupAccount(Class<T> accountType, Person guardian) {
+        throw new NotYetImplementedException();
+    }
 
 	/**
 	 * Issue an invoice on behalf of this customer.
@@ -100,4 +105,14 @@ public class Customer extends Person {
 		throw new NotYetImplementedException();
 	}
 
+    /**
+     * Checks whether this is equal to another Customer by comparing the CustomerIds.
+     *
+     * @param o the object maybe
+     * @return false if other object or different customerId - true otherwise
+     */
+    @Override
+    public boolean equals(Object o) {
+        throw new NotYetImplementedException();
+    }
 }
