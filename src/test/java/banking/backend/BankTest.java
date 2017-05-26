@@ -2,6 +2,7 @@ package banking.backend;
 
 import banking.backend.accounts.Account;
 import banking.backend.persons.Customer;
+import banking.backend.persons.CustomerTest;
 import banking.backend.transactions.Transaction;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
