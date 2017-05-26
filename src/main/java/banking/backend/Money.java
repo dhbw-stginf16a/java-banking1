@@ -9,8 +9,8 @@ public class Money implements Comparable<Money> {
 
     /**
      * This constructs a money object holding the given amount.
-     * <p>
-     * To add cents please use {@link Money}(int, int)
+     *
+     * To add cents please use {@link Money#Money(int, int)}
      *
      * @param amount the integer representation of the amount
      */
@@ -30,7 +30,7 @@ public class Money implements Comparable<Money> {
     }
 
     /**
-     * This constructs a money object from the given double value an cuts off after the the second decimal place
+     * This constructs a money object from the given double value and cuts off after the the second decimal place
      *
      * @param amount the double value to store
      */
@@ -41,7 +41,21 @@ public class Money implements Comparable<Money> {
     /**
      * Converts the String if possible to a money amount. The String needs to pass the following regex:
      * ^-?\d{1,3}?(,\d{3})*((\.\d\d)|(\.\d))?€$
-     * The regex is for the format XXX,XXX.XX€ or XX€ (english format)
+     *
+     * In words:
+     * - The decimal separator is '.'
+     * - The thousands separator is needed and is ','
+     * - The number can either have no decimal separator and no decimals or exactly one or two decimal places
+     * - The euro after the number is needed
+     *
+     * This means that the following formats should be handled:
+     * - XXX,XXX.XX€ (english format)
+     * - X,XXX.X€
+     * - XXX,XXX,XXX€
+     * This isn't supported:
+     * - X.XX (No euro sign in it)
+     * - X,XX€ (wrong decimal separator)
+     * - XXXXXX.XX€ (No thousands separators)
      *
      * @param amount The String to parse
      * @throws NumberFormatException if the String isn't of the format specified above

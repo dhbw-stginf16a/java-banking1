@@ -11,12 +11,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
+ * Contains every test for {@link Money}
+ *
  * Created by guserav on 25.05.2017.
  */
 class MoneyTest {
 
     /**
-     * this test {@link Money}.add() by testing several additions.
+     * This test {@link Money#add(Money)} by testing several additions.
      */
     @Test
     void add() {
@@ -41,7 +43,7 @@ class MoneyTest {
     }
 
     /**
-     * this test {@link Money}.subtract() by testing several subtractions.
+     * This test {@link Money#subtract(Money)} by testing several subtractions.
      */
     @Test
     void subtract() {
@@ -66,7 +68,7 @@ class MoneyTest {
     }
 
     /**
-     * this test {@link Money}.negate() by testing several negations.
+     * This test {@link Money#negate()} by testing several negations.
      */
     @Test
     void negate() {
@@ -97,7 +99,7 @@ class MoneyTest {
     }
 
     /**
-     * This test all Constructors and the equals method
+     * This test all Constructors and the equals method.
      */
     @Test
     void equalsAndConstructor() {
@@ -137,7 +139,7 @@ class MoneyTest {
     }
 
     /**
-     * This test several adds of Percentages
+     * This test several adds of Percentages.
      */
     @Test
     void applyPercentage() {
@@ -145,7 +147,7 @@ class MoneyTest {
     }
 
     /**
-     * This test several Strings
+     * This test several to String Conversions
      *
      * @return A List of DynamicTest
      */
@@ -173,7 +175,7 @@ class MoneyTest {
     }
 
     /**
-     * Checks the return value of {@link Money}.compareTo()
+     * Checks the return value of {@link Money#compareTo(Money)}
      */
     @Test
     void compareTo() {
