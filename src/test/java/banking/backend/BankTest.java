@@ -1,6 +1,7 @@
 package banking.backend;
 
 import banking.backend.accounts.Account;
+import banking.backend.accounts.AccountTest;
 import banking.backend.accounts.CurrentAccount;
 import banking.backend.persons.Customer;
 import banking.backend.persons.CustomerTest;
