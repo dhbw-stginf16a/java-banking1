@@ -4,7 +4,7 @@ import banking.NotYetImplementedException;
 import banking.backend.Money;
 import banking.backend.accounts.Account;
 
-class Withdrawal extends Transaction {
+public class Withdrawal extends Transaction {
     /**
      * Constructs a withdrawal transaction issued now with specified amount.
      *
@@ -17,7 +17,7 @@ class Withdrawal extends Transaction {
     }
 
     @Override
-    void apply() throws TransactionFailedException {
+    public void apply() throws TransactionFailedException {
         throw new NotYetImplementedException();
     }
 

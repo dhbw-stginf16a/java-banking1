@@ -1,9 +1,12 @@
 package banking.backend;
 
 import banking.backend.accounts.Account;
+import banking.backend.accounts.CurrentAccount;
 import banking.backend.persons.Customer;
 import banking.backend.persons.CustomerTest;
+import banking.backend.transactions.Deposit;
 import banking.backend.transactions.Transaction;
+import banking.backend.transactions.TransactionFailedException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,10 +26,9 @@ class BankTest {
      * The next call to {@link Bank#getInstance()} will set it again.
      *
      * @throws NoSuchFieldException   if the name of {@link Bank#instance} was changed
-     * @throws IllegalAccessException
+     * @throws IllegalAccessException never
      */
-    @BeforeEach
-    static void resetInstance() throws NoSuchFieldException, IllegalAccessException {
+    private static void resetInstance() throws NoSuchFieldException, IllegalAccessException {
         // Reset the private field where the instance is stored
         Field instance = Bank.class.getDeclaredField("instance");
         instance.setAccessible(true);
@@ -34,8 +36,10 @@ class BankTest {
     }
 
     /**
-     * @throws NoSuchFieldException
-     * @throws IllegalAccessException
+     * Reset bank instance to clean up all changes made by testin.
+     *
+     * @throws NoSuchFieldException   if the name of {@link Bank#instance} was changed
+     * @throws IllegalAccessException never
      */
     @AfterAll
     static void tearDown() throws NoSuchFieldException, IllegalAccessException {
@@ -43,13 +47,23 @@ class BankTest {
     }
 
     /**
-     * Check whether a non null instance of Bank is returned and it is the same every time.
+     * Reset the Bank instance by setting it to null to have equal conditions before each test.
+     * Each test will set up their own bank instance as they need.
+     * The next call to {@link Bank#getInstance()} will set it again.
      *
      * @throws NoSuchFieldException   if the name of {@link Bank#instance} was changed
-     * @throws IllegalAccessException
+     * @throws IllegalAccessException never
+     */
+    @BeforeEach
+    void setUp() throws NoSuchFieldException, IllegalAccessException {
+        resetInstance();
+    }
+
+    /**
+     * Check whether a non null instance of Bank is returned and it is the same every time.
      */
     @Test
-    void getInstance() throws NoSuchFieldException, IllegalAccessException {
+    void getInstance() {
         Bank firstInstance = Bank.getInstance();
         assertNotNull(firstInstance);
 
@@ -58,7 +72,8 @@ class BankTest {
     }
 
     /**
-     * Check whether adding a customer adds them and exactly them.
+     * Check whether adding a customer adds them and exactly them
+     * and an id is set to the customer after adding them to the bank.
      */
     @Test
     void addCustomer() {
@@ -66,13 +81,25 @@ class BankTest {
         Bank bank = Bank.getInstance();
 
         Customer dummyCustomer = CustomerTest.getDummyCustomer();
+        // new customer should not have a customer id
+        // because its set by addCustomer
+        assertThrows(IllegalStateException.class, dummyCustomer::getCustomerId);
+
         bank.addCustomer(dummyCustomer);
         customers = bank.getCustomers();
         // Never return null
         assertNotNull(customers);
+
         // The one added customer should be there
         assertEquals(customers.size(), 1);
         assertSame(customers.get(0), dummyCustomer);
+
+        // Should not throw a IllegalStateException because id has been added
+        dummyCustomer.getCustomerId();
+
+        // Should not add the same customer more than once
+        bank.addCustomer(dummyCustomer);
+        assertEquals(customers.size(), 1);
     }
 
     /**
@@ -108,10 +135,38 @@ class BankTest {
     }
 
     /**
-     *
+     * Check whether the added accounts of a customer are returned.
      */
     @Test
     void getCustomerAccounts() {
+        Bank bank = Bank.getInstance();
+        List<Account> customerAccounts;
+        Customer dummyCustomer = CustomerTest.getDummyCustomer();
+        Customer dummyCustomer2 = CustomerTest.getDummyCustomer();
+
+        // should not contain any accounts before adding any
+        customerAccounts = bank.getCustomerAccounts(dummyCustomer);
+        assertNotNull(customerAccounts);
+        assertEquals(customerAccounts.size(), 0);
+        customerAccounts = bank.getCustomerAccounts(dummyCustomer2);
+        assertNotNull(customerAccounts);
+        assertEquals(customerAccounts.size(), 0);
+
+        bank.addCustomer(dummyCustomer);
+        Account account1 = dummyCustomer.setupAccount(CurrentAccount.class);
+        Account account2 = dummyCustomer.setupAccount(CurrentAccount.class);
+        assertEquals(customerAccounts.size(), 2);
+        bank.addCustomer(dummyCustomer2);
+        Account account3 = dummyCustomer.setupAccount(CurrentAccount.class);
+        Account account4 = dummyCustomer.setupAccount(CurrentAccount.class);
+
+        // should contain those and only those accounts added
+        customerAccounts = bank.getCustomerAccounts(dummyCustomer);
+        assertEquals(customerAccounts.size(), 4);
+        assertTrue(customerAccounts.contains(account1));
+        assertTrue(customerAccounts.contains(account2));
+        assertTrue(customerAccounts.contains(account3));
+        assertTrue(customerAccounts.contains(account4));
     }
 
     /**
@@ -151,25 +206,31 @@ class BankTest {
     }
 
     /**
-     * TODO: Javadoc
+     * Test both methods {@link Bank#getTransactions()} and {@link Bank#applyTransaction(Transaction)}.
+     *
+     * @throws TransactionFailedException if the transaction has failed
      */
     @Test
-    void getTransactions() {
+    void testTransaction() throws TransactionFailedException {
         Bank bank = Bank.getInstance();
-        List<Transaction> transactions = bank.getTransactions();
+        final boolean[] applied = {false};
+        Transaction transaction = new Transaction(new Money(1)) {
+            @Override
+            public void apply() throws TransactionFailedException {
+                applied[0] = true;
+            }
 
-        // Never return null
-        assertNotNull(transactions);
-        // Start out with no transactions
-        assertEquals(transactions.size(), 0);
-
-        // TODO: Check if added Transaction are returned
-        // Might not do this with {@link Bank#applyTransacion} but via
-        // reflection and just injecting transactions into the list
-    }
-
-    @Test
-    void applyTransaction() {
+            @Override
+            public String toString() {
+                return null;
+            }
+        };
+        assertNotNull(bank.getTransactions());
+        assertEquals(bank.getTransactions().size(), 0);
+        bank.applyTransaction(transaction);
+        assertTrue(applied[0]);
+        assertEquals(bank.getTransactions().size(), 1);
+        assertSame(bank.getTransactions().get(0), transaction);
     }
 
     /**
@@ -182,17 +243,46 @@ class BankTest {
         Bank bank = Bank.getInstance();
 
         Account dummyAccount = AccountTest.getDummyAccount();
+        // new customer should not have a account id
+        // because its set by addAccount
+        assertThrows(IllegalStateException.class, dummyAccount::getAccountId);
+
         bank.addAccount(dummyAccount);
         accounts = bank.getAccounts();
         // Never return null
         assertNotNull(accounts);
+
         // The one added account should be there
         assertEquals(accounts.size(), 1);
         assertSame(accounts.get(0), dummyAccount);
+
+        // Should not throw a IllegalStateException because id has been added
+        dummyAccount.getAccountId();
+
+        // Should not add the same account more than once
+        bank.addAccount(dummyAccount);
+        assertEquals(accounts.size(), 1);
     }
 
     @Test
     void deposit() {
+        Bank bank = Bank.getInstance();
+        assertAll(
+                // Should not be possible to deposit money into an account that does not exist.
+                () -> assertThrows(TransactionFailedException.class, () -> {
+                    Deposit deposit = new Deposit(new Money(1), AccountTest.getDummyAccount());
+                    bank.applyTransaction(deposit);
+                }),
+                () -> {
+                    Account account = AccountTest.getDummyAccount();
+                    Money amount = new Money(1);
+                    bank.addAccount(account);
+                    bank.deposit(account.getAccountId(), amount);
+                    Deposit transaction = (Deposit) bank.getTransactions().get(0);
+                    assertEquals(transaction.getAmount(), amount);
+                    assertSame(transaction.getCreditor(), account);
+                }
+        );
 
     }
 
