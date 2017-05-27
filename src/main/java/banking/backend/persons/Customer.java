@@ -52,7 +52,8 @@ public class Customer extends Person {
 	 * Any attempt to overwrite the id throws a {@link IllegalStateException}.
 	 *
 	 * @param customerId the id of the customer
-     * @throws IllegalStateException if the CustomerId was already set.
+     * @throws IllegalStateException if the customer id was already set.
+	 * @throws IllegalArgumentException if supplied the customer id is null
      */
     public void setCustomerId(CustomerId customerId) {
         throw new NotYetImplementedException();
