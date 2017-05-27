@@ -42,22 +42,22 @@ public class CurrentAccount extends Account {
     }
 
     @Override
-    protected void receiveInvoice(Money amount) {
+    public void receiveInvoice(Money amount) {
         throw new NotYetImplementedException();
     }
 
     @Override
-    protected void sendInvoice(Money amount) throws InsufficientFundsException {
+    public void sendInvoice(Money amount) throws InsufficientFundsException {
         throw new NotYetImplementedException();
     }
 
     @Override
-    protected void withdraw(Money amount) throws InsufficientFundsException {
+    public void withdraw(Money amount) throws InsufficientFundsException {
         throw new NotYetImplementedException();
     }
 
     @Override
-    protected void deposit(Money amount) {
+    public void deposit(Money amount) {
         throw new NotYetImplementedException();
     }
 }

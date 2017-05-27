@@ -43,6 +43,8 @@ abstract public class Account {
     /**
      * Get the unique account id.
      * If it has not been set a {@link IllegalStateException} is thrown.
+     *
+     * @throws IllegalStateException if the AccountId isn't set
      */
     public AccountId getAccountId() {
         throw new NotYetImplementedException();
@@ -53,6 +55,7 @@ abstract public class Account {
      * Any attempt to overwrite the id throws a {@link IllegalStateException}.
      *
      * @param accountId the id of the account
+     * @throws IllegalStateException if the AccountId was already set
      */
     public void setAccountId(AccountId accountId) {
         throw new NotYetImplementedException();
@@ -79,13 +82,17 @@ abstract public class Account {
 
     /**
      * Apply the borrowing interest and therefore decrease the balance even further.
+     *
+     * @throws IllegalStateException if the borrowing interest is negative
      */
-    private void applyBorrowingInterest() {
+    public void applyBorrowingInterest() {
         throw new UnsupportedOperationException("This account does not suppport borrowing interest.");
     }
 
     /**
      * Apply the saving interest and therefore increase the balance even further.
+     *
+     * @throws IllegalStateException if the saving interest is negative
      */
     public void applySavingInterest() {
         throw new UnsupportedOperationException("This account does not suppport saving interest.");
@@ -95,9 +102,11 @@ abstract public class Account {
      * Handle an incoming invoice to this account with a specific amount of money.
      *
      * @param amount of money the amount to be added
+     * @throws IllegalArgumentException if the amount is negative or zero
+     * @throws UnsupportedOperationException if the Account doesn't support receiving a invoice
      */
-    protected void receiveInvoice(Money amount) {
-        throw new UnsupportedOperationException("This account does not suppport receiving invoices.");
+    public void receiveInvoice(Money amount) {
+        throw new NotYetImplementedException();
     }
 
 
@@ -107,9 +116,11 @@ abstract public class Account {
      *
      * @param amount of money to be transferred
      * @throws InsufficientFundsException if there are not sufficient funds available
+     * @throws IllegalArgumentException if the amount is negative or zero
+     * @throws UnsupportedOperationException if the Account doesn't support sending invoices
      */
-    protected void sendInvoice(Money amount) throws InsufficientFundsException {
-        throw new UnsupportedOperationException("This account does not suppport sending invoices.");
+    public void sendInvoice(Money amount) throws InsufficientFundsException {
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -118,21 +129,29 @@ abstract public class Account {
      *
      * @param amount of money to be withdrawn
      * @throws InsufficientFundsException if there are not sufficient funds available
+     * @throws IllegalArgumentException if the amount is negative or zero
+     * @throws UnsupportedOperationException if the Account doesn't support a withdraw
      */
     protected void withdraw(Money amount) throws InsufficientFundsException {
-        throw new UnsupportedOperationException("This account does not suppport sending money.");
+        throw new NotYetImplementedException();
     }
 
     /**
      * Handle deposit onto this account with a specific amount of money.
      *
      * @param amount the amount of money to be deposited
+     * @throws IllegalArgumentException if the amount is negative or zero
+     * @throws UnsupportedOperationException if the Account doesn't support depositing
      */
     protected void deposit(Money amount) {
-        throw new UnsupportedOperationException("This account does not suppport depositing money.");
+        throw new NotYetImplementedException();
     }
 
     public Customer getHolder() {
         return holder;
+    }
+
+    public Money getBalance() {
+        return balance;
     }
 }
