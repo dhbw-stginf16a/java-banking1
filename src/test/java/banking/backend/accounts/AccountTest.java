@@ -191,6 +191,32 @@ public class AccountTest {
     }
 
     /**
+     * Test if the Constructing of a particular Account works
+     *
+     * @param toTest          The accounts class to test
+     * @param requireAge      the required age to open this account
+     * @param requireBusiness if the Holder needs to be a business Customer
+     */
+    public static void testConstructing(Class<? extends Account> toTest, int requireAge, boolean requireBusiness) {
+        Customer customerOfLegalAgeNoneBusiness = CustomerTest.getDummyCustomer(requireAge, false);
+        Customer customerOfLegalAgeBusiness = CustomerTest.getDummyCustomer(requireAge, true);
+        Customer customerOfNoneLegalAgeNoneBusiness = CustomerTest.getDummyCustomer(requireAge - 1, false);
+        Customer customerOfNoneLegalAgeBusiness = CustomerTest.getDummyCustomer(requireAge - 1, true);
+
+        if (requireBusiness) {
+            assertThrows(IllegalArgumentException.class, () -> customerOfLegalAgeNoneBusiness.setupAccount(toTest));
+            assertSame(customerOfLegalAgeBusiness, customerOfLegalAgeBusiness.setupAccount(toTest).getHolder());
+            assertThrows(IllegalArgumentException.class, () -> customerOfNoneLegalAgeNoneBusiness.setupAccount(toTest));
+            assertThrows(IllegalArgumentException.class, () -> customerOfNoneLegalAgeBusiness.setupAccount(toTest));
+        } else {
+            assertThrows(IllegalArgumentException.class, () -> customerOfLegalAgeBusiness.setupAccount(toTest));
+            assertSame(customerOfLegalAgeBusiness, customerOfLegalAgeNoneBusiness.setupAccount(toTest).getHolder());
+            assertThrows(IllegalArgumentException.class, () -> customerOfNoneLegalAgeNoneBusiness.setupAccount(toTest));
+            assertThrows(IllegalArgumentException.class, () -> customerOfNoneLegalAgeBusiness.setupAccount(toTest));
+        }
+    }
+
+    /**
      * Test the base implementation of {@link Account#deposit(Money)}
      */
     @Test

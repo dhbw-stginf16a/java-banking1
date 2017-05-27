@@ -11,6 +11,7 @@ class StudentSavings extends Savings {
      * If the customer is null throws {@link IllegalArgumentException}
      *
      * @param holder the holder of this account
+     * @throws IllegalArgumentException if the Customer is older than 18 or a business customer
      */
     public StudentSavings(Customer holder) {
         super(holder);

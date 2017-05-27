@@ -11,6 +11,7 @@ class DebitCard extends Cards {
      * If the customer is null throws {@link IllegalArgumentException}
      *
      * @param holder the holder of this account
+     * @throws IllegalArgumentException never
      */
     public DebitCard(Customer holder) {
         super(holder);

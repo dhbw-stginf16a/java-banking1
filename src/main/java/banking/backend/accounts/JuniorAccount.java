@@ -14,6 +14,7 @@ public class JuniorAccount extends CurrentAccount {
      * If the customer is null throws {@link IllegalArgumentException}
      *
      * @param holder the holder of this account
+     * @throws IllegalArgumentException if the Customer is older than 16 or a business person
      */
     public JuniorAccount(Customer holder) {
         super(holder);

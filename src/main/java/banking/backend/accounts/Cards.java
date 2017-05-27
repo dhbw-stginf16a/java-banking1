@@ -10,6 +10,7 @@ abstract class Cards extends Account {
      * If the customer is null throws {@link IllegalArgumentException}
      *
      * @param holder the holder of this account
+     * @throws IllegalArgumentException if the Customer doesn't fit the requirements of the card
      */
     public Cards(Customer holder) {
         super(holder);

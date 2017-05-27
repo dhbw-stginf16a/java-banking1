@@ -11,6 +11,7 @@ class Mortgage extends Loan {
      * If the customer is null throws {@link IllegalArgumentException}
      *
      * @param holder the holder of this account
+     * @throws IllegalArgumentException if the Customer is younger than 18 or a business customer
      */
     public Mortgage(Customer holder) {
         super(holder);

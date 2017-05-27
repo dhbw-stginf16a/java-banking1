@@ -4,6 +4,7 @@ import banking.NotYetImplementedException;
 import banking.backend.Money;
 import banking.backend.Percentage;
 import banking.backend.persons.Customer;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 abstract class Loan extends Account {
     /**
@@ -11,10 +12,22 @@ abstract class Loan extends Account {
      * If the customer is null throws {@link IllegalArgumentException}
      *
      * @param holder the holder of this account
+     * @throws IllegalArgumentException if the Customer is younger than 18
      */
     public Loan(Customer holder) {
         super(holder);
         throw new NotYetImplementedException();
+    }
+
+    /**
+     * Initialises the value of the Loan
+     *
+     * @param amount The positive amount to store in the Loan
+     * @throws IllegalArgumentException if the amount is negative or zero
+     * @throws IllegalStateException    if the value is set already
+     */
+    void initAmount(Money amount) {
+        throw new NotImplementedException();
     }
 
     /**
@@ -35,5 +48,16 @@ abstract class Loan extends Account {
     @Override
     protected Percentage getSavingInterest() {
         throw new NotYetImplementedException();
+    }
+
+    /**
+     * Getter for the balance field
+     *
+     * @return the current balance of the loan
+     * @throws IllegalStateException if the loan wasn't initialized correctly
+     */
+    @Override
+    public Money getBalance() {
+        throw new NotImplementedException();
     }
 }

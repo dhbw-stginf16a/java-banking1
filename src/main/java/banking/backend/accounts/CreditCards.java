@@ -11,6 +11,7 @@ class CreditCards extends Cards {
      * If the customer is null throws {@link IllegalArgumentException}
      *
      * @param holder the holder of this account
+     * @throws IllegalArgumentException if the Customer is younger than 18
      */
     public CreditCards(Customer holder) {
         super(holder);
