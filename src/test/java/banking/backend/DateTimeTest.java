@@ -56,7 +56,7 @@ class DateTimeTest {
                 () -> assertEquals("2017-03-08_00:00:00", getDateTimeFromDate("08.03.2017").toString()),
                 () -> assertEquals("0023-01-15_00:00:00", getDateTimeFromDate("15.01.0023").toString()),
                 () -> assertEquals("1998-03-16_00:00:00", getDateTimeFromDate("16.03.1998").toString()),
-                () -> assertEquals("1854-05-78_23:59:59", new DateTime("1854 05 78 23 59 59", "yyyy MM dd HH mm ss").toString())
+                () -> assertEquals("1854-05-13_23:59:59", new DateTime("1854 05 13 23 59 59", "yyyy MM dd HH mm ss").toString())
         );
     }
 
