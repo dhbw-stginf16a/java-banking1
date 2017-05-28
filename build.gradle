@@ -18,9 +18,11 @@ ext.junitJupiterVersion  = '5.0.0-M4'
 ext.log4jVersion         = '2.6.2'
 
 apply plugin: 'java'
+apply plugin:'application'
 apply plugin: 'idea'
 apply plugin: 'org.junit.platform.gradle.plugin'
 
+mainClassName = "banking.Main"
 jar {
 	baseName = 'java-banking1'
 	version = '1.0.0-SNAPSHOT'
