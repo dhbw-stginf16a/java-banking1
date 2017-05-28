@@ -53,6 +53,8 @@ public class DateTime implements Comparable<DateTime> {
      * <i>signum</i> function, which is defined to return one of <tt>-1</tt>,
      * <tt>0</tt>, or <tt>1</tt> according to whether the value of
      * <i>expression</i> is negative, zero or positive.
+     * <p>
+     * this return -1 if this date is before dt.
      *
      * @param   dt the object to be compared.
      * @return a negative integer, zero, or a positive integer as this object
@@ -78,6 +80,9 @@ public class DateTime implements Comparable<DateTime> {
 
     /**
      * Format the datetime as a nice String for printing.
+     *
+     * this is in the format 2014-12-03_01:09:12
+     * yyyy-MM-dd_HH:mm:ss
      *
      * @return nice format of the datetime
      */
