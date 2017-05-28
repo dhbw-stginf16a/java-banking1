@@ -40,8 +40,31 @@ public abstract class Transaction {
      * @throws TransactionFailedException if it was not possible to complete the transaction on any
      *                                    one of the accounts
      */
-    abstract void apply() throws TransactionFailedException;
+    public abstract void apply() throws TransactionFailedException;
 
+    /**
+     * Get the current status of this transaction.
+     *
+     * @return the current status of this
+     */
+    public Status getStatus() {
+        throw new NotYetImplementedException();
+    }
+
+    /**
+     * Return the monetary amount of this.
+     *
+     * @return the amount
+     */
+    public Money getAmount() {
+        throw new NotYetImplementedException();
+    }
+
+    /**
+     * Convert this to a human readable string.
+     *
+     * @return string representation of this
+     */
     @Override
     public abstract String toString();
 
