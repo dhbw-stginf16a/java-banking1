@@ -54,7 +54,7 @@ class PercentageTest {
     void constructorString1() {
         double toTest = Math.floor(Math.random() * 1000 * 10000) / 10000;
         final String s = decimalFormatNoPercent.format(toTest);
-        assertEquals((int) (toTest * 10000), new Percentage(s).getPercentage(), "Tested \"" + s + "\"");
+        assertEquals(Math.round(toTest * 10000), new Percentage(s).getPercentage(), "Tested \"" + s + "\"");
     }
 
     /**
@@ -63,19 +63,19 @@ class PercentageTest {
     @RepeatedTest(value = 50, name = "Percentage(String) Test {currentRepetition} of {totalRepetitions}")
     @DisplayName("Tests Percentage(String) with String with % at the end")
     void constructorString2() {
-        double toTest = Math.floor(Math.random() * 1000 * 100) / 100;
+        double toTest = Math.floor(Math.random() * 1000 * 10000) / 10000;
         final String s = decimalFormatPercent.format(toTest);
-        assertEquals((int) (toTest * 10000), new Percentage(s).getPercentage(), "Tested \"" + s + "\"");
+        assertEquals(Math.round(toTest * 10000), new Percentage(s).getPercentage(), "Tested \"" + s + "\"");
     }
 
     @Test
     void toStringTest() {
         assertAll(
                 () -> assertEquals("1.00%", new Percentage(1.0).toString()),
-                () -> assertEquals("0.01%", new Percentage(1).toString()),
+                () -> assertEquals("0.01%", new Percentage(0.01).toString()),
                 () -> assertEquals("1.00%", new Percentage(1).toString()),
                 () -> assertEquals("1,000.00%", new Percentage(1000).toString()),
-                () -> assertEquals("1,234.56", new Percentage(1234.56).toString()),
+                () -> assertEquals("1,234.56%", new Percentage(1234.56).toString()),
                 () -> assertEquals("6,543.21%", new Percentage(6543.21).toString())
         );
     }
