@@ -4,7 +4,7 @@ import banking.NotYetImplementedException;
 import banking.backend.Money;
 import banking.backend.accounts.Account;
 
-class Invoice extends Transaction {
+public class Invoice extends Transaction {
     private Account creditor;
     private Account debtor;
 
@@ -21,7 +21,7 @@ class Invoice extends Transaction {
     }
 
     @Override
-    void apply() throws TransactionFailedException {
+    public void apply() throws TransactionFailedException {
         throw new NotYetImplementedException();
     }
 
