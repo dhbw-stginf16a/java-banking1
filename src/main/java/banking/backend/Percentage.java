@@ -34,6 +34,12 @@ public class Percentage {
     /**
      * Construct a percentage by parsing a string
      *
+     * This string consist of a number that fits in this criteria
+     * - english number formatting
+     * - '.' as decimal separator
+     * - max 4 decimal places if no % is uses else max. 2 decimal places
+     * - if no % is uses the number is interpreted as * 100%
+     *
      * @param percentage the percentage to be stored
      */
     public Percentage(String percentage) {
@@ -47,6 +53,27 @@ public class Percentage {
      * @return the int value with two decimals precision
      */
     int getPercentage() {
+        throw new NotYetImplementedException();
+    }
+
+    /**
+     * Gets the Percentage as String of format XX.XX% including grouping separators
+     *
+     * @return The String representation of this Percentage
+     */
+    @Override
+    public String toString() {
+        throw new NotYetImplementedException();
+    }
+
+    /**
+     * Test if the given object is a percentage with the same value
+     *
+     * @param o the object to compare to
+     * @return true if the object is of type Percentage and has the same integer value stored.
+     */
+    @Override
+    public boolean equals(Object o) {
         throw new NotYetImplementedException();
     }
 }
