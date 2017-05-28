@@ -1,12 +1,20 @@
 package banking.backend;
 
-import banking.NotYetImplementedException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
+import java.util.Locale;
 
 /**
  * Represents a percentage of something. May be above 100.00 or below 0.00.
  * Accuracy of two decimals XX.XX%
  */
 public class Percentage {
+    private static final int ACCURACY = 2;
+    private static final int FACTOR_ACCURACY = (int) Math.pow(10, ACCURACY);
+
+    private static final DecimalFormat format = new DecimalFormat("0.00%", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+
     /**
      * Int value of this.
      * Accuracy of two decimals XX.XX%
@@ -19,7 +27,7 @@ public class Percentage {
      * @param percentage the percentage to be stored
      */
     public Percentage(int percentage) {
-        throw new NotYetImplementedException();
+        this.percentage = percentage * FACTOR_ACCURACY;
     }
 
     /**
@@ -28,22 +36,60 @@ public class Percentage {
      * @param percentage the percentage to be stored
      */
     public Percentage(double percentage) {
-        throw new NotYetImplementedException();
+        this.percentage = (int) Math.floor(percentage * FACTOR_ACCURACY);
     }
 
     /**
      * Construct a percentage by parsing a string
-     *
+     * <p>
      * This string consist of a number that fits in this criteria
      * - english number formatting
      * - '.' as decimal separator
      * - max 4 decimal places if no % is uses else max. 2 decimal places
      * - if no % is uses the number is interpreted as * 100%
      *
-     * @param percentage the percentage to be stored
+     * @param string the percentage to be stored
+     * @throws IllegalArgumentException if the string is of the wrong format
      */
-    public Percentage(String percentage) {
-        throw new NotYetImplementedException();
+    public Percentage(String string) {
+        Number number = null;
+
+        if (string.endsWith("%")) {
+            String pattern = "#.";
+            for (int i = 0; i < ACCURACY; i++) {
+                pattern = pattern + "#";
+            }
+            pattern += "%";
+
+            DecimalFormat formatWithPercent = new DecimalFormat(pattern, DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+
+            formatWithPercent.setGroupingSize(3);
+            formatWithPercent.setGroupingUsed(true);
+
+            try {
+                number = formatWithPercent.parse(string);
+            } catch (ParseException e) {
+                throw new IllegalArgumentException("Couldn't parse: \"" + string + "\" to Percentage", e);
+            }
+        } else {
+            String pattern = "#.";
+            for (int i = 0; i < ACCURACY + 2; i++) {
+                pattern = pattern + "#";
+            }
+
+            DecimalFormat formatWithoutPercent = new DecimalFormat(pattern, DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+
+            formatWithoutPercent.setGroupingSize(3);
+            formatWithoutPercent.setGroupingUsed(true);
+
+            try {
+                number = formatWithoutPercent.parse(string);
+            } catch (ParseException e) {
+                throw new IllegalArgumentException("Couldn't parse: \"" + string + "\" to Percentage", e);
+            }
+        }
+
+        percentage = (int) Math.round(number.doubleValue() * 100 * FACTOR_ACCURACY);
     }
 
     /**
@@ -53,7 +99,7 @@ public class Percentage {
      * @return the int value with two decimals precision
      */
     int getPercentage() {
-        throw new NotYetImplementedException();
+        return percentage;
     }
 
     /**
@@ -63,7 +109,9 @@ public class Percentage {
      */
     @Override
     public String toString() {
-        throw new NotYetImplementedException();
+        format.setGroupingUsed(true);
+        format.setGroupingSize(3);
+        return format.format(((double) percentage) / FACTOR_ACCURACY / 100);
     }
 
     /**
@@ -74,6 +122,6 @@ public class Percentage {
      */
     @Override
     public boolean equals(Object o) {
-        throw new NotYetImplementedException();
+        return o instanceof Percentage && ((Percentage) o).percentage == percentage;
     }
 }
