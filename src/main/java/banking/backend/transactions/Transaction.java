@@ -68,5 +68,5 @@ public abstract class Transaction {
     @Override
     public abstract String toString();
 
-    enum Status {PENDING, FAILED, SUCCESS}
+    public enum Status {PENDING, FAILED, SUCCESS}
 }

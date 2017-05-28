@@ -138,7 +138,7 @@ public class Bank {
     }
 
     /**
-     * Apply the actions of a transaction to all effected accounts and store it in the transaction log.
+     * Apply the actions of a transaction to all affected accounts and store it in the transaction log.
      *
      * @param transaction transaction to be applied
      * @see #transactions
