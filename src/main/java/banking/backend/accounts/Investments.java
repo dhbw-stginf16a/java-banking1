@@ -37,4 +37,13 @@ abstract class Investments extends Account {
         throw new NotYetImplementedException();
     }
 
+    @Override
+    public void sendInvoice(Money amount) throws InsufficientFundsException {
+        throw new UnsupportedOperationException("An Investment can't send invoices");
+    }
+
+    @Override
+    protected void withdraw(Money amount) throws InsufficientFundsException {
+        throw new UnsupportedOperationException("You can't withdraw money from an Investments, because it's ours now and you will never see it again!");
+    }
 }

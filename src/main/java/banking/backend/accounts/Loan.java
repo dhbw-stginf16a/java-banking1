@@ -66,4 +66,14 @@ abstract class Loan extends Account {
     public Money getBalance() {
         throw new NotImplementedException();
     }
+
+    @Override
+    public void sendInvoice(Money amount) throws InsufficientFundsException {
+        throw new UnsupportedOperationException("An Loan can't send invoices");
+    }
+
+    @Override
+    protected void withdraw(Money amount) throws InsufficientFundsException {
+        throw new UnsupportedOperationException("It's not possible to get more Money ot of a Loan.");
+    }
 }

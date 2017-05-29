@@ -1,6 +1,7 @@
 package banking.backend.accounts;
 
 import banking.NotYetImplementedException;
+import banking.backend.Money;
 import banking.backend.Percentage;
 import banking.backend.persons.Customer;
 
@@ -35,5 +36,10 @@ abstract class Cards extends Account {
     @Override
     protected Percentage getSavingInterest() {
         throw new NotYetImplementedException();
+    }
+
+    @Override
+    protected void deposit(Money amount) {
+        throw new UnsupportedOperationException("A Card doesn't support depositing.");
     }
 }

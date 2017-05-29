@@ -37,4 +37,9 @@ abstract class Savings extends Account {
     protected Percentage getBorrowingInterest() {
         throw new NotYetImplementedException();
     }
+
+    @Override
+    public void sendInvoice(Money amount) throws InsufficientFundsException {
+        throw new UnsupportedOperationException("You can't send invoices from a Savings account");
+    }
 }

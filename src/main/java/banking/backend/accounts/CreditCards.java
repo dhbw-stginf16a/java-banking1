@@ -22,4 +22,9 @@ class CreditCards extends Cards {
     protected Money getOverdraft() {
         throw new NotYetImplementedException();
     }
+
+    @Override
+    public void receiveInvoice(Money amount) {
+        throw new UnsupportedOperationException("A credit card can't receive invoices");
+    }
 }
