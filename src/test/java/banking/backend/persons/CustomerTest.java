@@ -1,6 +1,7 @@
 package banking.backend.persons;
 
 import banking.NotYetImplementedException;
+import banking.backend.DateTimeTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +32,7 @@ public class CustomerTest {
      * @return a generic customer without a {@link CustomerId}
      */
     public static Customer getDummyCustomer(int age, boolean isBusiness) {
-        throw new NotYetImplementedException();
+        return new Customer("Testi Testdummy", "Teststraße 77a\n77777 Testingen", DateTimeTest.getDateTimeFromAge(age), "+49 827 8362783", isBusiness);
     }
 
     /**
