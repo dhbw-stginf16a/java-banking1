@@ -2,8 +2,10 @@ package banking.backend;
 
 import banking.backend.accounts.Account;
 import banking.backend.accounts.AccountTest;
+import banking.backend.accounts.AccountId;
 import banking.backend.accounts.CurrentAccount;
 import banking.backend.persons.Customer;
+import banking.backend.persons.CustomerId;
 import banking.backend.persons.CustomerTest;
 import banking.backend.transactions.Deposit;
 import banking.backend.transactions.Transaction;
@@ -13,7 +15,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -265,6 +271,11 @@ class BankTest {
         assertEquals(accounts.size(), 1);
     }
 
+    /**
+     * Check if money can be deposited to accounts that exist.
+     * Only check if the correct transaction gets created and added to the log.
+     * To check if the money actually has been added is responsibility of the Transaction tests.
+     */
     @Test
     void deposit() {
         Bank bank = Bank.getInstance();
@@ -279,12 +290,64 @@ class BankTest {
                     Money amount = new Money(1);
                     bank.addAccount(account);
                     bank.deposit(account.getAccountId(), amount);
+
+                    // Transaction with the correct values should be added to the transaction log
                     Deposit transaction = (Deposit) bank.getTransactions().get(0);
                     assertEquals(transaction.getAmount(), amount);
                     assertSame(transaction.getCreditor(), account);
+                    // Transaction should be applied
+                    assertNotEquals(transaction.getStatus(), Transaction.Status.FAILED);
                 }
         );
-
     }
 
+    /**
+     * Test whether a (private) method of Bank returns only unique objects and they are instance of a class.
+     *
+     * @param methodName the method to check
+     * @param iterations how many results to check
+     * @param c          which class the return values should be instance of
+     * @throws NoSuchMethodException     if the methodName does not exist on Bank
+     * @throws InvocationTargetException if the called method throws an exception
+     * @throws IllegalAccessException    never
+     * @throws ClassCastException        if the method does not return an object of type c
+     */
+    private <T> void returnUniqueTest(String methodName, int iterations, Class<T> c)
+            throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Bank bank = Bank.getInstance();
+        Method generateAvailableId = Bank.class.getDeclaredMethod(methodName, c);
+
+        generateAvailableId.setAccessible(true);
+
+        Set<T> set = new HashSet<>();
+        for (int i = 0; i < iterations; i++) {
+            T id = (T) generateAvailableId.invoke(bank, null);
+            set.add(id);
+        }
+        assertEquals(set.size(), iterations);
+    }
+
+    /**
+     * Verify that all returned account ids are unique.
+     *
+     * @throws NoSuchMethodException     if the generateAvailableAccountId does not exist on Bank
+     * @throws InvocationTargetException if the called method throws an exception
+     * @throws IllegalAccessException    never
+     */
+    @Test
+    void generateAvailableAccountId() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        returnUniqueTest("generateAvailableAccountId", 100, AccountId.class);
+    }
+
+    /**
+     * Verify that all returned customer ids are unique.
+     *
+     * @throws NoSuchMethodException     if the generateAvailableAccountId does not exist on Bank
+     * @throws InvocationTargetException if the called method throws an exception
+     * @throws IllegalAccessException    never
+     */
+    @Test
+    void generateAvailableCustomerId() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        returnUniqueTest("generateAvailableCustomerId", 100, CustomerId.class);
+    }
 }

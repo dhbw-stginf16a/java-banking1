@@ -47,7 +47,8 @@ public class Bank {
     /**
      * Not visible to avoid unwanted instantiation.
      * Use {@link #getInstance()}
-     * Throws {@link UnsupportedOperationException} if instance is already set.
+     *
+     * @throws UnsupportedOperationException if instance is already set.
      */
     private Bank() {
         if (instance != null) {
@@ -138,7 +139,7 @@ public class Bank {
     }
 
     /**
-     * Apply the actions of a transaction to all effected accounts and store it in the transaction log.
+     * Apply the actions of a transaction to all affected accounts and store it in the transaction log.
      *
      * @param transaction transaction to be applied
      * @see #transactions
@@ -177,11 +178,14 @@ public class Bank {
 
     /**
      * Add a new account to the database of the bank and set their id to an unused one.
-     * TODO: Should prohibit accounts with no holder?
      *
      * @param account the new account
+     * @throws IllegalArgumentException if the account does not have a holder
      */
     public void addAccount(Account account) {
+        if (account.getHolder() == null) {
+            throw new IllegalArgumentException("To add an account it must have a holder.");
+        }
         AccountId accountId = generateAvailableAccountId();
         account.setAccountId(accountId);
         if (!accounts.containsValue(account)) {
@@ -194,6 +198,7 @@ public class Bank {
      *
      * @param accountId the id of the account
      * @param amount    the amount to be deposited
+     * @throws TransactionFailedException if the transaction was not successful
      */
     public void deposit(AccountId accountId, Money amount) throws TransactionFailedException {
         Account account = getAccount(accountId);
