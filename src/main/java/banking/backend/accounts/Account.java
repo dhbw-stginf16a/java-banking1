@@ -1,6 +1,5 @@
 package banking.backend.accounts;
 
-import banking.NotYetImplementedException;
 import banking.backend.Money;
 import banking.backend.Percentage;
 import banking.backend.persons.Customer;
@@ -50,7 +49,10 @@ abstract public class Account {
      * @throws IllegalStateException if the AccountId isn't set
      */
     public AccountId getAccountId() {
-        throw new NotYetImplementedException();
+        if (accountId == null) {
+            throw new IllegalStateException("Account ID has not been set yet.");
+        }
+        return accountId;
     }
 
     /**
@@ -61,7 +63,10 @@ abstract public class Account {
      * @throws IllegalStateException if the AccountId was already set
      */
     public void setAccountId(AccountId accountId) {
-        throw new NotYetImplementedException();
+        if (this.accountId != null) {
+            throw new IllegalStateException("Account ID already exists.");
+        }
+        this.accountId = accountId;
     }
 
     /**
@@ -100,11 +105,19 @@ abstract public class Account {
 
     /**
      * Apply the saving interest and therefore increase the balance even further.
+     * Saving is only applied when it's a negative number
      *
      * @throws IllegalStateException if the saving interest is negative
      */
     public void applySavingInterest() {
-        throw new UnsupportedOperationException("This account does not suppport saving interest.");
+        Percentage savingInterest = getSavingInterest();
+        if (savingInterest.getPercentage() < 0) {
+            throw new IllegalStateException("The savings can't be negative: " + savingInterest);
+        }
+        if (new Money(0).compareTo(balance) < 0) {
+            balance = balance.applyPercentage(savingInterest);
+        }
+
     }
 
     /**
@@ -130,9 +143,23 @@ abstract public class Account {
      * @throws InsufficientFundsException if there are not sufficient funds available
      * @throws IllegalArgumentException if the amount is negative or zero
      * @throws UnsupportedOperationException if the Account doesn't support sending invoices
+     * @throws IllegalStateException if the Overdraft is negative
      */
     public void sendInvoice(Money amount) throws InsufficientFundsException {
-        throw new NotYetImplementedException();
+        if (new Money(0).compareTo(getOverdraft()) < 0) {
+            throw new IllegalStateException("You must not overdraw your overdraft limit.");
+        }
+
+        if (new Money(0).compareTo(amount) >= 0) {
+            throw new IllegalArgumentException("You can only send a positive amount.");
+        }
+
+        if (balance.compareTo(amount.add(getOverdraft())) < 0) {
+            throw new InsufficientFundsException("You do not have enough money to do this action.");
+        }
+
+        balance = balance.subtract(amount);
+
     }
 
     /**
@@ -143,9 +170,23 @@ abstract public class Account {
      * @throws InsufficientFundsException if there are not sufficient funds available
      * @throws IllegalArgumentException if the amount is negative or zero
      * @throws UnsupportedOperationException if the Account doesn't support a withdraw
+     * @throws IllegalStateException if the Overdraft is negative
      */
     protected void withdraw(Money amount) throws InsufficientFundsException {
-        throw new NotYetImplementedException();
+        if (new Money(0).compareTo(getOverdraft()) < 0) {
+            throw new IllegalStateException("You must not overdraw your overdraft limit.");
+        }
+
+        if (new Money(0).compareTo(amount) >= 0) {
+            throw new IllegalArgumentException("You can only withdraw a positive amount.");
+        }
+
+        if (balance.compareTo(amount.add(getOverdraft())) < 0) {
+            throw new InsufficientFundsException("You do not have enough money to do this action.");
+        }
+
+        balance = balance.subtract(amount);
+
     }
 
     /**
@@ -156,7 +197,11 @@ abstract public class Account {
      * @throws UnsupportedOperationException if the Account doesn't support depositing
      */
     protected void deposit(Money amount) {
-        throw new NotYetImplementedException();
+        if (new Money(0).compareTo(amount) >= 0) {
+            throw new IllegalArgumentException("You can only deposit a positive amount.");
+        }
+
+        balance = balance.add(amount);
     }
 
     public Customer getHolder() {
