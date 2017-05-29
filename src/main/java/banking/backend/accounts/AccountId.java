@@ -8,6 +8,17 @@ public class AccountId {
         throw new NotYetImplementedException();
     }
 
+
+    /**
+     * Must become a nine digit number that contains a 2 check digits
+     *
+     * @param id the String representation of the AccountId
+     * @throws IllegalArgumentException if the id given isn't a valid AccountId
+     */
+    public AccountId(String id) {
+        throw new NotYetImplementedException();
+    }
+
     /**
      * Returns a hash code value for the object. This method is
      * supported for the benefit of hash tables such as those provided by
@@ -56,6 +67,16 @@ public class AccountId {
      */
     @Override
     public boolean equals(Object obj) {
+        throw new NotYetImplementedException();
+    }
+
+    /**
+     * Returns the String Representation of the AccountId with its checksum in it.
+     *
+     * @return String
+     */
+    @Override
+    public String toString() {
         throw new NotYetImplementedException();
     }
 }
