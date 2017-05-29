@@ -27,7 +27,13 @@ abstract class Loan extends Account {
      * @throws IllegalStateException    if the value is set already
      */
     void initAmount(Money amount) {
-        throw new NotImplementedException();
+        if (balance != null) {
+            throw new IllegalStateException("The Loan is already initialised.");
+        }
+        if (new Money(0).compareTo(amount) >= 0) {
+            throw new IllegalArgumentException("Please enter a positive amount to initialise the Loan");
+        }
+        balance = amount.negate();
     }
 
     /**
