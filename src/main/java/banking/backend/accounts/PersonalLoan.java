@@ -1,6 +1,5 @@
 package banking.backend.accounts;
 
-import banking.NotYetImplementedException;
 import banking.backend.Percentage;
 import banking.backend.persons.Customer;
 
@@ -15,11 +14,13 @@ class PersonalLoan extends Loan {
      */
     public PersonalLoan(Customer holder) {
         super(holder);
-        throw new NotYetImplementedException();
+        if (holder.getAge() < 18 || !holder.isBusinessCustomer()) {
+            throw new IllegalArgumentException("You need to be at least 18 or a business customer.");
+        }
     }
 
     @Override
     protected Percentage getBorrowingInterest() {
-        throw new NotYetImplementedException();
+        return new Percentage(2); // not sure which number
     }
 }

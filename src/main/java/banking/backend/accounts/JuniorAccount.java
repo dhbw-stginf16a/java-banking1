@@ -1,6 +1,5 @@
 package banking.backend.accounts;
 
-import banking.NotYetImplementedException;
 import banking.backend.Money;
 import banking.backend.Percentage;
 import banking.backend.persons.Customer;
@@ -18,7 +17,9 @@ public class JuniorAccount extends CurrentAccount {
      */
     public JuniorAccount(Customer holder) {
         super(holder);
-        throw new NotYetImplementedException();
+        if (holder.getAge() < 16 || !holder.isBusinessCustomer()) {
+            throw new IllegalArgumentException("You need to be at least 16 or a business person.");
+        }
     }
 
     /**
@@ -28,7 +29,7 @@ public class JuniorAccount extends CurrentAccount {
      */
     @Override
     protected Money getOverdraft() {
-        throw new NotYetImplementedException();
+        return new Money(0);
     }
 
     /**
@@ -38,6 +39,6 @@ public class JuniorAccount extends CurrentAccount {
      */
     @Override
     protected Percentage getBorrowingInterest() {
-        return super.getBorrowingInterest();
+        return new Percentage(0);
     }
 }

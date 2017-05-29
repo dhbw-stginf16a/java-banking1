@@ -1,6 +1,5 @@
 package banking.backend.accounts;
 
-import banking.NotYetImplementedException;
 import banking.backend.Money;
 import banking.backend.persons.Customer;
 
@@ -15,11 +14,13 @@ class CreditCards extends Cards {
      */
     public CreditCards(Customer holder) {
         super(holder);
-        throw new NotYetImplementedException();
+        if (holder.getAge() < 18) {
+            throw new IllegalArgumentException("You need to be at least 18.");
+        }
     }
 
     @Override
     protected Money getOverdraft() {
-        throw new NotYetImplementedException();
+        return new Money(2000);
     }
 }

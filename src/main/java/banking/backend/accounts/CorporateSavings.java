@@ -18,11 +18,14 @@ class CorporateSavings extends Savings {
      */
     public CorporateSavings(Customer holder) {
         super(holder);
+        if (holder.getAge() < 18 || !holder.isBusinessCustomer()) {
+            throw new IllegalArgumentException("You need to be at least 18 or a business customer.");
+        }
         throw new NotYetImplementedException();
     }
 
     @Override
     protected Percentage getSavingInterest() {
-        throw new NotYetImplementedException();
+        return (new Percentage(2));
     }
 }

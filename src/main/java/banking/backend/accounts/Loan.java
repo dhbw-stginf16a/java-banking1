@@ -1,6 +1,5 @@
 package banking.backend.accounts;
 
-import banking.NotYetImplementedException;
 import banking.backend.Money;
 import banking.backend.Percentage;
 import banking.backend.persons.Customer;
@@ -16,7 +15,10 @@ abstract class Loan extends Account {
      */
     public Loan(Customer holder) {
         super(holder);
-        throw new NotYetImplementedException();
+        balance = null;
+        if (holder.getAge() < 18) {
+            throw new IllegalArgumentException("You need to be at least 18.");
+        }
     }
 
     /**
@@ -37,7 +39,7 @@ abstract class Loan extends Account {
      */
     @Override
     protected Money getOverdraft() {
-        throw new NotYetImplementedException();
+        return new Money(0);
     }
 
     /**
@@ -47,7 +49,7 @@ abstract class Loan extends Account {
      */
     @Override
     protected Percentage getSavingInterest() {
-        throw new NotYetImplementedException();
+        return new Percentage(0);
     }
 
     /**
