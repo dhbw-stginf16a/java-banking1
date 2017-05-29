@@ -4,7 +4,7 @@ import banking.NotYetImplementedException;
 import banking.backend.Money;
 import banking.backend.accounts.Account;
 
-class Deposit extends Transaction {
+public class Deposit extends Transaction {
     public Account creditor;
 
     /**
@@ -18,8 +18,17 @@ class Deposit extends Transaction {
         throw new NotYetImplementedException();
     }
 
+    /**
+     * Get the account to which the money was deposited.
+     *
+     * @return the creditor
+     */
+    public Account getCreditor() {
+        throw new NotYetImplementedException();
+    }
+
     @Override
-    void apply() {
+    public void apply() {
         throw new NotYetImplementedException();
     }
 

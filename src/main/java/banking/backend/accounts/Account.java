@@ -132,4 +132,7 @@ abstract public class Account {
         throw new UnsupportedOperationException("This account does not suppport depositing money.");
     }
 
+    public Customer getHolder() {
+        return holder;
+    }
 }
