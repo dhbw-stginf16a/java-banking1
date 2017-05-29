@@ -110,15 +110,4 @@ public class CustomerId {
     public String toString() {
         return Integer.toString(savedId);
     }
-
-    /**
-     * Check if two customer ids are the same.
-     *
-     * @param obj other customer id to compare to
-     * @return equivalence
-     */
-    @Override
-    public boolean equals(Object obj) {
-        throw new NotYetImplementedException();
-    }
 }
