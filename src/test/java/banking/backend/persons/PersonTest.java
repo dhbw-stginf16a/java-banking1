@@ -5,6 +5,7 @@ import banking.backend.DateTimeTest;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
+import static banking.backend.persons.CustomerTest.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -15,44 +16,35 @@ import static org.junit.jupiter.api.Assertions.*;
 class PersonTest {
     @RepeatedTest(10)
     void getAge() {
-        int age = (int) Math.random() * 100;
+        int age = (int) (Math.random() * 100);
         assertEquals(
                 age,
-                new Person("Testi Testdummy", "Teststraße 77a\n77777 Testingen", DateTimeTest.getDateTimeFromAge(age), "+49 827 8362783").getAge(),
+                new Person(DUMMY_NAME, DUMMY_ADDRESS, DateTimeTest.getDateTimeFromAge(age), DUMMY_TELEPHONE_NUMBER)
+                        .getAge(),
                 "If this isn't equal the age wasn't calculated properly"
         );
     }
 
     @Test
-    void allGetters() {
-        String name = "Papa Schlump";
-        String address = "Hüpfdudelstraße 31, Schlumphausen 12345";
-        DateTime birthday = new DateTime();
-        String telephone = "+491637349842";
-
-        Person testPerson = new Person(name, address, birthday, telephone);
-
-        assertAll(
-                () -> assertEquals(name, testPerson.getName(), "If this isn't equal the name wasn't stored properly"),
-                () -> assertEquals(address, testPerson.getAddress(), "If this isn't equal the address wasn't stored properly"),
-                () -> assertEquals(birthday, testPerson.getBirthdate(), "If this isn't equal the birthday wasn't stored properly"),
-                () -> assertEquals(telephone, testPerson.getTelephoneNumber(), "If this isn't equal the telephone number wasn't stored properly")
-        );
-    }
-
-    @Test
     void constructor() {
-        String name = "Papa Schlump";
-        String address = "Hüpfdudelstraße 31, Schlumphausen 12345";
-        DateTime birthday = new DateTime();
-        String telephone = "+491637349842";
-
-        assertAll("Checks if the constructor throws a IllegalArgumentException if either name, address or birthday is null",
-                () -> assertThrows(IllegalArgumentException.class, () -> new Person(null, address, birthday, telephone)),
-                () -> assertThrows(IllegalArgumentException.class, () -> new Person(name, null, birthday, telephone)),
-                () -> assertThrows(IllegalArgumentException.class, () -> new Person(name, address, null, telephone)),
-                () -> assertNull(new Person(name, address, birthday, telephone), "Telephone could be null")
+        Person dummyPerson = new Person(DUMMY_NAME, DUMMY_ADDRESS, DUMMY_BIRTH_DATE, DUMMY_TELEPHONE_NUMBER);
+        // Check if all attributes are correctly set
+        assertAll(
+                () -> assertEquals(DUMMY_NAME, dummyPerson.getName()),
+                () -> assertEquals(DUMMY_ADDRESS, dummyPerson.getAddress()),
+                () -> assertEquals(DUMMY_BIRTH_DATE, dummyPerson.getBirthdate()),
+                () -> assertEquals(DUMMY_TELEPHONE_NUMBER, dummyPerson.getTelephoneNumber())
         );
+        // No parameter of the constructor can be null except for telephone number
+        assertThrows(IllegalArgumentException.class, () -> new Person(null, "address", new DateTime(), "tel"));
+        assertThrows(IllegalArgumentException.class, () -> new Person("name", null, new DateTime(), "tel"));
+        assertThrows(IllegalArgumentException.class, () -> new Person("name", "address", null, "tel"));
+        assertThrows(IllegalArgumentException.class, () -> new Person("name", "address", new DateTime(), null));
+        assertNotNull(new Person("name", "address", DUMMY_BIRTH_DATE, null), "Telephone number can be null");
+
+        // The date of birth cannot lie in the future
+        assertThrows(IllegalArgumentException.class, () -> new Person(
+                "name", "address", DateTimeTest.getDateTimeFromAge(-1), "tel"));
     }
 
 }

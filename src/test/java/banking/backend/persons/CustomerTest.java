@@ -1,6 +1,7 @@
 package banking.backend.persons;
 
 import banking.NotYetImplementedException;
+import banking.backend.DateTime;
 import banking.backend.DateTimeTest;
 import banking.backend.Money;
 import banking.backend.accounts.Account;
@@ -14,6 +15,15 @@ import static org.junit.jupiter.api.Assertions.*;
  * Contains all test for non private methods of {@link Customer}
  */
 public class CustomerTest {
+    public static final String DUMMY_NAME = "Testi Testdummy";
+    public static final String DUMMY_ADDRESS = "Teststraße 77a\n77777 Testingen";
+    public static final String DUMMY_TELEPHONE_NUMBER = "+49 827 8362783";
+    /**
+     * Default values of the dummy customer used for testing.
+     */
+    private static final int DUMMY_BUSINESS_DEFAULT_AGE = 21;
+    public static final DateTime DUMMY_BIRTH_DATE = DateTimeTest.getDateTimeFromAge(DUMMY_BUSINESS_DEFAULT_AGE);
+
     /**
      * Get a dummy customer for testing purposes, that doesn't contain a CustomerId.
      * <p>
@@ -35,7 +45,7 @@ public class CustomerTest {
      * @return a generic customer without a {@link CustomerId}
      */
     public static Customer getDummyCustomer(int age, boolean isBusiness) {
-        return new Customer("Testi Testdummy", "Teststraße 77a\n77777 Testingen", DateTimeTest.getDateTimeFromAge(age), "+49 827 8362783", isBusiness);
+        return new Customer(DUMMY_NAME, DUMMY_ADDRESS, DateTimeTest.getDateTimeFromAge(age), DUMMY_TELEPHONE_NUMBER, isBusiness);
     }
 
     /**
@@ -47,13 +57,13 @@ public class CustomerTest {
      * @return a generic customer without a {@link CustomerId}
      */
     public static Customer getDummyCustomer(boolean isBusiness) {
-        return getDummyCustomer(21, isBusiness);
+        return getDummyCustomer(DUMMY_BUSINESS_DEFAULT_AGE, isBusiness);
     }
 
     /**
      * A dummy test to show that these tests aren't ready.
      * <p>
-     * The test of {@link Customer#setupAccount} should be done in the AccountTest with the checking of all prerequisite for the accounts.
+     * The test of {@link Customer#setupAccount} should be done in the {@link AccountTest} with the checking of all prerequisite for the accounts.
      */
     @Test
     @DisplayName("This test serves as a reminder that the check of Customer.setupAccount should be done somewhere else.")
@@ -62,7 +72,41 @@ public class CustomerTest {
     }
 
     /**
-     * Tests the Getter and Setter of CustomerId
+     * Test functionality of the Customer constructor.
+     */
+    @Test
+    public void customer() {
+        Customer dummyCustomer = getDummyCustomer();
+        // Check if all attributes are correctly set
+        assertAll(
+                () -> assertThrows(IllegalStateException.class, dummyCustomer::getCustomerId),
+                () -> assertEquals(DUMMY_NAME, dummyCustomer.getName()),
+                () -> assertEquals(DUMMY_ADDRESS, dummyCustomer.getAddress()),
+                () -> assertEquals(DUMMY_BIRTH_DATE, dummyCustomer.getBirthdate()),
+                () -> assertEquals(DUMMY_TELEPHONE_NUMBER, dummyCustomer.getTelephoneNumber()),
+                () -> assertEquals(false, dummyCustomer.isBusinessCustomer())
+        );
+        // No parameter of the constructor can be null except for telephone
+        assertThrows(IllegalArgumentException.class, () -> new Customer(null, "address", new DateTime(), "tel", false));
+        assertThrows(IllegalArgumentException.class, () -> new Customer("name", null, new DateTime(), "tel", false));
+        assertThrows(IllegalArgumentException.class, () -> new Customer("name", "address", null, "tel", false));
+        assertNotNull(new Customer("name", "address", new DateTime(), null, false), "Telephone can be null");
+
+        // A business customer must be at least 21 years old
+        assertAll(
+                () -> assertThrows(IllegalArgumentException.class, () -> new Customer(
+                        "name", "address", DateTimeTest.getDateTimeFromAge(20), "tel", false)),
+                () -> assertNotNull(new Customer("name", "address", DateTimeTest.getDateTimeFromAge(21), "tel", false))
+
+        );
+
+        // The date of birth cannot lie in the future
+        assertThrows(IllegalArgumentException.class, () -> new Customer(
+                "name", "address", DateTimeTest.getDateTimeFromAge(-1), "tel", false));
+    }
+
+    /**
+     * Tests the Getter and Setter of CustomerId.
      */
     @Test
     public void getAndSetCustomerId() {
