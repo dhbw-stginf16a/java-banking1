@@ -109,7 +109,7 @@ public class Money implements Comparable<Money> {
      * @param percentage the percentage to be calculated
      * @return a new instance after calculation
      */
-    Money applyPercentage(Percentage percentage) {
+    public Money applyPercentage(Percentage percentage) {
         throw new NotYetImplementedException();
     }
 

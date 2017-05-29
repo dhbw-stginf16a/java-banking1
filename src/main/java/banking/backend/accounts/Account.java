@@ -37,7 +37,10 @@ abstract public class Account {
      * @param holder the holder of this account
      */
     public Account(Customer holder) {
-        throw new NotYetImplementedException();
+        if (holder == null) {
+            throw new IllegalArgumentException("The holder is null");
+        }
+        this.holder = holder;
     }
 
     /**
@@ -86,7 +89,13 @@ abstract public class Account {
      * @throws IllegalStateException if the borrowing interest is negative
      */
     public void applyBorrowingInterest() {
-        throw new UnsupportedOperationException("This account does not suppport borrowing interest.");
+        Percentage borrowingInterest = getBorrowingInterest();
+        if (borrowingInterest.getPercentage() < 0) {
+            throw new IllegalStateException("The Borrowing can't be negative: " + borrowingInterest);
+        }
+        if (new Money(0).compareTo(balance) > 0) {
+            balance = balance.applyPercentage(borrowingInterest);
+        }
     }
 
     /**

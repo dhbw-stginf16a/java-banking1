@@ -46,7 +46,7 @@ public class Percentage {
      *
      * @return the int value with two decimals precision
      */
-    int getPercentage() {
+    public int getPercentage() {
         throw new NotYetImplementedException();
     }
 }
