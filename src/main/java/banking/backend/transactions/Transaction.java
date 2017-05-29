@@ -29,7 +29,7 @@ public abstract class Transaction {
      *
      * @param amount the positive monetary amount
      */
-    public Transaction(Money amount) {
+    protected Transaction(Money amount) {
         throw new NotYetImplementedException();
     }
 
@@ -67,6 +67,10 @@ public abstract class Transaction {
      */
     @Override
     public abstract String toString();
+
+    public DateTime getIssueDate() {
+        return issued;
+    }
 
     public enum Status {PENDING, FAILED, SUCCESS}
 }

@@ -41,6 +41,15 @@ abstract public class Account {
     }
 
     /**
+     * Return the account balance.
+     *
+     * @return the current balance
+     */
+    public Money getBalance() {
+        return balance;
+    }
+
+    /**
      * Get the unique account id.
      * If it has not been set a {@link IllegalStateException} is thrown.
      */
