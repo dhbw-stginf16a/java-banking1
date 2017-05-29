@@ -106,7 +106,10 @@ abstract public class Account {
      * @throws UnsupportedOperationException if the Account doesn't support receiving a invoice
      */
     public void receiveInvoice(Money amount) {
-        throw new NotYetImplementedException();
+        if (new Money(0).compareTo(amount) >= 0) {
+            throw new IllegalArgumentException("Can't receive a negative invoice: " + amount.toString());
+        }
+        balance = balance.add(amount);
     }
 
 
