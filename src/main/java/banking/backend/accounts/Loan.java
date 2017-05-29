@@ -29,7 +29,13 @@ abstract class Loan extends Account {
      * @throws IllegalStateException    if the value is set already
      */
     void initAmount(Money amount) {
-        throw new NotImplementedException();
+        if (balance != null) {
+            throw new IllegalStateException("The Loan is already initialised.");
+        }
+        if (new Money(0).compareTo(amount) >= 0) {
+            throw new IllegalArgumentException("Please enter a positive amount to initialise the Loan");
+        }
+        balance = amount.negate();
     }
 
     /**
@@ -61,5 +67,15 @@ abstract class Loan extends Account {
     @Override
     public Money getBalance() {
         throw new NotImplementedException();
+    }
+
+    @Override
+    public void sendInvoice(Money amount) throws InsufficientFundsException {
+        throw new UnsupportedOperationException("An Loan can't send invoices");
+    }
+
+    @Override
+    protected void withdraw(Money amount) throws InsufficientFundsException {
+        throw new UnsupportedOperationException("It's not possible to get more Money ot of a Loan.");
     }
 }

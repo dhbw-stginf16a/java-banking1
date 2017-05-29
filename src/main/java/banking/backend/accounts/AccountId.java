@@ -1,11 +1,35 @@
 package banking.backend.accounts;
 
-import banking.NotYetImplementedException;
-
 public class AccountId {
+    private int savedId;
 
     public AccountId() {
-        throw new NotYetImplementedException();
+        int numberWithOutChecksum = (int) (Math.random() * 10000000);
+        numberWithOutChecksum = (numberWithOutChecksum * 100) % 1000000000;
+        int moduloBefore = numberWithOutChecksum % 97;
+        savedId = numberWithOutChecksum + 98 - ((numberWithOutChecksum % 97));
+        if (savedId % 97 != 1) {
+            int moduloAfter = numberWithOutChecksum % 97;
+            throw new RuntimeException("This shouldn't happen " + moduloBefore + ", " + moduloAfter);
+        }
+    }
+
+
+    /**
+     * Must become a nine digit number that contains a 2 check digits
+     *
+     * @param id the String representation of the AccountId
+     * @throws IllegalArgumentException if the id given isn't a valid AccountId
+     */
+    public AccountId(String id) {
+        try {
+            savedId = Integer.parseInt(id);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("The accountId can only contain numbers", e);
+        }
+        if (savedId % 97 != 1) {
+            throw new IllegalArgumentException("The accountId ist invalid please check for typos.");
+        }
     }
 
     /**
@@ -45,7 +69,7 @@ public class AccountId {
      */
     @Override
     public int hashCode() {
-        throw new NotYetImplementedException();
+        return savedId / 100;
     }
 
     /**
@@ -56,6 +80,16 @@ public class AccountId {
      */
     @Override
     public boolean equals(Object obj) {
-        throw new NotYetImplementedException();
+        return !(obj == null || !(obj instanceof AccountId)) && savedId == ((AccountId) obj).savedId;
+    }
+
+    /**
+     * Returns the String Representation of the AccountId with its checksum in it.
+     *
+     * @return String
+     */
+    @Override
+    public String toString() {
+        return Integer.toString(savedId);
     }
 }
