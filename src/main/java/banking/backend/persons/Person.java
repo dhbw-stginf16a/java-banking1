@@ -38,6 +38,7 @@ public class Person {
      * @param address         the address of birth of the person
      * @param birthdate       the date of birth of the person
      * @param telephoneNumber the telephoneNumber of birth of the person
+     * @throws IllegalArgumentException if one argument (except the telephone number) is null
      */
     public Person(String name, String address, DateTime birthdate, String telephoneNumber) {
         throw new NotYetImplementedException();
@@ -52,4 +53,19 @@ public class Person {
         throw new NotYetImplementedException();
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public DateTime getBirthdate() {
+        return birthdate;
+    }
+
+    public String getTelephoneNumber() {
+        return telephoneNumber;
+    }
 }
