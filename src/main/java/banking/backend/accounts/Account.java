@@ -40,6 +40,7 @@ abstract public class Account {
             throw new IllegalArgumentException("The holder is null");
         }
         this.holder = holder;
+        this.balance = new Money(0);
     }
 
     /**
