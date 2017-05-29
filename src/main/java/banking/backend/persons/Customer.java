@@ -34,7 +34,8 @@ public class Customer extends Person {
 	 */
 	public Customer(String name, String address, DateTime birthdate, String telephoneNumber, boolean businessCustomer) {
 		super(name, address, birthdate, telephoneNumber);
-	}
+        throw new NotYetImplementedException();
+    }
 
 	/**
 	 * Get the unique customer id.

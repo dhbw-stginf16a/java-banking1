@@ -2,6 +2,9 @@ package banking.backend.persons;
 
 import banking.NotYetImplementedException;
 import banking.backend.DateTimeTest;
+import banking.backend.Money;
+import banking.backend.accounts.Account;
+import banking.backend.accounts.AccountId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -48,15 +51,6 @@ public class CustomerTest {
     }
 
     /**
-     * A dummy test to show that these tests aren't ready
-     */
-    @Test
-    @DisplayName("This test shows that not all test for the CustomerClass are done.")
-    public void notYetImplementedTest() {
-        throw new NotYetImplementedException(); // TODO remove this if all tests are implemented
-    }
-
-    /**
      * A dummy test to show that these tests aren't ready.
      * <p>
      * The test of {@link Customer#setupAccount} should be done in the AccountTest with the checking of all prerequisite for the accounts.
@@ -75,14 +69,38 @@ public class CustomerTest {
         Customer customer = getDummyCustomer();
         assertThrows(IllegalStateException.class, customer::getCustomerId);
 
-        CustomerId customerId = new CustomerId(); // TODO edit after implementing the CustomerId
+        CustomerId customerId = new CustomerId();
         assertThrows(IllegalArgumentException.class, () -> customer.setCustomerId(null));
 
         customer.setCustomerId(customerId);
 
         assertThrows(IllegalStateException.class, () -> customer.setCustomerId(customerId));
 
+        Customer customer2 = getDummyCustomer();
+        customer2.setCustomerId(customerId);
+
         assertEquals(customerId, customer.getCustomerId());
+        assertEquals(customer, customer2);
         assertSame(customerId, customer.getCustomerId());
+    }
+
+    /**
+     * Test if {@link Customer#invoice(Account, AccountId, Money)} actually performs the Invoice
+     * <p>
+     * This includes error testing
+     */
+    @Test
+    public void invoice() {
+        throw new NotYetImplementedException();
+    }
+
+    /**
+     * Test if {@link Customer#withdraw(Account, Money)} actually performs the Withdraw
+     * <p>
+     * This includes error testing
+     */
+    @Test
+    public void withdraw() {
+        throw new NotYetImplementedException();
     }
 }
