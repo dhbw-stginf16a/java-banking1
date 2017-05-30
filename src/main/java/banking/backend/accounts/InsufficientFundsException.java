@@ -10,4 +10,8 @@ public class InsufficientFundsException extends TransactionFailedException {
     public InsufficientFundsException(String msg) {
         super(msg);
     }
+
+    public InsufficientFundsException() {
+        super("Not enough Money to perform Transaction");
+    }
 }
