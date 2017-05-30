@@ -177,7 +177,7 @@ abstract public class Account {
      * @throws UnsupportedOperationException if the Account doesn't support a withdraw
      * @throws IllegalStateException if the Overdraft is negative
      */
-    protected void withdraw(Money amount) throws InsufficientFundsException {
+    public void withdraw(Money amount) throws InsufficientFundsException {
         if (new Money(0).compareTo(getOverdraft()) < 0) {
             throw new IllegalStateException("You must not overdraw your overdraft limit.");
         }
@@ -201,7 +201,7 @@ abstract public class Account {
      * @throws IllegalArgumentException if the amount is negative or zero
      * @throws UnsupportedOperationException if the Account doesn't support depositing
      */
-    protected void deposit(Money amount) {
+    public void deposit(Money amount) {
         if (new Money(0).compareTo(amount) >= 0) {
             throw new IllegalArgumentException("You can only deposit a positive amount.");
         }

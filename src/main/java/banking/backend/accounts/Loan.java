@@ -75,7 +75,7 @@ abstract class Loan extends Account {
     }
 
     @Override
-    protected void withdraw(Money amount) throws InsufficientFundsException {
+    public void withdraw(Money amount) throws InsufficientFundsException {
         throw new UnsupportedOperationException("It's not possible to get more Money ot of a Loan.");
     }
 }
