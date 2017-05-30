@@ -1,6 +1,5 @@
 package banking.backend;
 
-import banking.NotYetImplementedException;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
@@ -24,7 +23,7 @@ class MoneyTest {
     void add() {
         Money instance = new Money(1);
         assertAll(
-                () -> assertNotSame( // Test if the money after the addition is actually a other instance
+                () -> assertNotSame( // Test if the money after the addition is actually an other instance
                         instance,
                         instance.add(instance)),
                 () -> assertEquals( // 0.11 + 0.90 = 1.01
@@ -35,10 +34,7 @@ class MoneyTest {
                         new Money(5).add(new Money(5))),
                 () -> assertEquals( // 2 + (-3) = -1
                         new Money(-1),
-                        new Money(2).add(new Money(-3))),
-                () -> assertEquals(
-                        new Money("100,000,000,000,000.01€"),
-                        new Money("100,000,000,000,000.0€").add(new Money("0.01€")))
+                        new Money(2).add(new Money(-3)))
         );
     }
 
@@ -91,7 +87,7 @@ class MoneyTest {
                         new Money(-0.11).negate()),
                 () -> assertEquals(
                         new Money(1000),
-                        new Money(1000).negate()),
+                        new Money(-1000).negate()),
                 () -> assertEquals(
                         new Money(10),
                         new Money(10).negate().negate())
@@ -110,32 +106,31 @@ class MoneyTest {
         Money oneCentString = new Money("0.01€");
         Money oneCentDouble = new Money(0.01);
         Money twoInt = new Money(2);
-        assertAll(
-                () -> assertFalse(oneInt.equals(null)),
-                () -> assertFalse(oneInt.equals(new Object())),
-                () -> assertFalse(oneInt.equals("1")),
-                () -> assertFalse(oneInt.equals(1)),
-                () -> assertNotEquals(oneInt, twoInt),
-                () -> assertEquals(oneCentInt, oneCentDouble),
-                () -> assertEquals(oneCentInt, oneCentString),
-                () -> assertEquals(oneCentDouble, oneCentString),
-                () -> assertEquals(oneCentInt, oneIntInt),
-                () -> assertNotEquals(oneInt, oneCentInt),
-                () -> assertEquals(new Money("0.00€"), new Money("0€")),
-                () -> assertEquals(new Money("-0.00€"), new Money("0€")),
-                () -> assertThrows(NumberFormatException.class, () -> new Money("")),
-                () -> assertThrows(NumberFormatException.class, () -> new Money("100.111€")),
-                () -> assertThrows(NumberFormatException.class, () -> new Money("10,0€")),
-                () -> assertThrows(NumberFormatException.class, () -> new Money("10.€")),
-                () -> assertThrows(NumberFormatException.class, () -> new Money("100.100,0€")),
-                () -> assertThrows(NumberFormatException.class, () -> new Money("100.100,01€")),
-                () -> assertThrows(NumberFormatException.class, () -> new Money("10")),
-                () -> assertThrows(NumberFormatException.class, () -> new Money("0")),
-                () -> assertThrows(NumberFormatException.class, () -> new Money("0.00")),
-                () -> assertThrows(NumberFormatException.class, () -> new Money("10,0€")),
-                () -> assertThrows(IllegalArgumentException.class, () -> new Money(10, -1)),
-                () -> assertThrows(IllegalArgumentException.class, () -> new Money(10, 100))
-        );
+        assertFalse(oneInt.equals(null));
+        assertFalse(oneInt.equals(new Object()));
+        assertFalse(oneInt.equals("1"));
+        assertFalse(oneInt.equals(1));
+        assertNotEquals(oneInt, twoInt);
+        assertEquals(oneCentInt, oneCentDouble);
+        assertEquals(oneCentInt, oneCentString);
+        assertEquals(oneCentDouble, oneCentString);
+        assertNotEquals(oneCentInt, oneIntInt);
+        assertNotEquals(oneInt, oneCentInt);
+        assertEquals(new Money("0.00€"), new Money("0€"));
+        assertEquals(new Money("-0.00€"), new Money("0€"));
+        assertThrows(NumberFormatException.class, () -> new Money(""));
+        assertThrows(NumberFormatException.class, () -> new Money("100.111€"));
+        assertThrows(NumberFormatException.class, () -> new Money("10,0€"));
+        assertThrows(NumberFormatException.class, () -> new Money("10.€"));
+        assertThrows(NumberFormatException.class, () -> new Money("100.100,0€"));
+        assertThrows(NumberFormatException.class, () -> new Money("100.100,01€"));
+        assertThrows(NumberFormatException.class, () -> new Money("10"));
+        assertThrows(NumberFormatException.class, () -> new Money("0"));
+        assertThrows(NumberFormatException.class, () -> new Money("0.00"));
+        assertThrows(NumberFormatException.class, () -> new Money("10,0€"));
+        assertThrows(IllegalArgumentException.class, () -> new Money(10, -1));
+        assertThrows(IllegalArgumentException.class, () -> new Money(-10, 1));
+        assertThrows(IllegalArgumentException.class, () -> new Money(10, 100));
     }
 
     /**
@@ -143,9 +138,21 @@ class MoneyTest {
      */
     @Test
     void applyPercentage() {
-        throw new NotYetImplementedException();
-    }
+        assertEquals(
+                new Money(1, 5),
+                new Money(1).applyPercentage(new Percentage(5)));
+        assertNotEquals(
+                new Money(1, 5),
+                new Money(1, 5).applyPercentage(new Percentage(5)));
+        assertNotEquals(
+                new Money(1, 5),
+                new Money(1).applyPercentage(new Percentage(-5)));
+        assertEquals(
+                new Money(0, 55),
+                new Money(0, 50).applyPercentage(new Percentage(10)));
 
+
+    }
     /**
      * Tests several to String Conversions
      *
