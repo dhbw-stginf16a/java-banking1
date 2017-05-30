@@ -1,15 +1,33 @@
 package banking.backend.accounts;
 
 public class AccountId {
+    /**
+     * The sum total of Places in the AccountId
+     */
+    private static final int COUNT_OF_PLACES = 9;
+
+    /**
+     * The count of check digits at the end of the AccountId
+     */
+    private static final int COUNT_OF_CHECK_DIGITS = 2;
+
+    /**
+     * Checksum Modulo
+     */
+    private static final int MODULO_CHECKSUM = 97;
+
     private int savedId;
 
+    /**
+     * Generates a random new AccountId
+     */
     public AccountId() {
-        int numberWithOutChecksum = (int) (Math.random() * 10000000);
-        numberWithOutChecksum = (numberWithOutChecksum * 100) % 1000000000;
-        int moduloBefore = numberWithOutChecksum % 97;
-        savedId = numberWithOutChecksum + 98 - ((numberWithOutChecksum % 97));
-        if (savedId % 97 != 1) {
-            int moduloAfter = numberWithOutChecksum % 97;
+        int numberWithOutChecksum = (int) (Math.random() * Math.pow(10, COUNT_OF_PLACES - COUNT_OF_CHECK_DIGITS));
+        numberWithOutChecksum = (numberWithOutChecksum * 100) % ((int) Math.pow(10, COUNT_OF_PLACES));
+        int moduloBefore = numberWithOutChecksum % MODULO_CHECKSUM;
+        savedId = numberWithOutChecksum + MODULO_CHECKSUM + 1 - ((numberWithOutChecksum % MODULO_CHECKSUM));
+        if (savedId % MODULO_CHECKSUM != 1) {
+            int moduloAfter = numberWithOutChecksum % MODULO_CHECKSUM;
             throw new RuntimeException("This shouldn't happen " + moduloBefore + ", " + moduloAfter);
         }
     }
@@ -27,7 +45,7 @@ public class AccountId {
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("The accountId can only contain numbers", e);
         }
-        if (savedId % 97 != 1) {
+        if (savedId % MODULO_CHECKSUM != 1) {
             throw new IllegalArgumentException("The accountId ist invalid please check for typos.");
         }
     }
@@ -69,7 +87,7 @@ public class AccountId {
      */
     @Override
     public int hashCode() {
-        return savedId / 100;
+        return (int) (savedId / Math.pow(10, COUNT_OF_CHECK_DIGITS));
     }
 
     /**

@@ -2,6 +2,7 @@ package banking.backend.accounts;
 
 import banking.backend.persons.Customer;
 import banking.backend.persons.CustomerTest;
+import banking.backend.persons.Person;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -50,15 +51,36 @@ class JuniorAccountTest {
     }
 
     @Test
-    public void testConstructing() {
+    public void testConstructingWithValidLegalGuardian() {
+        Person legalGuardian = CustomerTest.getDummyCustomer(18, false);
         Customer customerOfLegalAgeNoneBusiness = CustomerTest.getDummyCustomer(16, false);
         Customer customerOfLegalAgeBusiness = CustomerTest.getDummyCustomer(16, true);
         Customer customerOfNoneLegalAgeNoneBusiness = CustomerTest.getDummyCustomer(16 - 1, false);
         Customer customerOfNoneLegalAgeBusiness = CustomerTest.getDummyCustomer(16 - 1, true);
 
-        assertThrows(IllegalArgumentException.class, () -> customerOfLegalAgeNoneBusiness.setupAccount(JuniorAccount.class));
-        assertSame(customerOfLegalAgeBusiness, customerOfNoneLegalAgeNoneBusiness.setupAccount(JuniorAccount.class).getHolder());
-        assertThrows(IllegalArgumentException.class, () -> customerOfLegalAgeBusiness.setupAccount(JuniorAccount.class));
-        assertThrows(IllegalArgumentException.class, () -> customerOfNoneLegalAgeBusiness.setupAccount(JuniorAccount.class));
+        assertThrows(IllegalArgumentException.class, () -> customerOfLegalAgeNoneBusiness.setupAccount(JuniorAccount.class, legalGuardian));
+        assertSame(customerOfLegalAgeBusiness, customerOfNoneLegalAgeNoneBusiness.setupAccount(JuniorAccount.class, legalGuardian).getHolder());
+        assertThrows(IllegalArgumentException.class, () -> customerOfLegalAgeBusiness.setupAccount(JuniorAccount.class, legalGuardian));
+        assertThrows(IllegalArgumentException.class, () -> customerOfNoneLegalAgeBusiness.setupAccount(JuniorAccount.class, legalGuardian));
+    }
+
+    @Test
+    public void testConstructingWithInvalidLegalGuardian() {
+        Person legalGuardian = CustomerTest.getDummyCustomer(17, false);
+        Customer customerOfLegalAgeNoneBusiness = CustomerTest.getDummyCustomer(16, false);
+        Customer customerOfLegalAgeBusiness = CustomerTest.getDummyCustomer(16, true);
+        Customer customerOfNoneLegalAgeNoneBusiness = CustomerTest.getDummyCustomer(16 - 1, false);
+        Customer customerOfNoneLegalAgeBusiness = CustomerTest.getDummyCustomer(16 - 1, true);
+
+        assertThrows(IllegalArgumentException.class, () -> customerOfLegalAgeNoneBusiness.setupAccount(JuniorAccount.class, legalGuardian));
+        assertThrows(IllegalArgumentException.class, () -> customerOfNoneLegalAgeNoneBusiness.setupAccount(JuniorAccount.class, legalGuardian));
+        assertThrows(IllegalArgumentException.class, () -> customerOfLegalAgeBusiness.setupAccount(JuniorAccount.class, legalGuardian));
+        assertThrows(IllegalArgumentException.class, () -> customerOfNoneLegalAgeBusiness.setupAccount(JuniorAccount.class, legalGuardian));
+    }
+
+    @Test
+    public void testConstructingWithoutLegalGuardian() {
+        Customer customerOfNoneLegalAgeNoneBusiness = CustomerTest.getDummyCustomer(16 - 1, false);
+        assertThrows(RuntimeException.class, () -> customerOfNoneLegalAgeNoneBusiness.setupAccount(JuniorAccount.class));
     }
 }
