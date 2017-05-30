@@ -1,6 +1,5 @@
 package banking.backend.transactions;
 
-import banking.NotYetImplementedException;
 import banking.backend.Money;
 import banking.backend.accounts.Account;
 
@@ -34,8 +33,14 @@ public class Deposit extends Transaction {
     }
 
     @Override
-    public void apply() {
-        throw new NotYetImplementedException();
+    public void apply() throws TransactionFailedException {
+        try {
+            creditor.deposit(getAmount());
+        } catch (UnsupportedOperationException e) {
+            this.status = Status.FAILED;
+            throw new TransactionFailedException(e);
+        }
+        this.status = Status.SUCCESS;
     }
 
     /**

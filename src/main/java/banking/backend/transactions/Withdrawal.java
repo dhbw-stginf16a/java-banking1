@@ -1,8 +1,8 @@
 package banking.backend.transactions;
 
-import banking.NotYetImplementedException;
 import banking.backend.Money;
 import banking.backend.accounts.Account;
+import banking.backend.accounts.InsufficientFundsException;
 
 public class Withdrawal extends Transaction {
     /**
@@ -26,7 +26,13 @@ public class Withdrawal extends Transaction {
 
     @Override
     public void apply() throws TransactionFailedException {
-        throw new NotYetImplementedException();
+        try {
+            debtor.withdraw(getAmount());
+        } catch (UnsupportedOperationException | InsufficientFundsException e) {
+            this.status = Status.FAILED;
+            throw new TransactionFailedException(e);
+        }
+        this.status = Status.SUCCESS;
     }
 
     /**

@@ -81,9 +81,5 @@ public abstract class Transaction {
      * The current status of this transaction.
      * Default is pending and changes to either FAILED or SUCCESS on applying.
      */
-    public DateTime getIssueDate() {
-        return issued;
-    }
-
     public enum Status {PENDING, FAILED, SUCCESS}
 }

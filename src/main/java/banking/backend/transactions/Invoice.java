@@ -1,8 +1,8 @@
 package banking.backend.transactions;
 
-import banking.NotYetImplementedException;
 import banking.backend.Money;
 import banking.backend.accounts.Account;
+import banking.backend.accounts.InsufficientFundsException;
 
 public class Invoice extends Transaction {
     /**
@@ -33,7 +33,28 @@ public class Invoice extends Transaction {
 
     @Override
     public void apply() throws TransactionFailedException {
-        throw new NotYetImplementedException();
+        try {
+            try {
+                creditor.sendInvoice(new Money(0));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                debtor.receiveInvoice(new Money(0));
+            } catch (IllegalArgumentException e) {
+            }
+        } catch (UnsupportedOperationException e) {
+            this.status = Status.FAILED;
+            throw new TransactionFailedException(e);
+        }
+
+        try {
+            debtor.sendInvoice(getAmount());
+            creditor.receiveInvoice(getAmount());
+        } catch (InsufficientFundsException e) {
+            this.status = Status.FAILED;
+            throw new TransactionFailedException(e);
+        }
+        this.status = Status.SUCCESS;
     }
 
     /**

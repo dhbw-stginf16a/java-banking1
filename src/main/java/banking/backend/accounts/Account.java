@@ -17,6 +17,11 @@ abstract public class Account {
     protected Money balance;
 
     /**
+     * The last balance this account was at.
+     */
+    protected Money lastBalance = null;
+
+    /**
      * A unique identifier for this account.
      */
     protected AccountId accountId = null;
@@ -41,15 +46,6 @@ abstract public class Account {
         }
         this.holder = holder;
         this.balance = new Money(0);
-    }
-
-    /**
-     * Return the account balance.
-     *
-     * @return the current balance
-     */
-    public Money getBalance() {
-        return balance;
     }
 
     /**
@@ -223,5 +219,20 @@ abstract public class Account {
      */
     public Customer getHolder() {
         return holder;
+    }
+
+    /**
+     * Roll back the amount to the last value it was at.
+     *
+     * @param defaultBalance the value to use if there was no previous balance
+     */
+    public void rollback(int defaultBalance) {
+        if (lastBalance != null) {
+            balance = lastBalance;
+        }
+    }
+
+    public Money getBalance() {
+        return balance;
     }
 }
