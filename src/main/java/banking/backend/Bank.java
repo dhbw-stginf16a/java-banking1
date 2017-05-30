@@ -73,10 +73,10 @@ public class Bank {
      */
     public void addCustomer(Customer customer) {
         CustomerId customerId = generateAvailableCustomerId();
-        customer.setCustomerId(customerId);
         if (!customers.containsValue(customer)) {
             customers.put(customerId, customer);
         }
+        customer.setCustomerId(customerId);
     }
 
     /**
@@ -96,7 +96,11 @@ public class Bank {
      * @return all accounts of the customer
      */
     public List<Account> getCustomerAccounts(Customer customer) {
-        CustomerId customerId = customer.getCustomerId();
+        try {
+            CustomerId customerId = customer.getCustomerId();
+        } catch (IllegalStateException ignored) {
+            return new ArrayList<>();
+        }
         return this.accounts.values().stream().filter(
                 (Account account) -> account.getHolder().getCustomerId().equals(customerId)).collect(Collectors.toList());
     }

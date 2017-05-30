@@ -119,7 +119,7 @@ class BankTest {
         Customer dummyCustomer = CustomerTest.getDummyCustomer();
 
         // Customer should not be there before adding them
-        assertNull(bank.getCustomer(dummyCustomer.getCustomerId()));
+        assertEquals(0, bank.getCustomers().size());
 
         bank.addCustomer(dummyCustomer);
         assertSame(bank.getCustomer(dummyCustomer.getCustomerId()), dummyCustomer);
@@ -135,7 +135,7 @@ class BankTest {
         Account dummyAccount = AccountTest.getDummyAccount();
 
         // Customer should not be there before adding them
-        assertNull(bank.getAccount(dummyAccount.getAccountId()));
+        assertEquals(0, bank.getAccounts().size());
 
         bank.addAccount(dummyAccount);
         assertSame(bank.getAccount(dummyAccount.getAccountId()), dummyAccount);
