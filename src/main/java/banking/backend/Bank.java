@@ -159,7 +159,7 @@ public class Bank {
         AccountId accountId;
         do {
             accountId = new AccountId();
-        } while (!accounts.containsKey(accountId));
+        } while (accounts.containsKey(accountId));
         return accountId;
     }
 
@@ -172,7 +172,7 @@ public class Bank {
         CustomerId customerId;
         do {
             customerId = new CustomerId();
-        } while (!customers.containsKey(customerId));
+        } while (customers.containsKey(customerId));
         return customerId;
     }
 
