@@ -48,7 +48,7 @@ abstract class Investments extends Account {
     }
 
     @Override
-    protected void withdraw(Money amount) throws InsufficientFundsException {
+    public void withdraw(Money amount) throws InsufficientFundsException {
         throw new UnsupportedOperationException("You can't withdraw money from an Investments, because it's ours now and you will never see it again!");
     }
 }

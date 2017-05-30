@@ -73,6 +73,9 @@ abstract public class Account {
      * @throws IllegalStateException if the AccountId was already set
      */
     public void setAccountId(AccountId accountId) {
+        if (accountId == null) {
+            throw new IllegalArgumentException("The accountID shouldn'T be null.");
+        }
         if (this.accountId != null) {
             throw new IllegalStateException("Account ID already exists.");
         }
@@ -109,7 +112,7 @@ abstract public class Account {
             throw new IllegalStateException("The Borrowing can't be negative: " + borrowingInterest);
         }
         if (new Money(0).compareTo(balance) > 0) {
-            balance = balance.applyPercentage(borrowingInterest);
+            balance = balance.addPercentage(borrowingInterest);
         }
     }
 
@@ -125,7 +128,7 @@ abstract public class Account {
             throw new IllegalStateException("The savings can't be negative: " + savingInterest);
         }
         if (new Money(0).compareTo(balance) < 0) {
-            balance = balance.applyPercentage(savingInterest);
+            balance = balance.addPercentage(savingInterest);
         }
 
     }
@@ -155,7 +158,7 @@ abstract public class Account {
      * @throws IllegalStateException if the Overdraft is negative
      */
     public void sendInvoice(Money amount) throws InsufficientFundsException {
-        if (new Money(0).compareTo(getOverdraft()) < 0) {
+        if (new Money(0).compareTo(getOverdraft()) > 0) {
             throw new IllegalStateException("You must not overdraw your overdraft limit.");
         }
 
@@ -163,7 +166,7 @@ abstract public class Account {
             throw new IllegalArgumentException("You can only send a positive amount.");
         }
 
-        if (balance.compareTo(amount.add(getOverdraft())) < 0) {
+        if (amount.compareTo(balance.add(getOverdraft())) > 0) {
             throw new InsufficientFundsException("You do not have enough money to do this action.");
         }
 
@@ -181,8 +184,8 @@ abstract public class Account {
      * @throws UnsupportedOperationException if the Account doesn't support a withdraw
      * @throws IllegalStateException if the Overdraft is negative
      */
-    protected void withdraw(Money amount) throws InsufficientFundsException {
-        if (new Money(0).compareTo(getOverdraft()) < 0) {
+    public void withdraw(Money amount) throws InsufficientFundsException {
+        if (new Money(0).compareTo(getOverdraft()) > 0) {
             throw new IllegalStateException("You must not overdraw your overdraft limit.");
         }
 
@@ -190,7 +193,7 @@ abstract public class Account {
             throw new IllegalArgumentException("You can only withdraw a positive amount.");
         }
 
-        if (balance.compareTo(amount.add(getOverdraft())) < 0) {
+        if (amount.compareTo(balance.add(getOverdraft())) > 0) {
             throw new InsufficientFundsException("You do not have enough money to do this action.");
         }
 
@@ -205,7 +208,7 @@ abstract public class Account {
      * @throws IllegalArgumentException if the amount is negative or zero
      * @throws UnsupportedOperationException if the Account doesn't support depositing
      */
-    protected void deposit(Money amount) {
+    public void deposit(Money amount) {
         if (new Money(0).compareTo(amount) >= 0) {
             throw new IllegalArgumentException("You can only deposit a positive amount.");
         }
@@ -213,6 +216,11 @@ abstract public class Account {
         balance = balance.add(amount);
     }
 
+    /**
+     * Return the account's holder.
+     *
+     * @return the acount's holder
+     */
     public Customer getHolder() {
         return holder;
     }
