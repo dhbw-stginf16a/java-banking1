@@ -1,6 +1,7 @@
 package banking.backend.accounts;
 
 import banking.NotYetImplementedException;
+import banking.backend.Money;
 import banking.backend.Percentage;
 import banking.backend.persons.Customer;
 
@@ -10,10 +11,11 @@ abstract class Cards extends Account {
      * If the customer is null throws {@link IllegalArgumentException}
      *
      * @param holder the holder of this account
+     * @throws IllegalArgumentException if the Customer doesn't fit the requirements of the card
      */
     public Cards(Customer holder) {
         super(holder);
-        throw new NotYetImplementedException();
+
     }
 
     /**
@@ -23,7 +25,7 @@ abstract class Cards extends Account {
      */
     @Override
     protected Percentage getBorrowingInterest() {
-        throw new NotYetImplementedException();
+        return new Percentage(0);
     }
 
     /**
@@ -33,6 +35,6 @@ abstract class Cards extends Account {
      */
     @Override
     protected Percentage getSavingInterest() {
-        throw new NotYetImplementedException();
+        return new Percentage(0);
     }
 }

@@ -1,6 +1,5 @@
 package banking.backend.accounts;
 
-import banking.NotYetImplementedException;
 import banking.backend.Percentage;
 import banking.backend.persons.Customer;
 
@@ -14,11 +13,10 @@ class PensionPlan extends Investments {
      */
     public PensionPlan(Customer holder) {
         super(holder);
-        throw new NotYetImplementedException();
     }
 
     @Override
     protected Percentage getSavingInterest() {
-        throw new NotYetImplementedException();
+        return new Percentage(2); // not sure which number
     }
 }

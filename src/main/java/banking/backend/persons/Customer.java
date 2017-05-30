@@ -153,4 +153,8 @@ public class Customer extends Person {
     public boolean isBusinessCustomer() {
         return businessCustomer;
     }
+
+	public boolean isBusinessCustomer() {
+		return businessCustomer;
+	}
 }
