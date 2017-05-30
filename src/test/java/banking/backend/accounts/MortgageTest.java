@@ -49,7 +49,7 @@ class MortgageTest {
     }
 
     @Test
-    public void testConstructing() {
+    public void testConstructing() throws IllegalAccessException, InstantiationException {
         AccountTest.testConstructing(Mortgage.class, 18, false);
     }
 }

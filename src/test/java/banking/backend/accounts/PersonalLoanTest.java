@@ -51,7 +51,7 @@ class PersonalLoanTest {
     }
 
     @Test
-    public void testConstructing() {
+    public void testConstructing() throws IllegalAccessException, InstantiationException {
         AccountTest.testConstructing(PersonalLoan.class, 18, false);
     }
 }

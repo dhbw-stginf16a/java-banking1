@@ -197,7 +197,7 @@ public class AccountTest {
      * @param requireAge      the required age to open this account
      * @param requireBusiness if the Holder needs to be a business Customer
      */
-    public static void testConstructing(Class<? extends Account> toTest, int requireAge, boolean requireBusiness) {
+    public static void testConstructing(Class<? extends Account> toTest, int requireAge, boolean requireBusiness) throws IllegalAccessException, InstantiationException {
         Customer customerOfLegalAgeNoneBusiness = CustomerTest.getDummyCustomer(requireAge, false);
         Customer customerOfLegalAgeBusiness = CustomerTest.getDummyCustomer(requireAge, true);
         Customer customerOfNoneLegalAgeNoneBusiness = CustomerTest.getDummyCustomer(requireAge - 1, false);

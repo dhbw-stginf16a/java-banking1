@@ -63,7 +63,7 @@ public class CustomerTest {
     /**
      * A dummy test to show that these tests aren't ready.
      * <p>
-     * The test of {@link Customer#setupAccount} should be done in the {@link AccountTest} with the checking of all prerequisite for the accounts.
+     * The test of {@link Customer#setupAccount} should be done in the {@link banking.backend.accounts.AccountTest} with the checking of all prerequisite for the accounts.
      */
     @Test
     @DisplayName("This test serves as a reminder that the check of Customer.setupAccount should be done somewhere else.")

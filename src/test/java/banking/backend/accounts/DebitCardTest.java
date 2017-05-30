@@ -50,7 +50,7 @@ class DebitCardTest {
     }
 
     @Test
-    public void testConstructing() {
+    public void testConstructing() throws IllegalAccessException, InstantiationException {
         Customer customerOfLegalAgeNoneBusiness = CustomerTest.getDummyCustomer(18, false);
         Customer customerOfLegalAgeBusiness = CustomerTest.getDummyCustomer(18, true);
         Customer customerOfNoneLegalAgeNoneBusiness = CustomerTest.getDummyCustomer(17, false);

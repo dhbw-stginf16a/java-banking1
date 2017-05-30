@@ -50,7 +50,7 @@ class CorporateLoanTest {
     }
 
     @Test
-    public void testConstructing() {
+    public void testConstructing() throws IllegalAccessException, InstantiationException {
         AccountTest.testConstructing(CorporateLoan.class, 18, true);
     }
 }

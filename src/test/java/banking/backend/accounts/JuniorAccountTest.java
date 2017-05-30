@@ -51,7 +51,7 @@ class JuniorAccountTest {
     }
 
     @Test
-    public void testConstructingWithValidLegalGuardian() {
+    public void testConstructingWithValidLegalGuardian() throws IllegalAccessException, InstantiationException {
         Person legalGuardian = CustomerTest.getDummyCustomer(18, false);
         Customer customerOfLegalAgeNoneBusiness = CustomerTest.getDummyCustomer(16, false);
         Customer customerOfLegalAgeBusiness = CustomerTest.getDummyCustomer(16, true);
@@ -65,7 +65,7 @@ class JuniorAccountTest {
     }
 
     @Test
-    public void testConstructingWithInvalidLegalGuardian() {
+    public void testConstructingWithInvalidLegalGuardian() throws IllegalAccessException, InstantiationException {
         Person legalGuardian = CustomerTest.getDummyCustomer(17, false);
         Customer customerOfLegalAgeNoneBusiness = CustomerTest.getDummyCustomer(16, false);
         Customer customerOfLegalAgeBusiness = CustomerTest.getDummyCustomer(16, true);
@@ -79,7 +79,7 @@ class JuniorAccountTest {
     }
 
     @Test
-    public void testConstructingWithoutLegalGuardian() {
+    public void testConstructingWithoutLegalGuardian() throws IllegalAccessException, InstantiationException {
         Customer customerOfNoneLegalAgeNoneBusiness = CustomerTest.getDummyCustomer(16 - 1, false);
         assertThrows(RuntimeException.class, () -> customerOfNoneLegalAgeNoneBusiness.setupAccount(JuniorAccount.class));
     }
