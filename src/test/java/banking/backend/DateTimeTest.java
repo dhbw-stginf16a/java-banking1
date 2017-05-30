@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * Created by guserav on 28.05.2017.
  */
-class DateTimeTest {
+public class DateTimeTest {
     private static final String PATTERN = "yyyy-MM-dd_HH:mm:ss";
 
     /**

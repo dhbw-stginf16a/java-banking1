@@ -6,6 +6,6 @@ package banking;
  */
 public class NotYetImplementedException extends RuntimeException {
     public NotYetImplementedException() {
-        super("This function is not yet implemented");
+        super("This function is not yet implemented.");
     }
 }

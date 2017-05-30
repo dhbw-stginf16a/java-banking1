@@ -1,22 +1,53 @@
 package banking.backend.persons;
 
-import banking.NotYetImplementedException;
-
 public class CustomerId {
     /**
-     * Create a new random customer id.
+     * The sum total of Places in the CustomerId
      */
-    public CustomerId() {
-        throw new NotYetImplementedException();
-    }
+    private static final int COUNT_OF_PLACES = 9;
 
     /**
-     * Recreate a customer id by providing the output of {@link #toString}
-     *
-     * @param customerId the customer id string
+     * The count of check digits at the end of the CustomerId
      */
-    public CustomerId(String customerId) {
-        throw new NotYetImplementedException();
+    private static final int COUNT_OF_CHECK_DIGITS = 2;
+
+    /**
+     * Checksum Modulo
+     */
+    private static final int MODULO_CHECKSUM = 97;
+
+    private int savedId;
+
+    /**
+     * Generates a random new CustomerId
+     */
+    public CustomerId() {
+        int numberWithOutChecksum = (int) (Math.random() * Math.pow(10, COUNT_OF_PLACES - COUNT_OF_CHECK_DIGITS));
+        numberWithOutChecksum = (numberWithOutChecksum * 100) % ((int) Math.pow(10, COUNT_OF_PLACES));
+        int moduloBefore = numberWithOutChecksum % MODULO_CHECKSUM;
+        savedId = numberWithOutChecksum + MODULO_CHECKSUM + 1 - ((numberWithOutChecksum % MODULO_CHECKSUM));
+        if (savedId % MODULO_CHECKSUM != 1) {
+            int moduloAfter = numberWithOutChecksum % MODULO_CHECKSUM;
+            throw new RuntimeException("This shouldn't happen " + moduloBefore + ", " + moduloAfter);
+        }
+    }
+
+
+    /**
+     * Must become a nine digit number that contains a 2 check digits
+     *
+     * @param id the String representation of the CustomerId
+     * @throws IllegalArgumentException if the id given isn't a valid CustomerId
+     */
+    public CustomerId(String id) {
+        try {
+            savedId = Integer.parseInt(id);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("The CustomerId can only contain numbers", e);
+        }
+        if (savedId % MODULO_CHECKSUM != 1) {
+            throw new IllegalArgumentException("The CustomerId ist invalid please check for typos.");
+        }
     }
 
     /**
@@ -56,7 +87,7 @@ public class CustomerId {
      */
     @Override
     public int hashCode() {
-        throw new NotYetImplementedException();
+        return (int) (savedId / Math.pow(10, COUNT_OF_CHECK_DIGITS));
     }
 
     /**
@@ -67,6 +98,16 @@ public class CustomerId {
      */
     @Override
     public boolean equals(Object obj) {
-        throw new NotYetImplementedException();
+        return !(obj == null || !(obj instanceof CustomerId)) && savedId == ((CustomerId) obj).savedId;
+    }
+
+    /**
+     * Returns the String Representation of the CustomerId with its checksum in it.
+     *
+     * @return string representation
+     */
+    @Override
+    public String toString() {
+        return Integer.toString(savedId);
     }
 }

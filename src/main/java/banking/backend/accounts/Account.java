@@ -18,6 +18,11 @@ abstract public class Account {
     protected Money balance;
 
     /**
+     * The last balance this account was at.
+     */
+    protected Money lastBalance = null;
+
+    /**
      * A unique identifier for this account.
      */
     protected AccountId accountId = null;
@@ -109,7 +114,6 @@ abstract public class Account {
         throw new UnsupportedOperationException("This account does not suppport receiving invoices.");
     }
 
-
     /**
      * Handle an outgoing invoice from this account with a specific amount of money.
      * Should check if the transaction is valid i.e enough funds available.
@@ -141,7 +145,23 @@ abstract public class Account {
         throw new UnsupportedOperationException("This account does not suppport depositing money.");
     }
 
+    /**
+     * Return the account's holder.
+     *
+     * @return the acount's holder
+     */
     public Customer getHolder() {
         return holder;
+    }
+
+    /**
+     * Roll back the amount to the last value it was at.
+     *
+     * @param defaultBalance the value to use if there was no previous balance
+     */
+    public void rollback(int defaultBalance) {
+        if (lastBalance != null) {
+            balance = lastBalance;
+        }
     }
 }
