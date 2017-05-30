@@ -1,21 +1,28 @@
 package banking.backend;
 
-import banking.NotYetImplementedException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
+import java.util.Locale;
 
 /**
  * A class for handling amounts of currency.
  */
 public class Money implements Comparable<Money> {
+    /**
+     * Amount in cents
+     */
+    private int cents;
 
     /**
-     * Constructs a money object holding the given amount.
-     *
+     * Constructs a money object holding the given amount in euro.
+     * <p>
      * To add cents please use {@link Money#Money(int, int)}
      *
      * @param amount the integer representation of the amount
      */
     public Money(int amount) {
-        throw new NotYetImplementedException();
+        cents = amount * 100;
     }
 
     /**
@@ -26,28 +33,37 @@ public class Money implements Comparable<Money> {
      * @throws IllegalArgumentException if cents ist not in the interval [0,99]
      */
     public Money(int amount, int cents) {
-        throw new NotYetImplementedException();
+
+        if (cents < 0 || cents > 99) {
+            throw new IllegalArgumentException("cent is a wrong value has to be between 0 and 99");
+        } else {
+            if (amount < 0) {
+                throw new IllegalArgumentException("amount cant be a negative number");
+            } else this.cents = amount * 100 + cents;
+        }
+
+
     }
 
     /**
-     * Constructs a money object from the given double value and cuts off after the the second decimal place
+     * Constructs a money object from the given double value and cuts off after the second decimal place
      *
      * @param amount the double value to store
      */
     public Money(double amount) {
-        throw new NotYetImplementedException();
+        cents = (int) (amount * 100);
     }
 
     /**
      * Converts the String if possible to a money amount. The String needs to pass the following regex:
      * ^-?\d{1,3}?(,\d{3})*((\.\d\d)|(\.\d))?€$
-     *
+     * <p>
      * In words:
      * - The decimal separator is '.'
      * - The thousands separator is needed and is ','
      * - The number can either have no decimal separator and no decimals or exactly one or two decimal places
      * - The euro after the number is needed
-     *
+     * <p>
      * This means that the following formats should be handled:
      * - XXX,XXX.XX€ (english format)
      * - X,XXX.X€
@@ -61,46 +77,79 @@ public class Money implements Comparable<Money> {
      * @throws NumberFormatException if the String isn't of the format specified above
      */
     public Money(String amount) {
-        throw new NotYetImplementedException();
+        double a;
+        if (amount.matches("^-?\\d{1,3}?(,\\d{3})*((\\.\\d\\d)|(\\.\\d))?€$")) {
+            DecimalFormat df = new DecimalFormat("###,###.##€", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+            try {
+                Double number = df.parse(amount).doubleValue();
+                cents = (int) (number * 100);
+            } catch (ParseException e) {
+                throw new NumberFormatException("Number is not in the format ###,###.##");
+            }
+        } else throw new NumberFormatException("Number is not in the format ###,###.##");
+    }
+
+
+    /**
+     * adds one instance of money to an already existing instance.
+     *
+     * @param money the summand
+     * @return a new instance after calculation
+     */
+
+    public Money add(Money money) {
+
+        Money result = new Money(0, 0);
+        result.cents = money.cents + this.cents;
+        return result;
     }
 
     /**
-     * Returns a new instance of Money with the added value of this and amount.
+     * Returns a new instance of Money with the value of this minus money.
      *
-     * @param amount the summand
+     * @param money the subtrahend
      * @return a new instance after calculation
      */
-    public Money add(Money amount) {
-        throw new NotYetImplementedException();
-    }
-
-    /**
-     * Returns a new instance of Money with the value of this minus amount.
-     *
-     * @param amount the subtrahend
-     * @return a new instance after calculation
-     */
-    public Money subtract(Money amount) {
-        throw new NotYetImplementedException();
+    public Money subtract(Money money) {
+        Money result = new Money(0, 0);
+        result.cents = this.cents - money.cents;
+        return result;
     }
 
     /**
      * Returns a new instance with the negative value of this.
+     *
      * @return a new instance after calculation
      */
     public Money negate() {
-        throw new NotYetImplementedException();
+        return new Money(this.cents * -0.01);
     }
 
     /**
      * Checks whether this is equal to another monetary amount.
      *
      * @param o the object maybe
-     * @return false if other object or different monetary amount - true otherwise
+     * @return true if same object or same monetary amount - false otherwise
      */
     @Override
     public boolean equals(Object o) {
-        throw new NotYetImplementedException();
+        if (o == null) {
+            return false;
+        } else {
+            return o instanceof Money && (this.cents == ((Money) o).cents);
+        }
+    }
+
+    /**
+     * Adds the needed percentage to the value and generates a new instance containing the result
+     *
+     * @param percentage the percentage to be calculated
+     * @return a new instance after calculation
+     * @deprecated
+     */
+    @Deprecated
+    Money applyPercentage(Percentage percentage) {
+        return addPercentage(percentage);
     }
 
     /**
@@ -109,8 +158,11 @@ public class Money implements Comparable<Money> {
      * @param percentage the percentage to be calculated
      * @return a new instance after calculation
      */
-    Money applyPercentage(Percentage percentage) {
-        throw new NotYetImplementedException();
+    public Money addPercentage(Percentage percentage) {
+        Money money = new Money(0);
+        Percentage hundred = new Percentage(100);
+        money.cents = this.cents * ((hundred.getPercentage()) / 100 + (percentage.getPercentage() / 100)) / 100;
+        return money;
     }
 
     /**
@@ -120,7 +172,10 @@ public class Money implements Comparable<Money> {
      */
     @Override
     public String toString() {
-        throw new NotYetImplementedException();
+        double total;
+        DecimalFormat df = new DecimalFormat("###,##0.00€", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+        total = this.cents / 100.0;
+        return df.format(total);
     }
 
     /**
@@ -153,7 +208,7 @@ public class Money implements Comparable<Money> {
      * <i>signum</i> function, which is defined to return one of <tt>-1</tt>,
      * <tt>0</tt>, or <tt>1</tt> according to whether the value of
      * <i>expression</i> is negative, zero or positive.
-     *
+     * <p>
      * This returns -1 if this object is less than money
      *
      * @param money the money object to be compared.
@@ -165,6 +220,10 @@ public class Money implements Comparable<Money> {
      */
     @Override
     public int compareTo(Money money) {
-        throw new NotYetImplementedException();
+        if (this.cents < money.cents) {
+            return -1;
+        } else if (this.cents == money.cents) {
+            return 0;
+        } else return 1;
     }
 }
