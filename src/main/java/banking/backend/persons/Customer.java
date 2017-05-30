@@ -7,6 +7,8 @@ import banking.backend.Money;
 import banking.backend.accounts.Account;
 import banking.backend.accounts.AccountId;
 import banking.backend.accounts.JuniorAccount;
+import banking.backend.transactions.Deposit;
+import banking.backend.transactions.TransactionFailedException;
 
 /**
  * A customer is any person who has an account with the company.
@@ -116,9 +118,16 @@ public class Customer extends Person {
      * @param origin      the account from which the money is drawn
      * @param destination the account to which the money is transferred
      * @param amount      the amount of money to be transferred
+     * @throws TransactionFailedException if the transaction was not successful
      */
-    public void invoice(Account origin, AccountId destination, Money amount) {
-        throw new NotYetImplementedException();
+    public void invoice(Account origin, AccountId destination, Money amount) throws TransactionFailedException {
+        Bank bank = Bank.getInstance();
+        Account account = bank.getAccount(destination);
+        if (account == null) {
+            throw new TransactionFailedException("It is not possible to deposit money into an account that does not exist");
+        }
+        Deposit deposit = new Deposit(amount, account);
+        bank.applyTransaction(deposit);
     }
 
     /**
