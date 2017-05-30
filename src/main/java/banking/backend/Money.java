@@ -34,10 +34,14 @@ public class Money implements Comparable<Money> {
      */
     public Money(int amount, int cents) {
 
-        if (amount < 0 || cents < 0 || cents > 99) {
-            throw new IllegalArgumentException("Number is not in the format ###,###.##");
+        if (cents < 0 || cents > 99) {
+            throw new IllegalArgumentException("cent is a wrong value has to be between 0 and 99");
+        } else {
+            if (amount < 0) {
+                throw new IllegalArgumentException("amount cant be a negative number");
+            } else this.cents = amount * 100 + cents;
         }
-        this.cents = amount * 100 + cents;
+
 
     }
 
@@ -101,7 +105,7 @@ public class Money implements Comparable<Money> {
     }
 
     /**
-     * Returns a new instance of Money with the value of this minus amount.
+     * Returns a new instance of Money with the value of this minus money.
      *
      * @param money the subtrahend
      * @return a new instance after calculation
@@ -141,10 +145,23 @@ public class Money implements Comparable<Money> {
      *
      * @param percentage the percentage to be calculated
      * @return a new instance after calculation
+     * @deprecated
      */
+    @Deprecated
     Money applyPercentage(Percentage percentage) {
+        return addPercentage(percentage);
+    }
+
+    /**
+     * Adds the needed percentage to the value and generates a new instance containing the result
+     *
+     * @param percentage the percentage to be calculated
+     * @return a new instance after calculation
+     */
+    public Money addPercentage(Percentage percentage) {
         Money money = new Money(0);
-        money.cents = this.cents * (percentage.getPercentage() / 100) / 100;
+        Percentage hundred = new Percentage(100);
+        money.cents = this.cents * ((hundred.getPercentage()) / 100 + (percentage.getPercentage() / 100)) / 100;
         return money;
     }
 

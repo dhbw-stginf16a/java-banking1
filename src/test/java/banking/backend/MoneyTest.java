@@ -140,19 +140,16 @@ class MoneyTest {
     void applyPercentage() {
         assertEquals(
                 new Money(1, 5),
-                new Money(1).applyPercentage(new Percentage(105)));
+                new Money(1).applyPercentage(new Percentage(5)));
         assertNotEquals(
                 new Money(1, 5),
-                new Money(1, 5).applyPercentage(new Percentage(105)));
-        assertEquals(
-                new Money(5, 0),
-                new Money(100).applyPercentage(new Percentage(5)));
+                new Money(1, 5).applyPercentage(new Percentage(5)));
         assertNotEquals(
                 new Money(1, 5),
-                new Money(1).applyPercentage(new Percentage(-105)));
+                new Money(1).applyPercentage(new Percentage(-5)));
         assertEquals(
                 new Money(0, 55),
-                new Money(0, 50).applyPercentage(new Percentage(110)));
+                new Money(0, 50).applyPercentage(new Percentage(10)));
 
 
     }
