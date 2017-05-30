@@ -10,4 +10,16 @@ public class TransactionFailedException extends Exception {
     public TransactionFailedException(String msg) {
         super(msg);
     }
+
+    public TransactionFailedException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public TransactionFailedException(Throwable cause) {
+        super(cause);
+    }
+
+    public TransactionFailedException() {
+        super("The attempted failed.");
+    }
 }

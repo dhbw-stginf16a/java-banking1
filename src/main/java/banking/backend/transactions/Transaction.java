@@ -9,21 +9,19 @@ import banking.backend.Money;
  */
 public abstract class Transaction {
     /**
+     * The status of applying the transaction.
+     * Has to be set by {@link #apply()} before throwing an exception to indicate success.
+     */
+    protected Status status = Status.PENDING;
+    /**
      * The monetary value of the transaction.
      */
     private Money amount;
-
     /**
      * The point in time when the transaction was issued.
      * Should be applied shortly after, therefore another `applied` attribute is not needed.
      */
     private DateTime issued;
-
-    /**
-     * The status of applying the transaction.
-     * Has to be set by {@link #apply()} before throwing an exception to indicate success.
-     */
-    private Status status = Status.PENDING;
 
     /**
      * Constructs a transaction issued now with specified amount.

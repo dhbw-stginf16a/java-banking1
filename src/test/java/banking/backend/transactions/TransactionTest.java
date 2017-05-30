@@ -1,9 +1,5 @@
 package banking.backend.transactions;
 
-import banking.NotYetImplementedException;
-
 class TransactionTest {
-    static Transaction getDummyTransaction() {
-        throw new NotYetImplementedException();
-    }
+    //TODO implement test for status and Constructor #27
 }
