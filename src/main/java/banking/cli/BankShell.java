@@ -73,7 +73,7 @@ public class BankShell implements ShellDependent {
         List<Customer> customers = Bank.getInstance().getCustomers();
         for (Customer customer : customers) {
             table.addRow(customer.getName(), customer.getAddress(), customer.getAge(),
-                    customer.getTelephone(), customer.isBusinessCustomer());
+                    customer.getTelephoneNumber(), customer.isBusinessCustomer());
         }
         table.addRow("Name", "address", 5, "0711", false);
         return table.toString();

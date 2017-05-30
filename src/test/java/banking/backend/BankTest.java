@@ -1,6 +1,7 @@
 package banking.backend;
 
 import banking.backend.accounts.Account;
+import banking.backend.accounts.AccountTest;
 import banking.backend.accounts.AccountId;
 import banking.backend.accounts.CurrentAccount;
 import banking.backend.persons.Customer;
@@ -144,7 +145,7 @@ class BankTest {
      * Check whether the added accounts of a customer are returned.
      */
     @Test
-    void getCustomerAccounts() {
+    void getCustomerAccounts() throws InstantiationException, IllegalAccessException {
         Bank bank = Bank.getInstance();
         List<Account> customerAccounts;
         Customer dummyCustomer = CustomerTest.getDummyCustomer();

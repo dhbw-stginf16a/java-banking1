@@ -1,6 +1,5 @@
 package banking.backend.accounts;
 
-import banking.NotYetImplementedException;
 import banking.backend.Money;
 import banking.backend.Percentage;
 import banking.backend.persons.Customer;
@@ -15,7 +14,6 @@ abstract class Savings extends Account {
      */
     public Savings(Customer holder) {
         super(holder);
-        throw new NotYetImplementedException();
     }
 
     /**
@@ -25,7 +23,7 @@ abstract class Savings extends Account {
      */
     @Override
     protected Money getOverdraft() {
-        throw new NotYetImplementedException();
+        return new Money("0€");
     }
 
     /**
@@ -35,6 +33,11 @@ abstract class Savings extends Account {
      */
     @Override
     protected Percentage getBorrowingInterest() {
-        throw new NotYetImplementedException();
+        return new Percentage("0%");
+    }
+
+    @Override
+    public void sendInvoice(Money amount) throws InsufficientFundsException {
+        throw new UnsupportedOperationException("You can't send invoices from a Savings account");
     }
 }
