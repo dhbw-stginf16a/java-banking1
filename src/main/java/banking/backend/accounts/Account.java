@@ -89,7 +89,7 @@ abstract public class Account {
     /**
      * Apply the borrowing interest and therefore decrease the balance even further.
      */
-    private void applyBorrowingInterest() {
+    public void applyBorrowingInterest() {
         throw new UnsupportedOperationException("This account does not suppport borrowing interest.");
     }
 
