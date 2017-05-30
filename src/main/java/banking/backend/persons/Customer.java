@@ -115,4 +115,13 @@ public class Customer extends Person {
     public boolean equals(Object o) {
         throw new NotYetImplementedException();
     }
+
+    /**
+     * Return true if this is a business customer.
+     *
+     * @return whether this is a business customer
+     */
+    public boolean isBusinessCustomer() {
+        return businessCustomer;
+    }
 }

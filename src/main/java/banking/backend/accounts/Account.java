@@ -41,6 +41,15 @@ abstract public class Account {
     }
 
     /**
+     * Return the account balance.
+     *
+     * @return the current balance
+     */
+    public Money getBalance() {
+        return balance;
+    }
+
+    /**
      * Get the unique account id.
      * If it has not been set a {@link IllegalStateException} is thrown.
      */
@@ -80,7 +89,7 @@ abstract public class Account {
     /**
      * Apply the borrowing interest and therefore decrease the balance even further.
      */
-    private void applyBorrowingInterest() {
+    public void applyBorrowingInterest() {
         throw new UnsupportedOperationException("This account does not suppport borrowing interest.");
     }
 

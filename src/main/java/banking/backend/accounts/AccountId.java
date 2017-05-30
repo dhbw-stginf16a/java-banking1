@@ -3,8 +3,19 @@ package banking.backend.accounts;
 import banking.NotYetImplementedException;
 
 public class AccountId {
-
+    /**
+     * Create a new random accountId id.
+     */
     public AccountId() {
+        throw new NotYetImplementedException();
+    }
+
+    /**
+     * Recreate a account id by providing the output of {@link #toString}
+     *
+     * @param accountId the account id string
+     */
+    public AccountId(String accountId) {
         throw new NotYetImplementedException();
     }
 
@@ -49,9 +60,9 @@ public class AccountId {
     }
 
     /**
-     * Check if two customer ids are the same.
+     * Check if two account ids are the same.
      *
-     * @param obj other customer id to compare to
+     * @param obj other account id to compare to
      * @return equivalence
      */
     @Override

@@ -32,12 +32,12 @@ public class Bank {
     /**
      * The map of all customers indexed by their {@link CustomerId}
      */
-    protected Map<CustomerId, Customer> customers = new HashMap<>();
+    private Map<CustomerId, Customer> customers = new HashMap<>();
 
     /**
      * The map of all accounts index by their {@link AccountId}
      */
-    protected Map<AccountId, Account> accounts = new HashMap<>();
+    private Map<AccountId, Account> accounts = new HashMap<>();
 
     /**
      * The list of all past transactions. Failed and successful.
@@ -107,7 +107,7 @@ public class Bank {
      * @return all accounts
      */
     public List<Account> getAccounts() {
-        return (List<Account>) accounts.values();
+        return new ArrayList<>(accounts.values());
     }
 
     /**
@@ -126,7 +126,7 @@ public class Bank {
      * @return all customer
      */
     public List<Customer> getCustomers() {
-        return (List<Customer>) customers.values();
+        return new ArrayList<>(customers.values());
     }
 
     /**

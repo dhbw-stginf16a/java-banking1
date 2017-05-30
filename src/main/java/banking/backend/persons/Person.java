@@ -52,4 +52,30 @@ public class Person {
         throw new NotYetImplementedException();
     }
 
+    /**
+     * Get the person's name.
+     *
+     * @return the person's name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Get the person's address.
+     *
+     * @return the person's address
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * Get the person's telephone number.
+     *
+     * @return the person's telephone number
+     */
+    public String getTelephone() {
+        return telephoneNumber;
+    }
 }

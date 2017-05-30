@@ -3,7 +3,19 @@ package banking.backend.persons;
 import banking.NotYetImplementedException;
 
 public class CustomerId {
+    /**
+     * Create a new random customer id.
+     */
     public CustomerId() {
+        throw new NotYetImplementedException();
+    }
+
+    /**
+     * Recreate a customer id by providing the output of {@link #toString}
+     *
+     * @param customerId the customer id string
+     */
+    public CustomerId(String customerId) {
         throw new NotYetImplementedException();
     }
 
