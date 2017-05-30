@@ -92,6 +92,11 @@ public class CustomerTest {
         assertThrows(IllegalArgumentException.class, () -> new Customer("name", "address", null, "tel", false));
         assertNotNull(new Customer("name", "address", new DateTime(), null, false), "Telephone can be null");
 
+        // No parameter of the constructor can be empty except for telehpone number
+        assertThrows(IllegalArgumentException.class, () -> new Customer("", "address", new DateTime(), "tel", false));
+        assertThrows(IllegalArgumentException.class, () -> new Customer("name", "", new DateTime(), "tel", false));
+        assertNotNull(new Customer("name", "address", new DateTime(), "", false), "Telephone can be null");
+
         // A business customer must be at least 21 years old
         assertAll(
                 () -> assertThrows(IllegalArgumentException.class, () -> new Customer(

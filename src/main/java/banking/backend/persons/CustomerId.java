@@ -104,7 +104,7 @@ public class CustomerId {
     /**
      * Returns the String Representation of the CustomerId with its checksum in it.
      *
-     * @return String
+     * @return string representation
      */
     @Override
     public String toString() {
