@@ -1,10 +1,11 @@
 package banking.backend.accounts;
 
-import banking.NotYetImplementedException;
 import banking.backend.Percentage;
 import banking.backend.persons.Customer;
 
 class EuropeanFundInvestment extends Investments {
+
+    private static final Percentage SAVING_INTEREST = new Percentage("6%");
 
     /**
      * Constructs an account and initializes the holder.
@@ -14,11 +15,13 @@ class EuropeanFundInvestment extends Investments {
      */
     public EuropeanFundInvestment(Customer holder) {
         super(holder);
-        throw new NotYetImplementedException();
+        if (holder.getAge() < 18) {
+            throw new IllegalArgumentException("Holder has to be at least 18");
+        }
     }
 
     @Override
     protected Percentage getSavingInterest() {
-        throw new NotYetImplementedException();
+        return SAVING_INTEREST;
     }
 }

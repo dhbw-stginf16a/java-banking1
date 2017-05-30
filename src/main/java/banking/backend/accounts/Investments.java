@@ -1,11 +1,14 @@
 package banking.backend.accounts;
 
-import banking.NotYetImplementedException;
 import banking.backend.Money;
 import banking.backend.Percentage;
 import banking.backend.persons.Customer;
 
 abstract class Investments extends Account {
+
+    private static final Money OVERDRAFT = new Money("0.00");
+    private static final Percentage BORROWING_INTEREST = new Percentage("0%");
+
     /**
      * Constructs an account and initializes the holder.
      * If the customer is null throws {@link IllegalArgumentException}
@@ -14,7 +17,9 @@ abstract class Investments extends Account {
      */
     public Investments(Customer holder) {
         super(holder);
-        throw new NotYetImplementedException();
+        if (holder.getAge() < 18) {
+            throw new IllegalArgumentException("Holder has to be at least 18");
+        }
     }
 
     /**
@@ -24,7 +29,7 @@ abstract class Investments extends Account {
      */
     @Override
     protected Money getOverdraft() {
-        throw new NotYetImplementedException();
+        return OVERDRAFT;
     }
 
     /**
@@ -34,7 +39,7 @@ abstract class Investments extends Account {
      */
     @Override
     protected Percentage getBorrowingInterest() {
-        throw new NotYetImplementedException();
+        return BORROWING_INTEREST;
     }
 
     @Override
