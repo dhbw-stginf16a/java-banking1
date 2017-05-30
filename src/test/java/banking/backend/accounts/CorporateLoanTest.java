@@ -11,42 +11,42 @@ import org.junit.jupiter.api.Test;
 class CorporateLoanTest {
     @Test
     public void testOverdraft() {
-        LoanTest.testOverdraft(new CorporateLoan(CustomerTest.getDummyCustomer()));
+        LoanTest.testOverdraft(new CorporateLoan(CustomerTest.getDummyCustomer(18, true)));
     }
 
     @Test
     public void testBorrowingInterest() {
-        LoanTest.testBorrowingInterest(new CorporateLoan(CustomerTest.getDummyCustomer()));
+        LoanTest.testBorrowingInterest(new CorporateLoan(CustomerTest.getDummyCustomer(18, true)));
     }
 
     @Test
     public void testSavingInterest() {
-        LoanTest.testSavingInterest(new CorporateLoan(CustomerTest.getDummyCustomer()));
+        LoanTest.testSavingInterest(new CorporateLoan(CustomerTest.getDummyCustomer(18, true)));
     }
 
     @Test
     public void testReceiveInvoice() {
-        LoanTest.testReceiveInvoice(new CorporateLoan(CustomerTest.getDummyCustomer()));
+        LoanTest.testReceiveInvoice(new CorporateLoan(CustomerTest.getDummyCustomer(18, true)));
     }
 
     @Test
     public void testDeposit() {
-        LoanTest.testDeposit(new CorporateLoan(CustomerTest.getDummyCustomer()));
+        LoanTest.testDeposit(new CorporateLoan(CustomerTest.getDummyCustomer(18, true)));
     }
 
     @Test
     public void testSendInvoice() {
-        LoanTest.testSendInvoice(new CorporateLoan(CustomerTest.getDummyCustomer()));
+        LoanTest.testSendInvoice(new CorporateLoan(CustomerTest.getDummyCustomer(18, true)));
     }
 
     @Test
     public void testWithdraw() {
-        LoanTest.testWithdraw(new CorporateLoan(CustomerTest.getDummyCustomer()));
+        LoanTest.testWithdraw(new CorporateLoan(CustomerTest.getDummyCustomer(18, true)));
     }
 
     @Test
     public void testInit() {
-        LoanTest.testInit(new CorporateLoan(CustomerTest.getDummyCustomer()));
+        LoanTest.testInit(new CorporateLoan(CustomerTest.getDummyCustomer(18, true)));
     }
 
     @Test

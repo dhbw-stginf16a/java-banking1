@@ -1,6 +1,5 @@
 package banking.backend.accounts;
 
-import banking.NotYetImplementedException;
 import banking.backend.Percentage;
 import banking.backend.persons.Customer;
 
@@ -21,7 +20,6 @@ class CorporateSavings extends Savings {
         if (holder.getAge() < 18 || !holder.isBusinessCustomer()) {
             throw new IllegalArgumentException("You need to be at least 18 or a business customer.");
         }
-        throw new NotYetImplementedException();
     }
 
     @Override
