@@ -5,7 +5,14 @@ import banking.backend.Money;
 import banking.backend.accounts.Account;
 
 public class Invoice extends Transaction {
+    /**
+     * The account to which the money is credited.
+     */
     private Account creditor;
+
+    /**
+     * The account from which the money is drawn.
+     */
     private Account debtor;
 
     /**
@@ -17,7 +24,11 @@ public class Invoice extends Transaction {
      */
     public Invoice(Money amount, Account creditor, Account debtor) {
         super(amount);
-        throw new NotYetImplementedException();
+        if (creditor == null || debtor == null) {
+            throw new IllegalArgumentException("Neither creditor nor debtor can be null.");
+        }
+        this.creditor = creditor;
+        this.debtor = debtor;
     }
 
     @Override
@@ -25,8 +36,14 @@ public class Invoice extends Transaction {
         throw new NotYetImplementedException();
     }
 
+    /**
+     * Get a string representation for logging purposes or displaying to the user.
+     *
+     * @return string representation
+     */
     @Override
     public String toString() {
-        throw new NotYetImplementedException();
+        return String.format("Status of invoice of %s from %s to %s is %s",
+                getAmount(), debtor.getAccountId(), creditor.getAccountId(), getStatus());
     }
 }

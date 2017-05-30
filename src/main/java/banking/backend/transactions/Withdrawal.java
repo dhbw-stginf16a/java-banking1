@@ -6,6 +6,11 @@ import banking.backend.accounts.Account;
 
 public class Withdrawal extends Transaction {
     /**
+     * The account from which the money is drawn.
+     */
+    private Account debtor;
+
+    /**
      * Constructs a withdrawal transaction issued now with specified amount.
      *
      * @param amount the monetary amount
@@ -13,7 +18,10 @@ public class Withdrawal extends Transaction {
      */
     public Withdrawal(Money amount, Account debtor) {
         super(amount);
-        throw new NotYetImplementedException();
+        if (debtor == null) {
+            throw new IllegalArgumentException("Debtor cannot be null.");
+        }
+        this.debtor = debtor;
     }
 
     @Override
@@ -21,8 +29,14 @@ public class Withdrawal extends Transaction {
         throw new NotYetImplementedException();
     }
 
+    /**
+     * Get a string representation for logging purposes or displaying to the user.
+     *
+     * @return string representation
+     */
     @Override
     public String toString() {
-        throw new NotYetImplementedException();
+        return String.format("Status of deposit of %s into %s is %s",
+                getAmount(), debtor.getAccountId(), getStatus());
     }
 }
