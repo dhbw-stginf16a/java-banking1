@@ -23,7 +23,7 @@ public abstract class Transaction {
      * The status of applying the transaction.
      * Has to be set by {@link #apply()} before throwing an exception to indicate success.
      */
-    private Status status = Status.PENDING;
+    protected Status status = Status.PENDING;
 
     /**
      * Constructs a transaction issued now with specified amount.
@@ -76,6 +76,10 @@ public abstract class Transaction {
      */
     @Override
     public abstract String toString();
+
+    public DateTime getIssueDate() {
+        return issued;
+    }
 
     /**
      * The current status of this transaction.

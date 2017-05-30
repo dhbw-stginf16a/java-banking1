@@ -3,7 +3,6 @@ package banking.backend.accounts;
 import banking.backend.Money;
 import banking.backend.Percentage;
 import banking.backend.persons.Customer;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 abstract class Loan extends Account {
     /**
@@ -66,7 +65,10 @@ abstract class Loan extends Account {
      */
     @Override
     public Money getBalance() {
-        throw new NotImplementedException();
+        if (balance == null) {
+            throw new IllegalStateException("Loan wasn't initialized correctly.");
+        }
+        return balance;
     }
 
     @Override
