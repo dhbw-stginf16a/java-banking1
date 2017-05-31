@@ -3,6 +3,9 @@ package banking.backend.transactions;
 import banking.backend.Money;
 import banking.backend.accounts.Account;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Deposit extends Transaction {
     /**
      * The account to which the money is credited.
@@ -52,5 +55,15 @@ public class Deposit extends Transaction {
     public String toString() {
         return String.format("Status of deposit of %s into %s is %s",
                 getAmount(), creditor.getAccountId(), getStatus());
+    }
+
+    /**
+     * Get all accounts involved in this transaction.
+     *
+     * @return the involved accounts
+     */
+    @Override
+    public List<Account> getInvolvedAccounts() {
+        return Arrays.asList(creditor);
     }
 }

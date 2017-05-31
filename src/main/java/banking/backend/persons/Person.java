@@ -4,7 +4,7 @@ import banking.backend.DateTime;
 
 /**
  * A person affiliated with the bank.
- * Can be a {@link Customer} or a guardian of an underage(<16) customer.
+ * Can be a {@link Customer} or a guardian of an underage(&le;16) customer.
  */
 public class Person {
     /**

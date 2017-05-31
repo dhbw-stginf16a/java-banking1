@@ -4,6 +4,8 @@ import banking.backend.persons.Customer;
 import banking.backend.persons.CustomerTest;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.InvocationTargetException;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -49,7 +51,7 @@ class StudentSavingsTest {
     }
 
     @Test
-    public void testConstructing() throws IllegalAccessException, InstantiationException {
+    public void testConstructing() throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         Customer customerOfLegalAgeNoneBusiness = CustomerTest.getDummyCustomer(18, false);
         Customer customerOfLegalAgeBusiness = CustomerTest.getDummyCustomer(18, true);
         Customer customerOfNoneLegalAgeNoneBusiness = CustomerTest.getDummyCustomer(17, false);

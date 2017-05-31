@@ -73,10 +73,15 @@ public class Bank {
      */
     public void addCustomer(Customer customer) {
         CustomerId customerId = generateAvailableCustomerId();
+        if (customer == null) {
+            throw new RuntimeException("aaah");
+        }
+        customers.forEach((CustomerId key, Customer val) ->
+                System.out.println("'" + key + ", " + val + "'"));
         if (!customers.containsValue(customer)) {
             customers.put(customerId, customer);
+            customer.setCustomerId(customerId);
         }
-        customer.setCustomerId(customerId);
     }
 
     /**
@@ -96,15 +101,13 @@ public class Bank {
      * @return all accounts of the customer
      */
     public List<Account> getCustomerAccounts(Customer customer) {
-        CustomerId customerId = null;
         try {
-            customerId = customer.getCustomerId();
+            CustomerId customerId = customer.getCustomerId();
+            return this.accounts.values().stream().filter(
+                    (Account account) -> account.getHolder().getCustomerId().equals(customerId)).collect(Collectors.toList());
         } catch (IllegalStateException ignored) {
             return new ArrayList<>();
         }
-        final CustomerId finalCustomerId = customerId;
-        return this.accounts.values().stream().filter(
-                (Account account) -> account.getHolder().getCustomerId().equals(finalCustomerId)).collect(Collectors.toList());
     }
 
     /**
@@ -152,6 +155,11 @@ public class Bank {
      * @throws TransactionFailedException if it was not possible to complete the transaction
      */
     public void applyTransaction(Transaction transaction) throws TransactionFailedException {
+        for (Account acc : transaction.getInvolvedAccounts()) {
+            if (!accounts.containsValue(acc)) {
+                throw new TransactionFailedException("Trying to apply transacction to account that does not exist.");
+            }
+        }
         transaction.apply();
         transactions.add(transaction);
     }
@@ -193,9 +201,9 @@ public class Bank {
             throw new IllegalArgumentException("To add an account it must have a holder.");
         }
         AccountId accountId = generateAvailableAccountId();
-        account.setAccountId(accountId);
         if (!accounts.containsValue(account)) {
             accounts.put(accountId, account);
+            account.setAccountId(accountId);
         }
     }
 

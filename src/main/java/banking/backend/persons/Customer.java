@@ -10,6 +10,8 @@ import banking.backend.accounts.JuniorAccount;
 import banking.backend.transactions.Deposit;
 import banking.backend.transactions.TransactionFailedException;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * A customer is any person who has an account with the company.
  * They might not have one upon creation but an account should be added shortly after.
@@ -81,9 +83,11 @@ public class Customer extends Person {
      * @return the newly created account
      * @throws IllegalAccessException when the constructor of the account class is private
      * @throws InstantiationException when the account class is not instantiable
+     * @throws NoSuchMethodException
+     * @throws InvocationTargetException
      */
-    public <T extends Account> T setupAccount(Class<T> accountType) throws IllegalAccessException, InstantiationException {
-        T account = accountType.newInstance();
+    public <T extends Account> T setupAccount(Class<T> accountType) throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+        T account = accountType.getDeclaredConstructor(Customer.class).newInstance(this);
         Bank.getInstance().addAccount(account);
         return account;
     }
@@ -148,7 +152,7 @@ public class Customer extends Person {
     @Override
     public boolean equals(Object o) {
         return o != null && o instanceof Customer
-                && customerId.equals(((Customer) o).customerId);
+                && customerId != null && customerId.equals(((Customer) o).customerId);
     }
 
     /**

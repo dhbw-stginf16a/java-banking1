@@ -3,6 +3,8 @@ package banking.backend.accounts;
 import banking.backend.persons.CustomerTest;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * Test the behavior of {@link CorporateLoan}
  * <p>
@@ -50,7 +52,7 @@ class CorporateLoanTest {
     }
 
     @Test
-    public void testConstructing() throws IllegalAccessException, InstantiationException {
+    public void testConstructing() throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         AccountTest.testConstructing(CorporateLoan.class, 18, true);
     }
 }

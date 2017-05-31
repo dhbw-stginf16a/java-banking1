@@ -4,6 +4,9 @@ import banking.backend.Money;
 import banking.backend.accounts.Account;
 import banking.backend.accounts.InsufficientFundsException;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Invoice extends Transaction {
     /**
      * The account to which the money is credited.
@@ -66,5 +69,15 @@ public class Invoice extends Transaction {
     public String toString() {
         return String.format("Status of invoice of %s from %s to %s is %s",
                 getAmount(), debtor.getAccountId(), creditor.getAccountId(), getStatus());
+    }
+
+    /**
+     * Get all accounts involved in this transaction.
+     *
+     * @return the involved accounts
+     */
+    @Override
+    public List<Account> getInvolvedAccounts() {
+        return Arrays.asList(creditor, debtor);
     }
 }

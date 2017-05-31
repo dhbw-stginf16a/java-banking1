@@ -4,6 +4,9 @@ import banking.backend.Money;
 import banking.backend.accounts.Account;
 import banking.backend.accounts.InsufficientFundsException;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Withdrawal extends Transaction {
     /**
      * The account from which the money is drawn.
@@ -44,5 +47,15 @@ public class Withdrawal extends Transaction {
     public String toString() {
         return String.format("Status of deposit of %s into %s is %s",
                 getAmount(), debtor.getAccountId(), getStatus());
+    }
+
+    /**
+     * Get all accounts involved in this transaction.
+     *
+     * @return the involved accounts
+     */
+    @Override
+    public List<Account> getInvolvedAccounts() {
+        return Arrays.asList(debtor);
     }
 }

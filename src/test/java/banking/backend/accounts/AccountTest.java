@@ -6,6 +6,8 @@ import banking.backend.persons.Customer;
 import banking.backend.persons.CustomerTest;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.InvocationTargetException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AccountTest {
@@ -197,7 +199,7 @@ public class AccountTest {
      * @param requireAge      the required age to open this account
      * @param requireBusiness if the Holder needs to be a business Customer
      */
-    public static void testConstructing(Class<? extends Account> toTest, int requireAge, boolean requireBusiness) throws InstantiationException, IllegalAccessException {
+    public static void testConstructing(Class<? extends Account> toTest, int requireAge, boolean requireBusiness) throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Customer customerOfLegalAgeNoneBusiness = CustomerTest.getDummyCustomer(requireAge, false);
         Customer customerOfLegalAgeBusiness = CustomerTest.getDummyCustomer(requireAge, true);
         Customer customerOfNoneLegalAgeNoneBusiness = CustomerTest.getDummyCustomer(requireAge - 1, false);
