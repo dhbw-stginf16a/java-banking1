@@ -102,11 +102,11 @@ public class Customer extends Person {
      * @throws InstantiationException when the account class is not instantiable
      * @return the newly created account
      */
-    public <T extends JuniorAccount> T setupAccount(Class<T> accountType, Person guardian) throws IllegalAccessException, InstantiationException {
+    public <T extends JuniorAccount> T setupAccount(Class<T> accountType, Person guardian) throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         if (guardian == null) {
             throw new IllegalArgumentException("A junior account needs an associated guardian.");
         }
-        T account = accountType.newInstance();
+        T account = accountType.getDeclaredConstructor(Customer.class, Person.class).newInstance(this, guardian);
         Bank.getInstance().addAccount(account);
         return account;
     }
