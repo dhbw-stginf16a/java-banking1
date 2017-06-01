@@ -1,5 +1,6 @@
 package banking.backend.accounts;
 
+import banking.backend.Money;
 import banking.backend.persons.CustomerTest;
 import org.junit.jupiter.api.Test;
 
@@ -12,39 +13,50 @@ import java.lang.reflect.InvocationTargetException;
  */
 class PersonalLoanTest {
 
+    /**
+     * Generates a personal loan that has an initialized amount but no {@link AccountId}.
+     *
+     * @return an instance of {@link PersonalLoan}
+     */
+    private static PersonalLoan getValidPersonalLoan() {
+        final PersonalLoan personalLoan = new PersonalLoan(CustomerTest.getDummyCustomer());
+        personalLoan.initAmount(new Money(100));
+        return personalLoan;
+    }
+
     @Test
     public void testOverdraft() {
-        LoanTest.testOverdraft(new PersonalLoan(CustomerTest.getDummyCustomer()));
+        LoanTest.testOverdraft(getValidPersonalLoan());
     }
 
     @Test
     public void testBorrowingInterest() {
-        LoanTest.testBorrowingInterest(new PersonalLoan(CustomerTest.getDummyCustomer()));
+        LoanTest.testBorrowingInterest(getValidPersonalLoan());
     }
 
     @Test
     public void testSavingInterest() {
-        LoanTest.testSavingInterest(new PersonalLoan(CustomerTest.getDummyCustomer()));
+        LoanTest.testSavingInterest(getValidPersonalLoan());
     }
 
     @Test
     public void testReceiveInvoice() {
-        LoanTest.testReceiveInvoice(new PersonalLoan(CustomerTest.getDummyCustomer()));
+        LoanTest.testReceiveInvoice(getValidPersonalLoan());
     }
 
     @Test
     public void testDeposit() {
-        LoanTest.testDeposit(new PersonalLoan(CustomerTest.getDummyCustomer()));
+        LoanTest.testDeposit(getValidPersonalLoan());
     }
 
     @Test
     public void testSendInvoice() {
-        LoanTest.testSendInvoice(new PersonalLoan(CustomerTest.getDummyCustomer()));
+        LoanTest.testSendInvoice(getValidPersonalLoan());
     }
 
     @Test
     public void testWithdraw() {
-        LoanTest.testWithdraw(new PersonalLoan(CustomerTest.getDummyCustomer()));
+        LoanTest.testWithdraw(getValidPersonalLoan());
     }
 
     @Test

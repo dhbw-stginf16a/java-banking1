@@ -1,5 +1,6 @@
 package banking.backend.accounts;
 
+import banking.backend.Money;
 import banking.backend.persons.CustomerTest;
 import org.junit.jupiter.api.Test;
 
@@ -10,39 +11,50 @@ import java.lang.reflect.InvocationTargetException;
  */
 class MortgageTest {
 
+    /**
+     * Generates a mortgage that has an initialized amount but no {@link AccountId}.
+     *
+     * @return an instance of {@link Mortgage}
+     */
+    private static Mortgage getValidMortgage() {
+        final Mortgage mortgage = new Mortgage(CustomerTest.getDummyCustomer());
+        mortgage.initAmount(new Money(100));
+        return mortgage;
+    }
+
     @Test
     public void testOverdraft() {
-        LoanTest.testOverdraft(new Mortgage(CustomerTest.getDummyCustomer()));
+        LoanTest.testOverdraft(getValidMortgage());
     }
 
     @Test
-    public void testBorrowingInterest(Loan toTest) {
-        LoanTest.testBorrowingInterest(new Mortgage(CustomerTest.getDummyCustomer()));
+    public void testBorrowingInterest() {
+        LoanTest.testBorrowingInterest(getValidMortgage());
     }
 
     @Test
-    public void testSavingInterest(Loan toTest) {
-        LoanTest.testSavingInterest(new Mortgage(CustomerTest.getDummyCustomer()));
+    public void testSavingInterest() {
+        LoanTest.testSavingInterest(getValidMortgage());
     }
 
     @Test
-    public void testReceiveInvoice(Loan toTest) {
-        LoanTest.testReceiveInvoice(new Mortgage(CustomerTest.getDummyCustomer()));
+    public void testReceiveInvoice() {
+        LoanTest.testReceiveInvoice(getValidMortgage());
     }
 
     @Test
-    public void testDeposit(Loan toTest) {
-        LoanTest.testDeposit(new Mortgage(CustomerTest.getDummyCustomer()));
+    public void testDeposit() {
+        LoanTest.testDeposit(getValidMortgage());
     }
 
     @Test
-    public void testSendInvoice(Loan toTest) {
-        LoanTest.testSendInvoice(new Mortgage(CustomerTest.getDummyCustomer()));
+    public void testSendInvoice() {
+        LoanTest.testSendInvoice(getValidMortgage());
     }
 
     @Test
-    public void testWithdraw(Loan toTest) {
-        LoanTest.testWithdraw(new Mortgage(CustomerTest.getDummyCustomer()));
+    public void testWithdraw() {
+        LoanTest.testWithdraw(getValidMortgage());
     }
 
     @Test

@@ -5,6 +5,8 @@ import banking.backend.Percentage;
 import banking.backend.persons.Customer;
 import banking.backend.persons.CustomerTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
+import org.opentest4j.AssertionFailedError;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -206,16 +208,32 @@ public class AccountTest {
         Customer customerOfNoneLegalAgeBusiness = CustomerTest.getDummyCustomer(requireAge - 1, true);
 
         if (requireBusiness) {
-            assertThrows(IllegalArgumentException.class, () -> customerOfLegalAgeNoneBusiness.setupAccount(toTest));
+            assertThrowsWithCause(IllegalArgumentException.class, () -> customerOfLegalAgeNoneBusiness.setupAccount(toTest));
             assertSame(customerOfLegalAgeBusiness, customerOfLegalAgeBusiness.setupAccount(toTest).getHolder());
-            assertThrows(IllegalArgumentException.class, () -> customerOfNoneLegalAgeNoneBusiness.setupAccount(toTest));
-            assertThrows(IllegalArgumentException.class, () -> customerOfNoneLegalAgeBusiness.setupAccount(toTest));
+            assertThrowsWithCause(IllegalArgumentException.class, () -> customerOfNoneLegalAgeNoneBusiness.setupAccount(toTest));
+            assertThrowsWithCause(IllegalArgumentException.class, () -> customerOfNoneLegalAgeBusiness.setupAccount(toTest));
         } else {
-            assertThrows(IllegalArgumentException.class, () -> customerOfLegalAgeBusiness.setupAccount(toTest));
+            assertThrowsWithCause(IllegalArgumentException.class, () -> customerOfLegalAgeBusiness.setupAccount(toTest));
             assertSame(customerOfLegalAgeBusiness, customerOfLegalAgeNoneBusiness.setupAccount(toTest).getHolder());
-            assertThrows(IllegalArgumentException.class, () -> customerOfNoneLegalAgeNoneBusiness.setupAccount(toTest));
-            assertThrows(IllegalArgumentException.class, () -> customerOfNoneLegalAgeBusiness.setupAccount(toTest));
+            assertThrowsWithCause(IllegalArgumentException.class, () -> customerOfNoneLegalAgeNoneBusiness.setupAccount(toTest));
+            assertThrowsWithCause(IllegalArgumentException.class, () -> customerOfNoneLegalAgeBusiness.setupAccount(toTest));
         }
+    }
+
+    public static <T extends Throwable> void assertThrowsWithCause(Class<T> throwable, Executable executable) {
+        try {
+            executable.execute();
+        } catch (Throwable e) {
+            if (e instanceof InvocationTargetException) {
+                if (throwable.isInstance(e.getCause())) {
+                    return;
+                }
+            } else if (throwable.isInstance(e)) {
+                return;
+            }
+            throw new AssertionFailedError("Expected exception wasn't thrown: " + throwable, e);
+        }
+        throw new AssertionFailedError("Expected " + throwable + " to be thrown, but nothing was thrown.");
     }
 
     /**

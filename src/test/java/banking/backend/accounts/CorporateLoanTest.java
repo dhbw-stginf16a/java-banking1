@@ -1,5 +1,6 @@
 package banking.backend.accounts;
 
+import banking.backend.Money;
 import banking.backend.persons.CustomerTest;
 import org.junit.jupiter.api.Test;
 
@@ -11,39 +12,51 @@ import java.lang.reflect.InvocationTargetException;
  * Created by guserav on 27.05.2017.
  */
 class CorporateLoanTest {
+
+    /**
+     * Generates a corporate loan that has an initialized amount but no {@link AccountId}.
+     *
+     * @return an instance of {@link CorporateLoan}
+     */
+    private static CorporateLoan getValidCorporateLoan() {
+        final CorporateLoan corporateLoan = new CorporateLoan(CustomerTest.getDummyCustomer(18, true));
+        corporateLoan.initAmount(new Money(100));
+        return corporateLoan;
+    }
+
     @Test
     public void testOverdraft() {
-        LoanTest.testOverdraft(new CorporateLoan(CustomerTest.getDummyCustomer(18, true)));
+        LoanTest.testOverdraft(getValidCorporateLoan());
     }
 
     @Test
     public void testBorrowingInterest() {
-        LoanTest.testBorrowingInterest(new CorporateLoan(CustomerTest.getDummyCustomer(18, true)));
+        LoanTest.testBorrowingInterest(getValidCorporateLoan());
     }
 
     @Test
     public void testSavingInterest() {
-        LoanTest.testSavingInterest(new CorporateLoan(CustomerTest.getDummyCustomer(18, true)));
+        LoanTest.testSavingInterest(getValidCorporateLoan());
     }
 
     @Test
     public void testReceiveInvoice() {
-        LoanTest.testReceiveInvoice(new CorporateLoan(CustomerTest.getDummyCustomer(18, true)));
+        LoanTest.testReceiveInvoice(getValidCorporateLoan());
     }
 
     @Test
     public void testDeposit() {
-        LoanTest.testDeposit(new CorporateLoan(CustomerTest.getDummyCustomer(18, true)));
+        LoanTest.testDeposit(getValidCorporateLoan());
     }
 
     @Test
     public void testSendInvoice() {
-        LoanTest.testSendInvoice(new CorporateLoan(CustomerTest.getDummyCustomer(18, true)));
+        LoanTest.testSendInvoice(getValidCorporateLoan());
     }
 
     @Test
     public void testWithdraw() {
-        LoanTest.testWithdraw(new CorporateLoan(CustomerTest.getDummyCustomer(18, true)));
+        LoanTest.testWithdraw(getValidCorporateLoan());
     }
 
     @Test
