@@ -3,7 +3,7 @@ package banking.backend.accounts;
 import banking.backend.Money;
 import banking.backend.persons.Customer;
 
-class DebitCard extends Cards {
+public class DebitCard extends Cards {
 
     /**
      * Constructs an account and initializes the holder.

@@ -3,7 +3,7 @@ package banking.backend.accounts;
 import banking.backend.Percentage;
 import banking.backend.persons.Customer;
 
-class StudentSavings extends Savings {
+public class StudentSavings extends Savings {
 
     /**
      * Constructs an account and initializes the holder.

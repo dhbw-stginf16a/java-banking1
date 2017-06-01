@@ -3,7 +3,7 @@ package banking.backend.accounts;
 import banking.backend.Money;
 import banking.backend.persons.Customer;
 
-class CreditCards extends Cards {
+public class CreditCards extends Cards {
 
     /**
      * Constructs an account and initializes the holder.

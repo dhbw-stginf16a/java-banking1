@@ -6,7 +6,7 @@ import banking.backend.persons.Customer;
 /**
  * A savings account only for business users with different conditions.
  */
-class CorporateSavings extends Savings {
+public class CorporateSavings extends Savings {
 
     /**
      * Constructs an account and initializes the holder.

@@ -3,7 +3,7 @@ package banking.backend.accounts;
 import banking.backend.Percentage;
 import banking.backend.persons.Customer;
 
-class EuropeanFundInvestment extends Investments {
+public class EuropeanFundInvestment extends Investments {
 
     private static final Percentage SAVING_INTEREST = new Percentage("6%");
 
