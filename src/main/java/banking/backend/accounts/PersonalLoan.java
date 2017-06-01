@@ -3,7 +3,7 @@ package banking.backend.accounts;
 import banking.backend.Percentage;
 import banking.backend.persons.Customer;
 
-class PersonalLoan extends Loan {
+public class PersonalLoan extends Loan {
 
     /**
      * Constructs an account and initializes the holder.
@@ -14,7 +14,7 @@ class PersonalLoan extends Loan {
      */
     public PersonalLoan(Customer holder) {
         super(holder);
-        if (holder.getAge() < 18 || !holder.isBusinessCustomer()) {
+        if (holder.getAge() < 18 || holder.isBusinessCustomer()) {
             throw new IllegalArgumentException("You need to be at least 18 or a business customer.");
         }
     }
