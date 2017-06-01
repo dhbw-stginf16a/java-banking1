@@ -1,6 +1,5 @@
 package banking.backend.accounts;
 
-import banking.NotYetImplementedException;
 import banking.backend.Money;
 import banking.backend.Percentage;
 import banking.backend.persons.Customer;
@@ -26,7 +25,7 @@ public class JuniorAccount extends CurrentAccount {
         if (holder.getAge() >= HOLDER_MAX_AGE || holder.isBusinessCustomer()) {
             throw new IllegalArgumentException("A junior account is only possible for non business teenagers below the age of 16.");
         }
-        if (legalGuardian == null || legalGuardian.getAge() >= 18) {
+        if (legalGuardian == null || legalGuardian.getAge() < 18) {
             throw new IllegalArgumentException("Please enter a valid guardian of the galaxy");
         }
         this.legalGuardian = legalGuardian;

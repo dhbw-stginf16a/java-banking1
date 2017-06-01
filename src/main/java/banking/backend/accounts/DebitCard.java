@@ -23,6 +23,6 @@ public class DebitCard extends Cards {
      */
     @Override
     protected Money getOverdraft() {
-        return new Money(2000);
+        return new Money(0);
     }
 }
