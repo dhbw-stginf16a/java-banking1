@@ -26,7 +26,7 @@ class CorporateSavingsTest {
 
     @Test
     public void testSavingInterest() {
-        AccountTest.testOverdraft(new CorporateSavings(CustomerTest.getDummyCustomer(18, true)), false);
+        AccountTest.testOverdraft(new CorporateSavings(CustomerTest.getDummyCustomer(18, true)), true);
     }
 
     @Test

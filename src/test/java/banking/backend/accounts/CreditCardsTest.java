@@ -28,7 +28,7 @@ class CreditCardsTest {
 
     @Test
     public void testSavingInterest() {
-        AccountTest.testOverdraft(new CreditCards(CustomerTest.getDummyCustomer()), true);
+        AccountTest.testSavingInterest(new CreditCards(CustomerTest.getDummyCustomer()), true);
     }
 
     @Test
@@ -60,7 +60,7 @@ class CreditCardsTest {
 
         assertSame(customerOfLegalAgeNoneBusiness, customerOfLegalAgeNoneBusiness.setupAccount(CreditCards.class).getHolder());
         assertSame(customerOfLegalAgeBusiness, customerOfLegalAgeBusiness.setupAccount(CreditCards.class).getHolder());
-        assertThrows(IllegalArgumentException.class, () -> customerOfNoneLegalAgeNoneBusiness.setupAccount(CreditCards.class));
-        assertThrows(IllegalArgumentException.class, () -> customerOfNoneLegalAgeBusiness.setupAccount(CreditCards.class));
+        AccountTest.assertThrowsWithCause(IllegalArgumentException.class, () -> customerOfNoneLegalAgeNoneBusiness.setupAccount(CreditCards.class));
+        AccountTest.assertThrowsWithCause(IllegalArgumentException.class, () -> customerOfNoneLegalAgeBusiness.setupAccount(CreditCards.class));
     }
 }

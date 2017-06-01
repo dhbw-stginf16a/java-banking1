@@ -28,7 +28,7 @@ class DebitCardTest {
 
     @Test
     public void testSavingInterest() {
-        AccountTest.testOverdraft(new DebitCard(CustomerTest.getDummyCustomer()), true);
+        AccountTest.testSavingInterest(new DebitCard(CustomerTest.getDummyCustomer()), true);
     }
 
     @Test

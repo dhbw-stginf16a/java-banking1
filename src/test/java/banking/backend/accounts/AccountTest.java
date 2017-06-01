@@ -111,8 +111,6 @@ public class AccountTest {
 
         assertThrows(InsufficientFundsException.class, () -> toTest.sendInvoice(new Money(0, 1)));
         assertEquals(overdraftLimit.negate(), toTest.getBalance());
-
-        assertEquals(new Money(-1), toTest.getBalance());
     }
 
     /**
@@ -148,8 +146,6 @@ public class AccountTest {
 
         assertThrows(InsufficientFundsException.class, () -> toTest.withdraw(new Money(0, 1)));
         assertEquals(overdraftLimit.negate(), toTest.getBalance());
-
-        assertEquals(new Money(-1), toTest.getBalance());
     }
 
     /**
@@ -214,7 +210,7 @@ public class AccountTest {
             assertThrowsWithCause(IllegalArgumentException.class, () -> customerOfNoneLegalAgeBusiness.setupAccount(toTest));
         } else {
             assertThrowsWithCause(IllegalArgumentException.class, () -> customerOfLegalAgeBusiness.setupAccount(toTest));
-            assertSame(customerOfLegalAgeBusiness, customerOfLegalAgeNoneBusiness.setupAccount(toTest).getHolder());
+            assertSame(customerOfLegalAgeNoneBusiness, customerOfLegalAgeNoneBusiness.setupAccount(toTest).getHolder());
             assertThrowsWithCause(IllegalArgumentException.class, () -> customerOfNoneLegalAgeNoneBusiness.setupAccount(toTest));
             assertThrowsWithCause(IllegalArgumentException.class, () -> customerOfNoneLegalAgeBusiness.setupAccount(toTest));
         }
