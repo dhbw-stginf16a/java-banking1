@@ -151,8 +151,13 @@ public class Customer extends Person {
      */
     @Override
     public boolean equals(Object o) {
-        return o != null && o instanceof Customer
-                && customerId != null && customerId.equals(((Customer) o).customerId);
+        if (o != null && o instanceof Customer) {
+            if (customerId != null) {
+                return customerId.equals(((Customer) o).customerId);
+            }
+            return this == o;
+        }
+        return false;
     }
 
     /**
