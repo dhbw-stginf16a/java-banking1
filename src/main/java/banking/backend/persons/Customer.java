@@ -30,7 +30,6 @@ public class Customer extends Person {
 
     /**
      * Constructs a new customer with all attributes defined.
-     * A business customer must be at least 21 years old.
      * The date of birth cannot lie in the future.
      *
      * @param name             the customer's name

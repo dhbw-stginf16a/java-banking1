@@ -86,11 +86,6 @@ public class CustomerTest {
                 () -> assertEquals(DUMMY_TELEPHONE_NUMBER, dummyCustomer.getTelephoneNumber()),
                 () -> assertEquals(false, dummyCustomer.isBusinessCustomer())
         );
-        // A business customer must be at least 21 years old
-        assertAll(
-                () -> assertThrows(IllegalArgumentException.class, () -> new Customer(
-                        "name", "address", DateTimeTest.getDateTimeFromAge(20), "tel", false)),
-                () -> assertNotNull(new Customer("name", "address", DateTimeTest.getDateTimeFromAge(21), "tel", false))
 
         assertAll("No parameter of the constructor can be null except for telephone",
                 () -> assertThrows(IllegalArgumentException.class, () -> new Customer(null, "address", new DateTime(), "tel", false)),
