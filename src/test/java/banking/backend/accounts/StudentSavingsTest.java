@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
@@ -15,39 +15,40 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * Created by guserav on 27.05.2017.
  */
 class StudentSavingsTest {
+    private static int DEFAULT_STUDENT_AGE = 17;
     @Test
     public void testOverdraft() {
-        AccountTest.testOverdraft(new StudentSavings(CustomerTest.getDummyCustomer()), true);
+        AccountTest.testOverdraft(new StudentSavings(CustomerTest.getDummyCustomer(DEFAULT_STUDENT_AGE, false)), true);
     }
 
     @Test
     public void testBorrowingInterest() {
-        AccountTest.testBorrowingInterest(new StudentSavings(CustomerTest.getDummyCustomer()), true);
+        AccountTest.testBorrowingInterest(new StudentSavings(CustomerTest.getDummyCustomer(DEFAULT_STUDENT_AGE, false)), true);
     }
 
     @Test
     public void testSavingInterest() {
-        AccountTest.testOverdraft(new StudentSavings(CustomerTest.getDummyCustomer()), false);
+        AccountTest.testSavingInterest(new StudentSavings(CustomerTest.getDummyCustomer(DEFAULT_STUDENT_AGE, false)), false);
     }
 
     @Test
     public void testReceiveInvoice() {
-        AccountTest.testReceiveInvoice(new StudentSavings(CustomerTest.getDummyCustomer()));
+        AccountTest.testReceiveInvoice(new StudentSavings(CustomerTest.getDummyCustomer(DEFAULT_STUDENT_AGE, false)));
     }
 
     @Test
     public void testDeposit() {
-        AccountTest.testDeposit(new StudentSavings(CustomerTest.getDummyCustomer()));
+        AccountTest.testDeposit(new StudentSavings(CustomerTest.getDummyCustomer(DEFAULT_STUDENT_AGE, false)));
     }
 
     @Test
     public void testSendInvoice() throws InsufficientFundsException {
-        assertThrows(UnsupportedOperationException.class, () -> AccountTest.testSendInvoice(new StudentSavings(CustomerTest.getDummyCustomer())));
+        assertThrows(UnsupportedOperationException.class, () -> AccountTest.testSendInvoice(new StudentSavings(CustomerTest.getDummyCustomer(DEFAULT_STUDENT_AGE, false))));
     }
 
     @Test
     public void testWithdraw() throws InsufficientFundsException {
-        AccountTest.testWithdraw(new StudentSavings(CustomerTest.getDummyCustomer()));
+        AccountTest.testWithdraw(new StudentSavings(CustomerTest.getDummyCustomer(DEFAULT_STUDENT_AGE, false)));
     }
 
     @Test
@@ -57,9 +58,9 @@ class StudentSavingsTest {
         Customer customerOfNoneLegalAgeNoneBusiness = CustomerTest.getDummyCustomer(17, false);
         Customer customerOfNoneLegalAgeBusiness = CustomerTest.getDummyCustomer(17, true);
 
-        assertThrows(IllegalArgumentException.class, () -> customerOfLegalAgeBusiness.setupAccount(StudentSavings.class));
-        assertSame(customerOfLegalAgeBusiness, customerOfNoneLegalAgeNoneBusiness.setupAccount(StudentSavings.class).getHolder());
-        assertThrows(IllegalArgumentException.class, () -> customerOfLegalAgeNoneBusiness.setupAccount(StudentSavings.class));
-        assertThrows(IllegalArgumentException.class, () -> customerOfNoneLegalAgeBusiness.setupAccount(StudentSavings.class));
+        AccountTest.assertThrowsWithCause(IllegalArgumentException.class, () -> customerOfLegalAgeBusiness.setupAccount(StudentSavings.class));
+        assertEquals(customerOfNoneLegalAgeNoneBusiness, customerOfNoneLegalAgeNoneBusiness.setupAccount(StudentSavings.class).getHolder());
+        AccountTest.assertThrowsWithCause(IllegalArgumentException.class, () -> customerOfLegalAgeNoneBusiness.setupAccount(StudentSavings.class));
+        AccountTest.assertThrowsWithCause(IllegalArgumentException.class, () -> customerOfNoneLegalAgeBusiness.setupAccount(StudentSavings.class));
     }
 }
