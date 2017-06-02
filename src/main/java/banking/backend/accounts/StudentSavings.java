@@ -14,7 +14,7 @@ public class StudentSavings extends Savings {
      */
     public StudentSavings(Customer holder) {
         super(holder);
-        if (holder.getAge() < 18 || !holder.isBusinessCustomer()) {
+        if (holder.getAge() >= 18 || holder.isBusinessCustomer()) {
             throw new IllegalArgumentException("You need to be at least 18 or a business customer.");
         }
     }
