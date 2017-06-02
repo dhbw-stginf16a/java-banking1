@@ -101,7 +101,7 @@ public class DateTime implements Comparable<DateTime> {
 
         LocalDateTime inPast = now.minusYears(differenceYears);
 
-        return inPast.isAfter(value) ? differenceYears : differenceYears - 1;
+        return inPast.isBefore(value) ? differenceYears -1 : differenceYears;
     }
 
     /**
