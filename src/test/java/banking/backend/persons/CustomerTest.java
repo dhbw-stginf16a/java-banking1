@@ -77,8 +77,8 @@ public class CustomerTest {
     @Test
     public void customer() {
         Customer dummyCustomer = getDummyCustomer();
-        // Check if all attributes are correctly set
-        assertAll(
+
+        assertAll("Check if all attributes are correctly set",
                 () -> assertThrows(IllegalStateException.class, dummyCustomer::getCustomerId),
                 () -> assertEquals(DUMMY_NAME, dummyCustomer.getName()),
                 () -> assertEquals(DUMMY_ADDRESS, dummyCustomer.getAddress()),
@@ -86,23 +86,23 @@ public class CustomerTest {
                 () -> assertEquals(DUMMY_TELEPHONE_NUMBER, dummyCustomer.getTelephoneNumber()),
                 () -> assertEquals(false, dummyCustomer.isBusinessCustomer())
         );
-        // No parameter of the constructor can be null except for telephone
-        assertThrows(IllegalArgumentException.class, () -> new Customer(null, "address", new DateTime(), "tel", false));
-        assertThrows(IllegalArgumentException.class, () -> new Customer("name", null, new DateTime(), "tel", false));
-        assertThrows(IllegalArgumentException.class, () -> new Customer("name", "address", null, "tel", false));
-        assertNotNull(new Customer("name", "address", new DateTime(), null, false), "Telephone can be null");
-
-        // No parameter of the constructor can be empty except for telehpone number
-        assertThrows(IllegalArgumentException.class, () -> new Customer("", "address", new DateTime(), "tel", false));
-        assertThrows(IllegalArgumentException.class, () -> new Customer("name", "", new DateTime(), "tel", false));
-        assertNotNull(new Customer("name", "address", new DateTime(), "", false), "Telephone can be null");
-
         // A business customer must be at least 21 years old
         assertAll(
                 () -> assertThrows(IllegalArgumentException.class, () -> new Customer(
                         "name", "address", DateTimeTest.getDateTimeFromAge(20), "tel", false)),
                 () -> assertNotNull(new Customer("name", "address", DateTimeTest.getDateTimeFromAge(21), "tel", false))
 
+        assertAll("No parameter of the constructor can be null except for telephone",
+                () -> assertThrows(IllegalArgumentException.class, () -> new Customer(null, "address", new DateTime(), "tel", false)),
+                () -> assertThrows(IllegalArgumentException.class, () -> new Customer("name", null, new DateTime(), "tel", false)),
+                () -> assertThrows(IllegalArgumentException.class, () -> new Customer("name", "address", null, "tel", false)),
+                () -> assertNotNull(new Customer("name", "address", new DateTime(), null, false), "Telephone can be null")
+        );
+
+        assertAll("No parameter of the constructor can be empty except for telehpone number",
+                () -> assertThrows(IllegalArgumentException.class, () -> new Customer("", "address", new DateTime(), "tel", false)),
+                () -> assertThrows(IllegalArgumentException.class, () -> new Customer("name", "", new DateTime(), "tel", false)),
+                () -> assertThrows(IllegalArgumentException.class, () -> new Customer("name", "address", new DateTime(), "", false))
         );
 
         // The date of birth cannot lie in the future

@@ -39,14 +39,12 @@ class PersonTest {
         assertThrows(IllegalArgumentException.class, () -> new Person(null, "address", new DateTime(), "tel"));
         assertThrows(IllegalArgumentException.class, () -> new Person("name", null, new DateTime(), "tel"));
         assertThrows(IllegalArgumentException.class, () -> new Person("name", "address", null, "tel"));
-        assertThrows(IllegalArgumentException.class, () -> new Person("name", "address", new DateTime(), null));
-        assertNotNull(new Person("name", "address", DUMMY_BIRTH_DATE, null), "Telephone number can be null");
+        assertNotNull(new Person("name", "address", new DateTime(), null), "Telephone number can be null");
 
-        // No parameter of the constructor can be empty except for telehpone number
+        // No parameter of the constructor can be empty
         assertThrows(IllegalArgumentException.class, () -> new Person("", "address", new DateTime(), "tel"));
         assertThrows(IllegalArgumentException.class, () -> new Person("name", "", new DateTime(), "tel"));
         assertThrows(IllegalArgumentException.class, () -> new Person("name", "address", new DateTime(), ""));
-        assertNotNull(new Person("name", "address", DUMMY_BIRTH_DATE, ""), "Telephone number can be empty");
 
         // The date of birth cannot lie in the future
         assertThrows(IllegalArgumentException.class, () -> new Person(

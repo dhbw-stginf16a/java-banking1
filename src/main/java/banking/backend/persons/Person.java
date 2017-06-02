@@ -42,7 +42,8 @@ public class Person {
      * @throws IllegalArgumentException if one argument (except the telephone number) is null or empty
      */
     public Person(String name, String address, DateTime birthdate, String telephoneNumber) {
-        if (name == null || address == null || birthdate == null || name.isEmpty() || address.isEmpty()) {
+        if (name == null || address == null || birthdate == null || name.isEmpty() || address.isEmpty()
+                || (telephoneNumber!= null && telephoneNumber.isEmpty())) {
             throw new IllegalArgumentException("None of the parameters can be null.");
         }
         if (birthdate.getAge() < 0) {
