@@ -1,13 +1,16 @@
 package banking.backend.persons;
 
-import banking.NotYetImplementedException;
+import banking.backend.Bank;
 import banking.backend.DateTime;
 import banking.backend.DateTimeTest;
 import banking.backend.Money;
 import banking.backend.accounts.Account;
 import banking.backend.accounts.AccountId;
-import org.junit.jupiter.api.DisplayName;
+import banking.backend.accounts.CurrentAccount;
+import banking.backend.transactions.TransactionFailedException;
 import org.junit.jupiter.api.Test;
+
+import java.lang.reflect.InvocationTargetException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -58,17 +61,6 @@ public class CustomerTest {
      */
     public static Customer getDummyCustomer(boolean isBusiness) {
         return getDummyCustomer(DUMMY_BUSINESS_DEFAULT_AGE, isBusiness);
-    }
-
-    /**
-     * A dummy test to show that these tests aren't ready.
-     * <p>
-     * The test of {@link Customer#setupAccount} should be done in the {@link banking.backend.accounts.AccountTest} with the checking of all prerequisite for the accounts.
-     */
-    @Test
-    @DisplayName("This test serves as a reminder that the check of Customer.setupAccount should be done somewhere else.")
-    public void notYetImplementedTest1() {
-        throw new NotYetImplementedException(); // TODO remove this when the other test is implemented
     }
 
     /**
@@ -134,8 +126,29 @@ public class CustomerTest {
      * This includes error testing
      */
     @Test
-    public void invoice() {
-        throw new NotYetImplementedException();
+    public void invoice() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, TransactionFailedException {
+        Customer dummy = getDummyCustomer();
+        Account dummyAccount1 = dummy.setupAccount(CurrentAccount.class);
+        Account dummyAccount2 = dummy.setupAccount(CurrentAccount.class);
+        Money balance1 = dummyAccount1.getBalance();
+        Money balance2 = dummyAccount2.getBalance();
+        Money amount = new Money(1);
+
+        dummy.invoice(dummyAccount1, dummyAccount2.getAccountId(), amount);
+        assertEquals(balance1.subtract(amount), dummyAccount1.getBalance(), "The Balance should change after invoice");
+        assertEquals(balance2.add(amount), dummyAccount2.getBalance(), "The Balance should change after the invoice");
+
+        assertThrows(IllegalArgumentException.class, () -> dummy.invoice(null, dummyAccount2.getAccountId(), amount));
+        assertThrows(IllegalArgumentException.class, () -> dummy.invoice(dummyAccount1, null, amount));
+        assertThrows(IllegalArgumentException.class, () -> dummy.invoice(dummyAccount1, dummyAccount2.getAccountId(), null));
+
+        assertThrows(IllegalArgumentException.class, () -> dummy.invoice(dummyAccount1, dummyAccount2.getAccountId(), new Money(0)));
+        assertThrows(IllegalArgumentException.class, () -> dummy.invoice(dummyAccount1, dummyAccount2.getAccountId(), new Money(-1)));
+
+        assertEquals(balance1.subtract(amount), dummyAccount1.getBalance(), "The balance shouldn't have changed after failed invoices.");
+        assertEquals(balance2.add(amount), dummyAccount2.getBalance(), "The balance shouldn't have changed after failed invoices.");
+
+        assertFalse(Bank.getInstance().getTransactions().isEmpty(), "The Transactions list shouldn't be empty after a successful transaction");
     }
 
     /**
@@ -144,7 +157,22 @@ public class CustomerTest {
      * This includes error testing
      */
     @Test
-    public void withdraw() {
-        throw new NotYetImplementedException();
+    public void withdraw() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, TransactionFailedException {
+        Customer dummy = getDummyCustomer();
+        Account dummyAccount1 = dummy.setupAccount(CurrentAccount.class);
+        Money balance1 = dummyAccount1.getBalance();
+        Money amount = new Money(1);
+
+        dummy.withdraw(dummyAccount1, amount);
+        assertEquals(balance1.subtract(amount), dummyAccount1.getBalance(), "The Balance should change after withdrawal");
+        assertThrows(IllegalArgumentException.class, () -> dummy.withdraw(null, amount));
+        assertThrows(IllegalArgumentException.class, () -> dummy.withdraw(dummyAccount1, null));
+
+        assertThrows(IllegalArgumentException.class, () -> dummy.withdraw(dummyAccount1, new Money(0)));
+        assertThrows(IllegalArgumentException.class, () -> dummy.withdraw(dummyAccount1, new Money(-1)));
+
+        assertEquals(balance1.subtract(amount), dummyAccount1.getBalance(), "The balance shouldn't have changed after failed withdrawal.");
+
+        assertFalse(Bank.getInstance().getTransactions().isEmpty(), "The Transactions list shouldn't be empty after a successful withdrawal");
     }
 }
