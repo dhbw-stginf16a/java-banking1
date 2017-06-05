@@ -1,14 +1,14 @@
 package banking.backend.persons;
 
-import banking.NotYetImplementedException;
 import banking.backend.Bank;
 import banking.backend.DateTime;
 import banking.backend.Money;
 import banking.backend.accounts.Account;
 import banking.backend.accounts.AccountId;
 import banking.backend.accounts.JuniorAccount;
-import banking.backend.transactions.Deposit;
+import banking.backend.transactions.Invoice;
 import banking.backend.transactions.TransactionFailedException;
+import banking.backend.transactions.Withdrawal;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -119,15 +119,26 @@ public class Customer extends Person {
      * @param destination the account to which the money is transferred
      * @param amount      the amount of money to be transferred
      * @throws TransactionFailedException if the transaction was not successful
+     * @throws IllegalArgumentException if one of the parameters is null
      */
     public void invoice(Account origin, AccountId destination, Money amount) throws TransactionFailedException {
+        if (origin == null || destination == null || amount == null) {
+            throw new IllegalArgumentException("Can't perform invoice if origin, destination or amount ist null");
+        }
+
         Bank bank = Bank.getInstance();
+
+        if (!origin.getHolder().equals(this)) {
+            throw new IllegalArgumentException("Can't perform invoices for accounts that aren't belonging to yourself");
+        }
+
         Account account = bank.getAccount(destination);
         if (account == null) {
             throw new TransactionFailedException("It is not possible to deposit money into an account that does not exist");
         }
-        Deposit deposit = new Deposit(amount, account);
-        bank.applyTransaction(deposit);
+
+        Invoice invoice = new Invoice(amount, account, origin);
+        bank.applyTransaction(invoice);
     }
 
     /**
@@ -137,9 +148,22 @@ public class Customer extends Person {
      *
      * @param account the account from which the money is withdrawn
      * @param amount  the amount of money to be withdrawn
+     * @throws TransactionFailedException if the transaction was not successful
+     * @throws IllegalArgumentException if one of the parameters is null
      */
-    public void withdraw(Account account, Money amount) {
-        throw new NotYetImplementedException();
+    public void withdraw(Account account, Money amount) throws TransactionFailedException {
+        if (account == null || amount == null) {
+            throw new IllegalArgumentException("Can't perform withdrawal if the account or amount ist null");
+        }
+
+        Bank bank = Bank.getInstance();
+
+        if (!account.getHolder().equals(this)) {
+            throw new IllegalArgumentException("Can't perform withdrawal for accounts that aren't belonging to yourself");
+        }
+
+        Withdrawal withdrawal = new Withdrawal(amount, account);
+        bank.applyTransaction(withdrawal);
     }
 
     /**

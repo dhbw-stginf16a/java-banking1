@@ -52,7 +52,7 @@ public class CustomerShell implements ShellDependent {
      * @return the string to be displayed
      */
     @Command
-    public String withdraw(String accountId, String amount) {
+    public String withdraw(String accountId, String amount) throws TransactionFailedException {
         Account account = Bank.getInstance().getAccount(new AccountId(accountId));
         if (account != null) {
             try {
