@@ -1,10 +1,9 @@
 package banking.backend;
 
 import banking.backend.accounts.Account;
-import banking.backend.accounts.AccountId;
+import banking.backend.accounts.AccountTest;
 import banking.backend.accounts.CurrentAccount;
 import banking.backend.persons.Customer;
-import banking.backend.persons.CustomerId;
 import banking.backend.persons.CustomerTest;
 import banking.backend.transactions.Deposit;
 import banking.backend.transactions.Transaction;
@@ -16,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -118,7 +118,7 @@ class BankTest {
         Customer dummyCustomer = CustomerTest.getDummyCustomer();
 
         // Customer should not be there before adding them
-        assertNull(bank.getCustomer(dummyCustomer.getCustomerId()));
+        assertEquals(0, bank.getCustomers().size());
 
         bank.addCustomer(dummyCustomer);
         assertSame(bank.getCustomer(dummyCustomer.getCustomerId()), dummyCustomer);
@@ -134,7 +134,7 @@ class BankTest {
         Account dummyAccount = AccountTest.getDummyAccount();
 
         // Customer should not be there before adding them
-        assertNull(bank.getAccount(dummyAccount.getAccountId()));
+        assertEquals(0, bank.getAccounts().size());
 
         bank.addAccount(dummyAccount);
         assertSame(bank.getAccount(dummyAccount.getAccountId()), dummyAccount);
@@ -144,35 +144,27 @@ class BankTest {
      * Check whether the added accounts of a customer are returned.
      */
     @Test
-    void getCustomerAccounts() {
+    void getCustomerAccounts() throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         Bank bank = Bank.getInstance();
         List<Account> customerAccounts;
         Customer dummyCustomer = CustomerTest.getDummyCustomer();
-        Customer dummyCustomer2 = CustomerTest.getDummyCustomer();
+        assertNotNull(dummyCustomer);
 
         // should not contain any accounts before adding any
         customerAccounts = bank.getCustomerAccounts(dummyCustomer);
         assertNotNull(customerAccounts);
         assertEquals(customerAccounts.size(), 0);
-        customerAccounts = bank.getCustomerAccounts(dummyCustomer2);
         assertNotNull(customerAccounts);
         assertEquals(customerAccounts.size(), 0);
 
         bank.addCustomer(dummyCustomer);
         Account account1 = dummyCustomer.setupAccount(CurrentAccount.class);
         Account account2 = dummyCustomer.setupAccount(CurrentAccount.class);
-        assertEquals(customerAccounts.size(), 2);
-        bank.addCustomer(dummyCustomer2);
-        Account account3 = dummyCustomer.setupAccount(CurrentAccount.class);
-        Account account4 = dummyCustomer.setupAccount(CurrentAccount.class);
-
-        // should contain those and only those accounts added
         customerAccounts = bank.getCustomerAccounts(dummyCustomer);
-        assertEquals(customerAccounts.size(), 4);
+        assertEquals(customerAccounts.size(), 2);
+        // should contain those and only those accounts added
         assertTrue(customerAccounts.contains(account1));
         assertTrue(customerAccounts.contains(account2));
-        assertTrue(customerAccounts.contains(account3));
-        assertTrue(customerAccounts.contains(account4));
     }
 
     /**
@@ -220,6 +212,8 @@ class BankTest {
     void testTransaction() throws TransactionFailedException {
         Bank bank = Bank.getInstance();
         final boolean[] applied = {false};
+        final Account dummyAccount = AccountTest.getDummyAccount();
+        bank.addAccount(dummyAccount);
         Transaction transaction = new Transaction(new Money(1)) {
             @Override
             public void apply() throws TransactionFailedException {
@@ -229,6 +223,11 @@ class BankTest {
             @Override
             public String toString() {
                 return null;
+            }
+
+            @Override
+            public List<Account> getInvolvedAccounts() {
+                return Arrays.asList(dummyAccount);
             }
         };
         assertNotNull(bank.getTransactions());
@@ -305,16 +304,15 @@ class BankTest {
      *
      * @param methodName the method to check
      * @param iterations how many results to check
-     * @param c          which class the return values should be instance of
      * @throws NoSuchMethodException     if the methodName does not exist on Bank
      * @throws InvocationTargetException if the called method throws an exception
      * @throws IllegalAccessException    never
      * @throws ClassCastException        if the method does not return an object of type c
      */
-    private <T> void returnUniqueTest(String methodName, int iterations, Class<T> c)
+    private <T> void returnUniqueTest(String methodName, int iterations)
             throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Bank bank = Bank.getInstance();
-        Method generateAvailableId = Bank.class.getDeclaredMethod(methodName, c);
+        Method generateAvailableId = Bank.class.getDeclaredMethod(methodName);
 
         generateAvailableId.setAccessible(true);
 
@@ -335,7 +333,7 @@ class BankTest {
      */
     @Test
     void generateAvailableAccountId() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        returnUniqueTest("generateAvailableAccountId", 100, AccountId.class);
+        returnUniqueTest("generateAvailableAccountId", 100);
     }
 
     /**
@@ -347,6 +345,6 @@ class BankTest {
      */
     @Test
     void generateAvailableCustomerId() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        returnUniqueTest("generateAvailableCustomerId", 100, CustomerId.class);
+        returnUniqueTest("generateAvailableCustomerId", 100);
     }
 }

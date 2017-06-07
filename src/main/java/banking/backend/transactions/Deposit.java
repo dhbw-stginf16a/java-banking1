@@ -1,11 +1,16 @@
 package banking.backend.transactions;
 
-import banking.NotYetImplementedException;
 import banking.backend.Money;
 import banking.backend.accounts.Account;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Deposit extends Transaction {
-    public Account creditor;
+    /**
+     * The account to which the money is credited.
+     */
+    private Account creditor;
 
     /**
      * Constructs a deposit transaction issued now with specified amount deposited to an account.
@@ -15,7 +20,10 @@ public class Deposit extends Transaction {
      */
     public Deposit(Money amount, Account creditor) {
         super(amount);
-        throw new NotYetImplementedException();
+        if (creditor == null) {
+            throw new IllegalArgumentException("Creditor cannot be null.");
+        }
+        this.creditor = creditor;
     }
 
     /**
@@ -24,16 +32,38 @@ public class Deposit extends Transaction {
      * @return the creditor
      */
     public Account getCreditor() {
-        throw new NotYetImplementedException();
+        return creditor;
     }
 
     @Override
-    public void apply() {
-        throw new NotYetImplementedException();
+    public void apply() throws TransactionFailedException {
+        try {
+            creditor.deposit(getAmount());
+        } catch (UnsupportedOperationException e) {
+            this.status = Status.FAILED;
+            throw new TransactionFailedException(e);
+        }
+        this.status = Status.SUCCESS;
     }
 
+    /**
+     * Get a string representation for logging purposes or displaying to the user.
+     *
+     * @return string representation
+     */
     @Override
     public String toString() {
-        throw new NotYetImplementedException();
+        return String.format("Status of deposit of %s into %s is %s",
+                getAmount(), creditor.getAccountId(), getStatus());
+    }
+
+    /**
+     * Get all accounts involved in this transaction.
+     *
+     * @return the involved accounts
+     */
+    @Override
+    public List<Account> getInvolvedAccounts() {
+        return Arrays.asList(creditor);
     }
 }

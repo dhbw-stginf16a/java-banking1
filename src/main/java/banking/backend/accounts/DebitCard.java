@@ -1,20 +1,19 @@
 package banking.backend.accounts;
 
-import banking.NotYetImplementedException;
 import banking.backend.Money;
 import banking.backend.persons.Customer;
 
-class DebitCard extends Cards {
+public class DebitCard extends Cards {
 
     /**
      * Constructs an account and initializes the holder.
      * If the customer is null throws {@link IllegalArgumentException}
      *
      * @param holder the holder of this account
+     * @throws IllegalArgumentException never
      */
     public DebitCard(Customer holder) {
         super(holder);
-        throw new NotYetImplementedException();
     }
 
     /**
@@ -24,6 +23,6 @@ class DebitCard extends Cards {
      */
     @Override
     protected Money getOverdraft() {
-        throw new NotYetImplementedException();
+        return new Money(0);
     }
 }

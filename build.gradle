@@ -1,9 +1,9 @@
 buildscript {
-	repositories {
-		mavenCentral()
+    repositories {
+        mavenCentral()
 	}
 	dependencies {
-		classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-M4'
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-M4'
 	}
 }
 
@@ -57,6 +57,8 @@ junitPlatform {
 }
 
 dependencies {
+    compile 'com.budhash.cliche:cliche-shell:0.9.3'
+
 	// JUnit Jupiter API and TestEngine implementation
 	testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
 	testRuntime("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")

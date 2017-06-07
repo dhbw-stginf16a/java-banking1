@@ -32,12 +32,12 @@ public class Bank {
     /**
      * The map of all customers indexed by their {@link CustomerId}
      */
-    protected Map<CustomerId, Customer> customers = new HashMap<>();
+    private Map<CustomerId, Customer> customers = new HashMap<>();
 
     /**
      * The map of all accounts index by their {@link AccountId}
      */
-    protected Map<AccountId, Account> accounts = new HashMap<>();
+    private Map<AccountId, Account> accounts = new HashMap<>();
 
     /**
      * The list of all past transactions. Failed and successful.
@@ -73,9 +73,14 @@ public class Bank {
      */
     public void addCustomer(Customer customer) {
         CustomerId customerId = generateAvailableCustomerId();
-        customer.setCustomerId(customerId);
+        if (customer == null) {
+            throw new RuntimeException("aaah");
+        }
+        customers.forEach((CustomerId key, Customer val) ->
+                System.out.println("'" + key + ", " + val + "'"));
         if (!customers.containsValue(customer)) {
             customers.put(customerId, customer);
+            customer.setCustomerId(customerId);
         }
     }
 
@@ -96,9 +101,13 @@ public class Bank {
      * @return all accounts of the customer
      */
     public List<Account> getCustomerAccounts(Customer customer) {
-        CustomerId customerId = customer.getCustomerId();
-        return this.accounts.values().stream().filter(
-                (Account account) -> account.getHolder().getCustomerId().equals(customerId)).collect(Collectors.toList());
+        try {
+            CustomerId customerId = customer.getCustomerId();
+            return this.accounts.values().stream().filter(
+                    (Account account) -> account.getHolder().getCustomerId().equals(customerId)).collect(Collectors.toList());
+        } catch (IllegalStateException ignored) {
+            return new ArrayList<>();
+        }
     }
 
     /**
@@ -107,7 +116,7 @@ public class Bank {
      * @return all accounts
      */
     public List<Account> getAccounts() {
-        return (List<Account>) accounts.values();
+        return new ArrayList<>(accounts.values());
     }
 
     /**
@@ -126,7 +135,7 @@ public class Bank {
      * @return all customer
      */
     public List<Customer> getCustomers() {
-        return (List<Customer>) customers.values();
+        return new ArrayList<>(customers.values());
     }
 
     /**
@@ -146,6 +155,11 @@ public class Bank {
      * @throws TransactionFailedException if it was not possible to complete the transaction
      */
     public void applyTransaction(Transaction transaction) throws TransactionFailedException {
+        for (Account acc : transaction.getInvolvedAccounts()) {
+            if (!accounts.containsValue(acc)) {
+                throw new TransactionFailedException("Trying to apply transacction to account that does not exist.");
+            }
+        }
         transaction.apply();
         transactions.add(transaction);
     }
@@ -159,7 +173,7 @@ public class Bank {
         AccountId accountId;
         do {
             accountId = new AccountId();
-        } while (!accounts.containsKey(accountId));
+        } while (accounts.containsKey(accountId));
         return accountId;
     }
 
@@ -172,7 +186,7 @@ public class Bank {
         CustomerId customerId;
         do {
             customerId = new CustomerId();
-        } while (!customers.containsKey(customerId));
+        } while (customers.containsKey(customerId));
         return customerId;
     }
 
@@ -187,9 +201,9 @@ public class Bank {
             throw new IllegalArgumentException("To add an account it must have a holder.");
         }
         AccountId accountId = generateAvailableAccountId();
-        account.setAccountId(accountId);
         if (!accounts.containsValue(account)) {
             accounts.put(accountId, account);
+            account.setAccountId(accountId);
         }
     }
 

@@ -148,7 +148,7 @@ public class Money implements Comparable<Money> {
      * @deprecated
      */
     @Deprecated
-    Money applyPercentage(Percentage percentage) {
+    public Money applyPercentage(Percentage percentage) {
         return addPercentage(percentage);
     }
 

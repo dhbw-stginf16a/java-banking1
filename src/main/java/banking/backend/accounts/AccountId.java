@@ -1,11 +1,53 @@
 package banking.backend.accounts;
 
-import banking.NotYetImplementedException;
-
 public class AccountId {
+    /**
+     * The sum total of Places in the AccountId
+     */
+    private static final int COUNT_OF_PLACES = 9;
 
+    /**
+     * The count of check digits at the end of the AccountId
+     */
+    private static final int COUNT_OF_CHECK_DIGITS = 2;
+
+    /**
+     * Checksum Modulo
+     */
+    private static final int MODULO_CHECKSUM = 97;
+
+    private int savedId;
+
+    /**
+     * Generates a random new AccountId
+     */
     public AccountId() {
-        throw new NotYetImplementedException();
+        int numberWithOutChecksum = (int) (Math.random() * Math.pow(10, COUNT_OF_PLACES - COUNT_OF_CHECK_DIGITS));
+        numberWithOutChecksum = (numberWithOutChecksum * 100) % ((int) Math.pow(10, COUNT_OF_PLACES));
+        int moduloBefore = numberWithOutChecksum % MODULO_CHECKSUM;
+        savedId = numberWithOutChecksum + MODULO_CHECKSUM + 1 - ((numberWithOutChecksum % MODULO_CHECKSUM));
+        if (savedId % MODULO_CHECKSUM != 1) {
+            int moduloAfter = numberWithOutChecksum % MODULO_CHECKSUM;
+            throw new RuntimeException("This shouldn't happen " + moduloBefore + ", " + moduloAfter);
+        }
+    }
+
+
+    /**
+     * Must become a nine digit number that contains a 2 check digits
+     *
+     * @param id the String representation of the AccountId
+     * @throws IllegalArgumentException if the id given isn't a valid AccountId
+     */
+    public AccountId(String id) {
+        try {
+            savedId = Integer.parseInt(id);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("The accountId can only contain numbers", e);
+        }
+        if (savedId % MODULO_CHECKSUM != 1) {
+            throw new IllegalArgumentException("The accountId ist invalid please check for typos.");
+        }
     }
 
     /**
@@ -45,17 +87,27 @@ public class AccountId {
      */
     @Override
     public int hashCode() {
-        throw new NotYetImplementedException();
+        return (int) (savedId / Math.pow(10, COUNT_OF_CHECK_DIGITS));
     }
 
     /**
-     * Check if two customer ids are the same.
+     * Check if two account ids are the same.
      *
-     * @param obj other customer id to compare to
+     * @param obj other account id to compare to
      * @return equivalence
      */
     @Override
     public boolean equals(Object obj) {
-        throw new NotYetImplementedException();
+        return !(obj == null || !(obj instanceof AccountId)) && savedId == ((AccountId) obj).savedId;
+    }
+
+    /**
+     * Returns the String Representation of the AccountId with its checksum in it.
+     *
+     * @return String
+     */
+    @Override
+    public String toString() {
+        return Integer.toString(savedId);
     }
 }

@@ -83,8 +83,7 @@ public class DateTime implements Comparable<DateTime> {
     public int compareTo(DateTime dt) {
         if (value.isAfter(dt.value)) {
             return 1;
-        }
-        if (value.isBefore(dt.value)) {
+        } else if (value.isBefore(dt.value)) {
             return -1;
         }
         return 0;
@@ -96,13 +95,13 @@ public class DateTime implements Comparable<DateTime> {
      * @return the age of this
      */
 
-    int getAge() {
+    public int getAge() {
         LocalDateTime now = LocalDateTime.now();
         int differenceYears = now.getYear() - value.getYear();
 
         LocalDateTime inPast = now.minusYears(differenceYears);
 
-        return inPast.isAfter(value) ? differenceYears : differenceYears - 1;
+        return inPast.isBefore(value) ? differenceYears -1 : differenceYears;
     }
 
     /**
@@ -116,5 +115,16 @@ public class DateTime implements Comparable<DateTime> {
     @Override
     public String toString() {
         return value.format(DateTimeFormatter.ofPattern(PATTERN));
+    }
+
+    /**
+     * Test if the date and time of this is equal to another instance.
+     *
+     * @param obj other object to compare to
+     * @return equivalence
+     */
+    @Override
+    public boolean equals(Object obj) {
+        return obj != null && obj instanceof DateTime && compareTo((DateTime) obj) == 0;
     }
 }

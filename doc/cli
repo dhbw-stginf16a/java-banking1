@@ -1,0 +1,14 @@
+# auth> authenticate
+
+bank> show-accounts
+bank> show-customers
+bank> register-customer name address birthdate telephone-number
+bank> login
+bank> deposit account-id amount
+bank> show-transactions
+bank> tick
+
+customer> withdraw account-id amount
+customer> show-accounts
+customer> show-balance account-id
+customer> send-invoice from-id to-id amount
