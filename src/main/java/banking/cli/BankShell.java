@@ -92,7 +92,7 @@ public class BankShell implements ShellDependent {
     @Command
     public String registerCustomer(String name, String address, String birthdate,
                                    String telephoneNumber, boolean businessCustomer) {
-        final String FORMAT = "DD.MM.YYYY";
+        final String FORMAT = "dd.MM.yyyy";
         try {
             DateTime dateTime = new DateTime(birthdate, FORMAT);
             Customer customer = new Customer(name, address, dateTime, telephoneNumber, businessCustomer);
